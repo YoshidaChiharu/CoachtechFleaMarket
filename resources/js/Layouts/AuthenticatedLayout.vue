@@ -20,8 +20,8 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <nav class="flex items-center gap-10 text-white">
                             <NavLink :href="route('logout')">ログアウト</NavLink>
-                            <NavLink :href="route('mypage')">マイページ</NavLink>
-                            <Link :href="route('sell')">
+                            <NavLink :href="route('login')">マイページ</NavLink>
+                            <Link :href="route('login')">
                                 <PrimaryButton>出品</PrimaryButton>
                             </Link>
                         </nav>
