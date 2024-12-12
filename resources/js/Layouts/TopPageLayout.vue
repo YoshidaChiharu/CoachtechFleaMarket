@@ -15,10 +15,10 @@ const selected = ref(1)
     <div class="pt-10 pb-2 px-20 border-b border-gray-600">
         <div class="max-w-7xl mx-auto">
             <ul class="flex gap-20">
-                <li @click="selected = 1" :class="{ 'text-red-400' : selected == 1 }">
+                <li @click="selected = 1" :class="{ 'text-red-500' : selected == 1 }">
                     <Link href="/" class="font-bold">おすすめ</Link>
                 </li>
-                <li @click="selected = 2" :class="{ 'text-red-400' : selected == 2 }">
+                <li @click="selected = 2" :class="{ 'text-red-500' : selected == 2 }">
                     <Link href="/" class="font-bold">マイリスト</Link>
                 </li>
             </ul>
