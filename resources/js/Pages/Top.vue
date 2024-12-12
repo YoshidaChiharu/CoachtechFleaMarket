@@ -1,8 +1,8 @@
 <script setup>
+import TopPageLayoutVue from '@/Layouts/TopPageLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
-// import GuestLayout from '../Layouts/GuestLayout.vue';
 
-// defineOptions({ layout: GuestLayout })
+defineOptions({ layout: TopPageLayoutVue })
 </script>
 
 <template>
