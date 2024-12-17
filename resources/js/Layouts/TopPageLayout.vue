@@ -4,8 +4,8 @@ import { Link } from '@inertiajs/vue3';
 import NavLink from '@/Components/NavLink.vue';
 
 // ログイン状態によってレイアウトを切り替える
-// import Layout from '../Layouts/AuthenticatedLayout.vue';
-import Layout from '../Layouts/GuestLayout.vue';
+import Layout from '../Layouts/AuthenticatedLayout.vue';
+// import Layout from '../Layouts/GuestLayout.vue';
 
 const selected = ref(1)
 </script>
