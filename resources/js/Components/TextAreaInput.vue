@@ -18,8 +18,8 @@ defineExpose({ focus: () => input.value.focus() });
 </script>
 
 <template>
-    <input
-        class="w-full rounded border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+    <textarea
+        class="w-full min-h-28 rounded border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
         v-model="model"
         ref="input"
     />
