@@ -9,7 +9,7 @@ import { Head, Link } from '@inertiajs/vue3';
 <template>
     <div>
         <Head title="COACHTECHフリマ" />
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen">
             <header>
                 <div class="py-2 px-10 flex justify-between items-center bg-black">
                     <Link href="/">

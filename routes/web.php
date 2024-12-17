@@ -16,15 +16,15 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Top');
-});
+})->name('top');
 
 Route::get('/mypage', function () {
     return Inertia::render('MyPage');
-});
+})->name('mypage');
 
-Route::get('/test', function () {
-    return Inertia::render('Test');
-});
+// Route::get('/test', function () {
+//     return Inertia::render('Test');
+// });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
