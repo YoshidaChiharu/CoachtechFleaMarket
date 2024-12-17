@@ -8,8 +8,8 @@ const props = defineProps({
     <div>
         <img
             :src="path"
-            alt="ユーザーアイコン"
-            class="w-full aspect-square rounded-full bg-gray-200 border border-gray-400 object-cover"
+            alt="商品画像"
+            class="w-full bg-gray-200 border border-gray-400 aspect-[3/4] object-contain"
         >
     </div>
 </template>

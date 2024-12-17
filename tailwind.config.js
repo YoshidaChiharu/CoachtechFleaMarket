@@ -15,6 +15,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            aspectRatio: {
+                '3/4': '3 / 4',
+            },
         },
     },
 

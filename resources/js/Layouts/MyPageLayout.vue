@@ -18,7 +18,9 @@ const selected = ref(1)
         <div class="max-w-7xl mx-auto">
             <div class="flex justify-around items-center mb-10">
                 <div class="flex gap-10 items-center">
-                    <UserIcon path="img/dummy_user_icon.png" />
+                    <div class="w-32">
+                        <UserIcon path="img/dummy_user_icon.png" />
+                    </div>
                     <span class="font-bold text-2xl">ユーザー名</span>
                 </div>
                 <div>
