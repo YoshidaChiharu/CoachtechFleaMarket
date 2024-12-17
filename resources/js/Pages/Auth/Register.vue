@@ -23,7 +23,7 @@ const submit = () => {
 
 <template>
     <div class="max-w-xl mx-auto">
-        <Head title="Register" />
+        <Head title="会員登録" />
 
         <PageTitle>会員登録</PageTitle>
         <form @submit.prevent="submit">
@@ -64,13 +64,12 @@ const submit = () => {
                 </PrimaryButton>
 
                 <div class="mt-6 text-center">
-                <Link
-                    :href="route('login')"
-                    class="text-sm text-blue-700 tracking-widest hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    ログインはこちら
-                </Link>
-
+                    <Link
+                        :href="route('login')"
+                        class="text-sm text-blue-700 tracking-widest hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                        ログインはこちら
+                    </Link>
                 </div>
             </div>
         </form>
