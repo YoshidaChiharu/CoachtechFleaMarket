@@ -21,10 +21,8 @@ class TopPageController extends Controller
         });
 
         // お気に入り登録商品を判別
-        if(Auth::id()) {
-            $user_id = Auth::id();
-            $likes = Like::where('user_id', $user_id)->get()->toArray();
-            $like_item_ids = array_column($likes, 'item_id');
+        if(Auth::user()) {
+            $like_item_ids = Auth::user()->likeItems->pluck('id')->toArray();
 
             // お気に入り商品なら$item['is_like']をtrueへ変更
             foreach ($items as $item) {
@@ -33,6 +31,22 @@ class TopPageController extends Controller
                 }
             }
         }
+
+        $items->toArray();
+
+        return Inertia::render('Top', [
+            'items' => $items
+        ]);
+    }
+
+    public function showMylist() {
+        $items = Auth::user()->likeItems;
+
+        // $items配列内に 'is_like' フラグを追加
+        $items->map(function ($item) {
+            $item['is_like'] = true;
+            return $item;
+        });
 
         $items->toArray();
 
