@@ -13,15 +13,15 @@ class ItemSeeder extends Seeder
      */
     public function run(): void
     {
-        $param = [
-            'name' => '商品名',
-            'price' => '1000',
-            'description' => '商品詳細テキスト',
-            'image_url' => 'img/dummy_item.png',
-            'condition_id' => '1',
-            'user_id' => '1',
-        ];
-        for ($i=0; $i<50; $i++) {
+        for ($i=1; $i<=50; $i++) {
+            $param = [
+                'name' => '商品名_'+$i,
+                'price' => '1000',
+                'description' => '商品詳細テキスト',
+                'image_url' => 'img/dummy_item.png',
+                'condition_id' => '1',
+                'user_id' => '1',
+            ];
             DB::table('items')->insert($param);
         }
     }
