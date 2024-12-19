@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\TopPageController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -14,9 +15,7 @@ use Inertia\Inertia;
 //     ]);
 // });
 
-Route::get('/', function () {
-    return Inertia::render('Top');
-})->name('top');
+Route::get('/', [TopPageController::class, 'index'])->name('top');
 
 Route::get('/mypage', function () {
     return Inertia::render('MyPage');
