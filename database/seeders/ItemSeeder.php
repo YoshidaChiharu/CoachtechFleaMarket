@@ -15,7 +15,7 @@ class ItemSeeder extends Seeder
     {
         for ($i=1; $i<=50; $i++) {
             $param = [
-                'name' => '商品名_'+$i,
+                'name' => "商品名_{$i}",
                 'price' => '1000',
                 'description' => '商品詳細テキスト',
                 'image_url' => 'img/dummy_item.png',
