@@ -18,7 +18,7 @@ class ItemSeeder extends Seeder
                 'name' => "商品名_{$i}",
                 'price' => '1000',
                 'description' => '商品詳細テキスト',
-                'image_url' => 'img/dummy_item.png',
+                'image_url' => '/img/dummy_item.png',
                 'condition_id' => '1',
                 'user_id' => '1',
             ];

@@ -26,8 +26,8 @@ function ChangeLike() {
 <template>
     <div class="inline-block text-center">
         <button @click="ChangeLike()" class="flex justify-center items-center">
-            <img v-if="item.is_like" src="img/like_on.svg" alt="" class="w-8">
-            <img v-else src="img/like_off.svg" alt="" class="w-8">
+            <img v-if="item.is_like" :src="'/img/like_on.svg'" alt="" class="w-8">
+            <img v-else :src="'/img/like_off.svg'" alt="" class="w-8">
         </button>
         <span class="text-xs font-bold">
             <slot />

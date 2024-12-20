@@ -1,3 +1,3 @@
 <template>
-    <img :src="'img/logo.svg'" alt="COACHTECH">
+    <img :src="'/img/logo.svg'" alt="COACHTECH">
 </template>
