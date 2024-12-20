@@ -19,7 +19,7 @@ const selected = ref(1)
             <div class="flex justify-around items-center mb-10">
                 <div class="flex gap-10 items-center">
                     <div class="w-32">
-                        <UserIcon path="img/dummy_user_icon.png" />
+                        <UserIcon path="/img/dummy_user_icon.png" />
                     </div>
                     <span class="font-bold text-2xl">ユーザー名</span>
                 </div>
@@ -34,7 +34,7 @@ const selected = ref(1)
                     <Link href="/mypage" class="font-bold">出品した商品</Link>
                 </li>
                 <li @click="selected = 2" :class="{ 'text-red-500' : selected == 2 }">
-                    <Link href="/mypage" class="font-bold">購入した商品</Link>
+                    <Link href="/mypage/purchased" class="font-bold">購入した商品</Link>
                 </li>
             </ul>
         </div>

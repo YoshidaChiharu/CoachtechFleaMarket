@@ -1,16 +1,13 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { ref } from 'vue'
 import TopPageLayoutVue from '@/Layouts/TopPageLayout.vue';
-import LikeIcon from "@/Components/LikeIcon.vue";
-import ItemImage from "@/Components/ItemImage.vue";
 import ItemCard from "@/Components/ItemCard.vue";
 import Pagination from "@/Components/Pagination.vue";
 
 defineOptions({ layout: TopPageLayoutVue })
 
 defineProps({
-    items: Array,
+    items: Object,
 })
 </script>
 
@@ -23,6 +20,6 @@ defineProps({
                 <ItemCard :item="item" />
             </div>
         </div>
-        <Pagination :links=items.links />
+        <Pagination :links="items.links" />
     </div>
 </template>

@@ -3,19 +3,19 @@ import { router } from '@inertiajs/vue3'
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
-    item: Array,
+    item: Object,
 })
 
 function ChangeLike() {
     if (props.item.is_like) {
         // お気に入り削除
-        router.delete(`api/like/${props.item.id}`, {
+        router.delete(`/api/like/${props.item.id}`, {
             preserveScroll: true,
             onError: (errors) => {console.log( errors ) },
         });
     } else {
         // お気に入り登録
-        router.post(`api/like/${props.item.id}`, {}, {
+        router.post(`/api/like/${props.item.id}`, {}, {
             preserveScroll: true,
             onError: (errors) => {console.log( errors ) },
         });

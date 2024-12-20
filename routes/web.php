@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\TopPageController;
 use App\Http\Controllers\Api\LikeController;
+use App\Http\Controllers\MyPageController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -18,17 +19,9 @@ use App\Http\Controllers\Api\LikeController;
 
 Route::get('/', [TopPageController::class, 'index'])->name('top');
 
-Route::get('/mypage', function () {
-    return Inertia::render('MyPage');
-})->name('mypage');
-
 // Route::get('/test', function () {
 //     return Inertia::render('Test');
 // });
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/mylist', [TopPageController::class, 'showMylist'])->name('top.mylist');
     Route::post('/api/like/{item_id}', [LikeController::class, 'store']);
     Route::delete('/api/like/{item_id}', [LikeController::class, 'destroy']);
+    Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage');
+    Route::get('/mypage/purchased', [MyPageController::class, 'showPurchased'])->name('mypage.purchased');
 });
 
 require __DIR__.'/auth.php';

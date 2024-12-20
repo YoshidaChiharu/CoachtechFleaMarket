@@ -3,7 +3,7 @@ import LikeIcon from "../Components/LikeIcon.vue";
 import ItemImage from "../Components/ItemImage.vue";
 
 defineProps({
-    item: Array,
+    item: Object,
 })
 </script>
 
