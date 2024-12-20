@@ -14,7 +14,7 @@ defineProps({
             <ItemImage :path="item.image_url" />
             <!-- お気に入りアイコン -->
             <div
-                class="w-1/5 max-w-8 flex justify-center items-center aspect-square rounded-full bg-gray-200 opacity-80 absolute top-2 right-2"
+                class="w-1/5 max-w-8 flex justify-center items-center aspect-square rounded-full bg-gray-200 opacity-80 shadow-xl absolute top-2 right-2"
             >
                 <LikeIcon :item="item" class="w-2/3" />
             </div>
