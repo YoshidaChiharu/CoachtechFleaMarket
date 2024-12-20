@@ -5,8 +5,10 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Database\Seeders\ConditionSeeder;
 use Database\Seeders\ItemSeeder;
+use Database\Seeders\PaymentMethodSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,8 +22,10 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => Hash::make('password'),
         ]);
         $this->call(ConditionSeeder::class);
         $this->call(ItemSeeder::class);
+        $this->call(PaymentMethodSeeder::class);
     }
 }
