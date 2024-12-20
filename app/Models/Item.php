@@ -15,4 +15,12 @@ class Item extends Model
     public function likeUsers() {
         return $this->belongsToMany('App\Models\User', 'likes');
     }
+
+    public function user() {
+        return $this->hasOne('App\Models\User');
+    }
+
+    public function purchasedUser() {
+        return $this->belongsToMany('App\Models\User', 'sold_items');
+    }
 }
