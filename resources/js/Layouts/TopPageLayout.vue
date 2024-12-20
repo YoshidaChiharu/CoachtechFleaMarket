@@ -19,7 +19,7 @@ const selected = ref(1)
                     <Link href="/" class="font-bold">おすすめ</Link>
                 </li>
                 <li @click="selected = 2" :class="{ 'text-red-500' : selected == 2 }">
-                    <Link href="/" class="font-bold">マイリスト</Link>
+                    <Link href="/mylist" class="font-bold">マイリスト</Link>
                 </li>
             </ul>
         </div>
