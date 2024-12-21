@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -16,48 +17,44 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): Response
+    public function edit(Request $request)
     {
-        return Inertia::render('Profile/Edit', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
+        $profile = $request->user()->profile;
+
+        return Inertia::render('Profile', [
+            'profile' => $profile,
         ]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
-        $request->user()->fill($request->validated());
+        // dd($request->image, $request->file('image'), $request->name, $request->postcode, $request->address, $request->building);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $profile = $request->user()->profile;
+
+        try {
+            // サムネイル画像の保存
+            $image = $request->file('image');
+            $file_name = $image->getClientOriginalName();
+            $image_path = $image->storeAs('img', $file_name, 'public');
+            $image_path = str_replace("img", "/storage/img", $image_path);
+
+            $profile->update([
+                'name' => $request->name,
+                'image_url' => $image_path,
+                'postcode' => $request->postcode,
+                'address' => $request->address,
+                'building' => $request->building,
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e);
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit');
-    }
-
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'password' => ['required', 'current_password'],
+        return Inertia::render('Profile', [
+            'profile' => $profile,
         ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
     }
 }
