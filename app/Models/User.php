@@ -62,4 +62,8 @@ class User extends Authenticatable
     public function purchasedItems() {
         return $this->belongsToMany('App\Models\Item', 'sold_items');
     }
+
+    public function profile() {
+        return $this->hasOne('App\Models\Profile');
+    }
 }
