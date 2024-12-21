@@ -29,7 +29,7 @@ onUnmounted(() => {
                             <!-- <SearchItems /> -->
                         </div>
                         <nav class="flex items-center gap-10 text-white">
-                            <NavLink :href="route('logout')" method="post">ログアウト</NavLink>
+                            <NavLink :href="route('logout')" as="button" type="button" method="post">ログアウト</NavLink>
                             <NavLink :href="route('mypage')">マイページ</NavLink>
                             <Link :href="route('login')" as="button" type="button" class="py-1 px-4 bg-white text-black text-sm font-bold rounded">出品</Link>
                         </nav>
