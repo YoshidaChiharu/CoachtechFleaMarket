@@ -29,26 +29,27 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request)
+    public function update(ProfileUpdateRequest $request)
     {
-        // dd($request->image, $request->file('image'), $request->name, $request->postcode, $request->address, $request->building);
-
         $profile = $request->user()->profile;
 
         try {
-            // サムネイル画像の保存
-            $image = $request->file('image');
-            $file_name = $image->getClientOriginalName();
-            $image_path = $image->storeAs('img', $file_name, 'public');
-            $image_path = str_replace("img", "/storage/img", $image_path);
-
-            $profile->update([
+            $param = [
                 'name' => $request->name,
-                'image_url' => $image_path,
                 'postcode' => $request->postcode,
                 'address' => $request->address,
                 'building' => $request->building,
-            ]);
+            ];
+
+            // サムネイル画像の保存
+            if ($request->has('image')) {
+                $image = $request->file('image');
+                $file_name = $image->getClientOriginalName();
+                $image_path = $image->storeAs('img', $file_name, 'public');
+                $param['image_url'] = str_replace("img", "/storage/img", $image_path);
+            }
+
+            $profile->update($param);
         } catch (\Exception $e) {
             Log::error($e);
         }
