@@ -1,9 +1,15 @@
 <script setup>
-const previewUrl = defineModel()
+const previewUrl = defineModel("previewUrl", {
+    type: String,
+})
+const file = defineModel('file', {
+    type: Object,
+})
 
 function setPreviewUrl(e) {
-    const file = e.target.files[0];
-    previewUrl.value = URL.createObjectURL(file)
+    const image = e.target.files[0];
+    previewUrl.value = URL.createObjectURL(image);
+    file.value = image;
 }
 </script>
 
@@ -14,5 +20,11 @@ function setPreviewUrl(e) {
     >
         <slot />
     </label>
-    <input type="file" accept="image/*" @change="setPreviewUrl" id="input_file" class="hidden">
+    <input
+        type="file"
+        accept="image/*"
+        @change="setPreviewUrl"
+        id="input_file"
+        class="hidden"
+   >
 </template>

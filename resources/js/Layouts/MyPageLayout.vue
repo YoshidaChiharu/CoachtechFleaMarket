@@ -19,12 +19,12 @@ const selected = ref(1)
             <div class="flex justify-around items-center mb-10">
                 <div class="flex gap-10 items-center">
                     <div class="w-32">
-                        <UserIcon path="/img/dummy_user_icon.png" />
+                        <UserIcon path="/img/default_user_icon.png" />
                     </div>
                     <span class="font-bold text-2xl">ユーザー名</span>
                 </div>
                 <div>
-                    <Link href="/mypage">
+                    <Link href="/mypage/profile">
                         <SecondaryButton>プロフィールを編集</SecondaryButton>
                     </Link>
                 </div>

@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\TopPageController;
 use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\MyPageController;
+use App\Http\Controllers\ProfileController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/api/like/{item_id}', [LikeController::class, 'destroy']);
     Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage');
     Route::get('/mypage/purchased', [MyPageController::class, 'showPurchased'])->name('mypage.purchased');
+    Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('mypage.profile');
+    Route::post('/mypage/profile', [ProfileController::class, 'update']);
 });
 
 require __DIR__.'/auth.php';
