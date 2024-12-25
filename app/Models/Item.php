@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Item extends Model
 {
@@ -22,5 +23,19 @@ class Item extends Model
 
     public function purchasedUser() {
         return $this->belongsToMany('App\Models\User', 'sold_items');
+    }
+
+    public function categories () {
+        return $this->belongsToMany('App\Models\Category');
+    }
+
+    /**
+     * お気に入り登録された商品かどうかの判別メソッド
+     *
+     * @return boolean
+     */
+    public function isLike() : bool {
+        $like = $this->likes->where('user_id', Auth::user()->id);
+        return $like->isNotEmpty();
     }
 }

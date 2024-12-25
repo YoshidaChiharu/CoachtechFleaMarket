@@ -26,7 +26,7 @@ onUnmounted(() => {
                     </Link>
                     <div class="flex gap-10">
                         <div>
-                            <!-- <SearchItems /> -->
+                            <SearchItems />
                         </div>
                         <nav class="flex items-center gap-10 text-white">
                             <NavLink :href="route('logout')" as="button" type="button" method="post">ログアウト</NavLink>

@@ -8,28 +8,17 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Item;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Services\ItemService;
 
 class TopPageController extends Controller
 {
     public function index(Request $request) {
-        $items = Item::all();
-
-        // $items配列内に 'is_like' フラグを追加
-        $items->map(function ($item) {
-            $item['is_like'] = false;
-            return $item;
-        });
-
-        // お気に入り登録商品を判別
-        if(Auth::user()) {
-            $like_item_ids = Auth::user()->likeItems->pluck('id')->toArray();
-
-            // お気に入り商品なら$item['is_like']をtrueへ変更
-            foreach ($items as $item) {
-                if (in_array($item->id, $like_item_ids)) {
-                    $item['is_like'] = true;
-                }
-            }
+        // 全商品を取得（お気に入り商品かどうかの「is_like」フラグ付き）
+        $item_service = new ItemService;
+        if ($request->searchWord) {
+            $items = $item_service->searchItemsWithLike($request->searchWord);
+        } else {
+            $items = $item_service->getAllItemsWithLike();
         }
 
         // ページネーション
@@ -48,13 +37,9 @@ class TopPageController extends Controller
     }
 
     public function showMylist(Request $request) {
-        $items = Auth::user()->likeItems;
-
-        // $items配列内に 'is_like' フラグを追加
-        $items->map(function ($item) {
-            $item['is_like'] = true;
-            return $item;
-        });
+        // お気に入り登録商品を取得
+        $item_service = new ItemService;
+        $items = $item_service->getLikeItemsWithLike();
 
         // ページネーション
         $items = new LengthAwarePaginator
