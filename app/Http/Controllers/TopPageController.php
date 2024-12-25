@@ -22,13 +22,17 @@ class TopPageController extends Controller
         }
 
         // ページネーション
+        $path = $request->url();
+        if ($request->searchWord) {
+            $path = $path . "/?searchWord=" . $request->searchWord;
+        }
         $items = new LengthAwarePaginator
         (
             $items->forPage($request->page, 20),
             $items->count(),
             20,
             $request->page,
-            ['path' => $request->url()]
+            ['path' => $path ]
         );
 
         return Inertia::render('Top', [
