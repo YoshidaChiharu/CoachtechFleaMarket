@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -10,6 +11,8 @@ use Database\Seeders\ConditionSeeder;
 use Database\Seeders\ItemSeeder;
 use Database\Seeders\PaymentMethodSeeder;
 use Database\Seeders\ProfileSeeder;
+use Database\Seeders\CategorySeeder;
+use Database\Seeders\CategoryItemSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,5 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ConditionSeeder::class);
         $this->call(ItemSeeder::class);
         $this->call(PaymentMethodSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(CategoryItemSeeder::class);
     }
 }

@@ -25,6 +25,10 @@ class Item extends Model
         return $this->belongsToMany('App\Models\User', 'sold_items');
     }
 
+    public function categories () {
+        return $this->belongsToMany('App\Models\Category');
+    }
+
     /**
      * お気に入り登録された商品かどうかの判別メソッド
      *
