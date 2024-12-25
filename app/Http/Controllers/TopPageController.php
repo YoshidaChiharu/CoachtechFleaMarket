@@ -15,7 +15,11 @@ class TopPageController extends Controller
     public function index(Request $request) {
         // 全商品を取得（お気に入り商品かどうかの「is_like」フラグ付き）
         $item_service = new ItemService;
-        $items = $item_service->getAllItemsWithLike();
+        if ($request->searchWord) {
+            $items = $item_service->searchItemsWithLike($request->searchWord);
+        } else {
+            $items = $item_service->getAllItemsWithLike();
+        }
 
         // ページネーション
         $items = new LengthAwarePaginator

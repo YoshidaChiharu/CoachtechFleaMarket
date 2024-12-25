@@ -5,7 +5,7 @@ import { router } from '@inertiajs/vue3'
 const searchWord = ref('')
 
 function search() {
-    router.get('/', { word: searchWord.value })
+    router.get('/', { searchWord: searchWord.value })
 }
 </script>
 
