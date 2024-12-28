@@ -13,6 +13,8 @@ use Database\Seeders\PaymentMethodSeeder;
 use Database\Seeders\ProfileSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\CategoryItemSeeder;
+use Database\Seeders\LikeSeeder;
+use Database\Seeders\CommentSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,5 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentMethodSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(CategoryItemSeeder::class);
+        $this->call(LikeSeeder::class);
+        $this->call(CommentSeeder::class);
     }
 }
