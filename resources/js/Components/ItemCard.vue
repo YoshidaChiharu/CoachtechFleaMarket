@@ -1,4 +1,5 @@
 <script setup>
+import { Link } from '@inertiajs/vue3';
 import LikeIcon from "../Components/LikeIcon.vue";
 import ItemImage from "../Components/ItemImage.vue";
 
@@ -11,7 +12,9 @@ defineProps({
     <div>
         <div class="relative">
             <!-- 商品画像 -->
-            <ItemImage :path="item.image_url" />
+            <Link :href="'/item/' + item.id">
+                <ItemImage :path="item.image_url" />
+            </Link>
             <!-- お気に入りアイコン -->
             <div
                 class="w-1/5 max-w-8 flex justify-center items-center aspect-square rounded-full bg-gray-200 opacity-80 shadow-xl absolute top-2 right-2"

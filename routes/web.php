@@ -7,6 +7,7 @@ use App\Http\Controllers\TopPageController;
 use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ItemDetailController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -18,6 +19,7 @@ use App\Http\Controllers\ProfileController;
 // });
 
 Route::get('/', [TopPageController::class, 'index'])->name('top');
+Route::get('/item/{item_id}', [ItemDetailController::class, 'show'])->name('item.detail');
 
 // Route::get('/test', function () {
 //     return Inertia::render('Test');
