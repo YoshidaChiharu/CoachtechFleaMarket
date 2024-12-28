@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -47,23 +50,27 @@ class User extends Authenticatable
         ];
     }
 
-    public function likes() {
+    public function likes(): HasMany {
         return $this->hasMany('App\Models\Like');
     }
 
-    public function likeItems() {
+    public function likeItems(): BelongsToMany {
         return $this->belongsToMany('App\Models\Item', 'likes');
     }
 
-    public function items() {
+    public function items(): HasMany {
         return $this->hasMany('App\Models\Item');
     }
 
-    public function purchasedItems() {
+    public function purchasedItems(): BelongsToMany {
         return $this->belongsToMany('App\Models\Item', 'sold_items');
     }
 
-    public function profile() {
+    public function profile(): HasOne {
         return $this->hasOne('App\Models\Profile');
+    }
+
+    public function comments(): HasMany {
+        return $this->hasMany('App\Models\Comment');
     }
 }
