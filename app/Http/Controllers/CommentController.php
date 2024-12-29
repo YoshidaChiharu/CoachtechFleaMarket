@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Services\ItemService;
 
-class ItemDetailController extends Controller
+class CommentController extends Controller
 {
-    public function show(Request $request) {
+    public function index(Request $request) {
         $item_service = new ItemService;
         $item = $item_service->getItemDetail($request->item_id);
 
-        return Inertia::render('ItemDetail', [
+        return Inertia::render('Comment', [
             'item' => $item
         ]);
     }

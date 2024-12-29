@@ -6,19 +6,12 @@ import CommentIcon from "@/Components/CommentIcon.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import CategoryIcon from "@/Components/CategoryIcon.vue";
 
-import { onMounted } from 'vue'
-
 const props = defineProps({
     item: Object,
 });
 
 const likes_count = props.item.likes.length;
 const comments_count = props.item.comments.length;
-
-onMounted(() => {
-    console.log(props.item.likes.length);
-    console.log(props.item);
-});
 </script>
 
 <template>
@@ -38,7 +31,9 @@ onMounted(() => {
                 </div>
                 <div class="flex gap-8 mt-4 px-2">
                     <LikeIcon :item="item">{{ likes_count }}</LikeIcon>
-                    <CommentIcon>{{ comments_count }}</CommentIcon>
+                    <Link :href="'/item/comment/' + item.id">
+                        <CommentIcon>{{ comments_count }}</CommentIcon>
+                    </Link>
                 </div>
                 <div class="mt-4">
                     <Link :href="route('top')">
