@@ -6,6 +6,7 @@ import CommentIcon from "@/Components/CommentIcon.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextAreaInput from "@/Components/TextAreaInput.vue";
+import SpeechBalloon from "@/Components/SpeechBalloon.vue";
 
 import { onMounted } from 'vue'
 
@@ -13,11 +14,7 @@ const props = defineProps({
     item: Object,
 });
 
-const likes_count = props.item.likes.length;
-const comments_count = props.item.comments.length;
-
 onMounted(() => {
-    console.log(props.item.likes.length);
     console.log(props.item);
 });
 </script>
@@ -38,13 +35,20 @@ onMounted(() => {
                     {{ item.price }}
                 </div>
                 <div class="flex gap-8 mt-4 px-2">
-                    <LikeIcon :item="item">{{ likes_count }}</LikeIcon>
-                    <CommentIcon>{{ comments_count }}</CommentIcon>
+                    <LikeIcon :item="item">{{ item.likes_count }}</LikeIcon>
+                    <CommentIcon>{{ item.comments_count }}</CommentIcon>
                 </div>
-                <div>
-                    <!-- コメントバルーン -->
+                <div class="mt-14">
+                    <SpeechBalloon
+                        v-for="comment in item.comments"
+                        :key="comment.id"
+                        :comment="comment"
+                    />
+                    <p v-if="item.comments_count == 0" class="font-bold text-gray-400">
+                        コメントなし
+                    </p>
                 </div>
-                <div>
+                <div class="mt-14">
                     <form action="">
                         <InputLabel>商品へのコメント</InputLabel>
                         <TextAreaInput></TextAreaInput>
