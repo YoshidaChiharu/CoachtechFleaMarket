@@ -112,37 +112,8 @@ class ItemService
         return $this->items;
     }
 
-    public function getItemDetail(int $item_id) : Item {
-        $this->items = Item::where('id', $item_id)->get();
-
-        // is_likeフラグを付与（ログイン済みの場合のみ）
-        if (Auth::user()) {
-            $this->withLike();
-        }
-
-        // 商品に紐づく各種情報を付与
-        $item = $this->items[0];
-        // お気に入り情報
-        $item->likes;
-        // コメント情報
-        // $this->items[0]['comments_count'] = $this->items[0]->comments->count();
-        $item->comments;
-        // カテゴリー情報
-        // $categories_array = $this->items[0]->categories->pluck('name')->toArray();
-        $item->categories;
-        // 商品の状態
-        // $this->items[0]['condition'] = $this->items[0]->condition;
-        $item->condition;
-        // 出品者情報
-        $item->user;
-        // 売却済み情報
-        $item->soldItem;
-
-        return $item;
-    }
-
     /**
-     * itemsにお気に入り商品かどうかの判別フラグ is_like を付与する
+     * itemsにログインユーザーのお気に入り商品かどうかの判別フラグ is_like を付与する
      *
      * @return void
      */

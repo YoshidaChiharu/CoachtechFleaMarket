@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Services\ItemService;
+use App\Services\ItemDetailService;
 
 class CommentController extends Controller
 {
     public function index(Request $request) {
-        $item_service = new ItemService;
-        $item = $item_service->getItemDetail($request->item_id);
+        $item = ItemDetailService::getItemDetail($request->item_id);
 
         return Inertia::render('Comment', [
             'item' => $item
