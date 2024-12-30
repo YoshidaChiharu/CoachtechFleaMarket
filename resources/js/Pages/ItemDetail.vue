@@ -6,18 +6,8 @@ import CommentIcon from "@/Components/CommentIcon.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import CategoryIcon from "@/Components/CategoryIcon.vue";
 
-import { onMounted } from 'vue'
-
 const props = defineProps({
     item: Object,
-});
-
-const likes_count = props.item.likes.length;
-const comments_count = props.item.comments.length;
-
-onMounted(() => {
-    console.log(props.item.likes.length);
-    console.log(props.item);
 });
 </script>
 
@@ -37,8 +27,10 @@ onMounted(() => {
                     {{ item.price }}
                 </div>
                 <div class="flex gap-8 mt-4 px-2">
-                    <LikeIcon :item="item">{{ likes_count }}</LikeIcon>
-                    <CommentIcon>{{ comments_count }}</CommentIcon>
+                    <LikeIcon :item="item">{{ item.likes_count }}</LikeIcon>
+                    <Link :href="'/item/comment/' + item.id">
+                        <CommentIcon>{{ item.comments_count }}</CommentIcon>
+                    </Link>
                 </div>
                 <div class="mt-4">
                     <Link :href="route('top')">
@@ -54,14 +46,14 @@ onMounted(() => {
                     <div class="mt-8 flex items-center flex-wrap gap-4">
                         <span class="font-bold">カテゴリー</span>
                         <div class="flex flex-wrap gap-2">
-                            <CategoryIcon v-for="category in item.categories">
-                                {{ category.name }}
+                            <CategoryIcon v-for="name in item.category_names">
+                                {{ name }}
                             </CategoryIcon>
                         </div>
                     </div>
                     <div class="mt-8 gap-4 flex items-center flex-wrap ">
                         <span class="font-bold">商品の状態</span>
-                        <span>{{ item.condition.name }}</span>
+                        <span>{{ item.condition_name }}</span>
                     </div>
                 </div>
             </div>

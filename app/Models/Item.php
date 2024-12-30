@@ -45,13 +45,17 @@ class Item extends Model
         return $this->hasMany('App\Models\Comment');
     }
 
+    public function commentUsers (): BelongsToMany {
+        return $this->belongsToMany('App\Models\User', 'comments');
+    }
+
     /**
-     * お気に入り登録された商品かどうかの判別メソッド
+     * ログインユーザーがお気に入り登録している商品かどうかの判別メソッド
      *
      * @return boolean
      */
-    public function isLike() : bool {
-        $like = $this->likes->where('user_id', Auth::user()->id);
+    public function isLike(): bool {
+        $like = $this->likes->where('user_id', Auth::user()->id ?? null);
         return $like->isNotEmpty();
     }
 }

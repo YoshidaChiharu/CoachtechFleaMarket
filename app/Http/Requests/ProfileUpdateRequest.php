@@ -17,6 +17,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'image' => [
+                'nullable',
                 'file',
                 'image',
                 'mimes:jpeg,jpg,png,bmp',
