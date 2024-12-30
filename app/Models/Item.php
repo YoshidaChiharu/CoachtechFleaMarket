@@ -55,7 +55,7 @@ class Item extends Model
      * @return boolean
      */
     public function isLike(): bool {
-        $like = $this->likes->where('user_id', Auth::user()->id);
+        $like = $this->likes->where('user_id', Auth::user()->id ?? null);
         return $like->isNotEmpty();
     }
 }
