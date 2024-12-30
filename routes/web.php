@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('mypage.profile');
     Route::post('/mypage/profile', [ProfileController::class, 'update']);
     Route::get('/item/comment/{item_id}', [CommentController::class, 'index'])->name('item.comment');
+    Route::post('/item/comment/{item_id}', [CommentController::class, 'store']);
 });
 
 require __DIR__.'/auth.php';

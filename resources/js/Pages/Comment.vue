@@ -1,5 +1,6 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import ItemImage from "@/Components/ItemImage.vue";
 import LikeIcon from "@/Components/LikeIcon.vue";
 import CommentIcon from "@/Components/CommentIcon.vue";
@@ -7,21 +8,27 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextAreaInput from "@/Components/TextAreaInput.vue";
 import SpeechBalloon from "@/Components/SpeechBalloon.vue";
-
-import { onMounted } from 'vue'
+import InputError from '@/Components/InputError.vue';
 
 const props = defineProps({
     item: Object,
 });
 
-onMounted(() => {
-    console.log(props.item);
+const form = useForm({
+    comment: null,
 });
+
+function submit() {
+    form.post('/item/comment/' + props.item.id, {
+        preserveScroll: true
+    });
+    form.comment = null;
+};
 </script>
 
 <template>
     <div class="max-w-5xl mx-auto py-10">
-        <Head title="商品詳細" />
+        <Head title="コメント" />
         <div class="flex w-full">
             <!-- 商品画像(左側) -->
             <div class="w-1/2 p-20">
@@ -49,9 +56,11 @@ onMounted(() => {
                     </p>
                 </div>
                 <div class="mt-14">
-                    <form action="">
+                    <form @submit.prevent="submit" >
                         <InputLabel>商品へのコメント</InputLabel>
-                        <TextAreaInput></TextAreaInput>
+                        <!-- <InputError class="mt-2" :message="form.errors.comment" /> -->
+                        <TextAreaInput v-model="form.comment" required />
+                        <InputError class="mb-2" :message="form.errors.comment" />
                         <PrimaryButton>コメントを送信する</PrimaryButton>
                     </form>
                 </div>
