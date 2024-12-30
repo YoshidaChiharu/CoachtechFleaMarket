@@ -42,7 +42,7 @@ class ProfileController extends Controller
             ];
 
             // サムネイル画像の保存
-            if ($request->has('image')) {
+            if ($request->image) {
                 $image = $request->file('image');
                 $file_name = $image->getClientOriginalName();
                 $image_path = $image->storeAs('img', $file_name, 'public');
