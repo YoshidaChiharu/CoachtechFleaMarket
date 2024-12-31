@@ -4,16 +4,11 @@ import { Link } from '@inertiajs/vue3';
 import NavLink from '@/Components/NavLink.vue';
 import SecondaryButton from "../Components/SecondaryButton.vue";
 import UserIcon from "../Components/UserIcon.vue";
-
-// ログイン状態によってレイアウトを切り替える
-// import Layout from '../Layouts/AuthenticatedLayout.vue';
-import Layout from '../Layouts/GuestLayout.vue';
-
-const selected = ref(1)
+import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 </script>
 
 <template>
-    <Layout>
+    <DefaultLayout>
     <div class="pt-10 pb-2 px-20 border-b border-gray-600">
         <div class="max-w-7xl mx-auto">
             <div class="flex justify-around items-center mb-10">
@@ -30,15 +25,15 @@ const selected = ref(1)
                 </div>
             </div>
             <ul class="flex gap-20">
-                <li @click="selected = 1" :class="{ 'text-red-500' : selected == 1 }">
+                <li :class="{ 'text-red-500' : $page.url === '/mypage' }">
                     <Link href="/mypage" class="font-bold">出品した商品</Link>
                 </li>
-                <li @click="selected = 2" :class="{ 'text-red-500' : selected == 2 }">
+                <li :class="{ 'text-red-500' : $page.url === '/mypage/purchased' }">
                     <Link href="/mypage/purchased" class="font-bold">購入した商品</Link>
                 </li>
             </ul>
         </div>
     </div>
     <slot />
-    </Layout>
+    </DefaultLayout>
 </template>

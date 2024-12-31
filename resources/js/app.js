@@ -5,7 +5,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-import AuthenticatedLayout from './Layouts/AuthenticatedLayout.vue';
+import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -18,7 +18,7 @@ createInertiaApp({
         )
         page.then((module) => {
             // ここで設定する
-            module.default.layout = module.default.layout || AuthenticatedLayout
+            module.default.layout = module.default.layout || DefaultLayout
         })
 
         return page
