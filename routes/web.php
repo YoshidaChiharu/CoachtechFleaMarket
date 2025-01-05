@@ -9,6 +9,7 @@ use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ItemDetailController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\Api\PurchaseController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/mypage/profile', [ProfileController::class, 'update']);
     Route::get('/item/comment/{item_id}', [CommentController::class, 'index'])->name('item.comment');
     Route::post('/item/comment/{item_id}', [CommentController::class, 'store']);
+    Route::post('/api/purchase/{item_id}', [PurchaseController::class, 'createCheckoutSession']);
 });
 
 require __DIR__.'/auth.php';
