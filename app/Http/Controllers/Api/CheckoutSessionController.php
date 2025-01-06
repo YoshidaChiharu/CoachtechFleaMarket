@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
 
-class PurchaseController extends Controller
+class CheckoutSessionController extends Controller
 {
     public function createCheckoutSession(Request $request): JsonResponse {
         $stripe = new StripeClient("sk_test_51QBad1Bli9nlS8GVTqk4Uty9r2jQqd3WwJlYOrZJZmNPZQWZBqPR4VOJNVPWaZMO88CJT7H9fDoXkJuIp6fTDo1K00UkjRgzAt");
