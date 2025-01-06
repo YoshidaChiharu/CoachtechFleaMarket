@@ -33,7 +33,7 @@ const props = defineProps({
                     </Link>
                 </div>
                 <div class="mt-4">
-                    <Link :href="route('top')">
+                    <Link :href="'/purchase/' + item.id">
                         <PrimaryButton>購入する</PrimaryButton>
                     </Link>
                 </div>
