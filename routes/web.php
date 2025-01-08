@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/item/comment/{item_id}', [CommentController::class, 'index'])->name('item.comment');
     Route::post('/item/comment/{item_id}', [CommentController::class, 'store']);
     Route::post('/api/purchase/{item_id}', [CheckoutSessionController::class, 'createCheckoutSession']);
+    Route::delete('/api/purchase/{checkout_session_id}', [CheckoutSessionController::class, 'expireCheckoutSession']);
+    Route::post('/api/purchase/completed/{checkout_session_id}', [CheckoutSessionController::class, 'completeCheckoutSession']);
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase');
 });
 

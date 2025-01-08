@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('item_id')->constrained()->unique();
             $table->foreignId('payment_method_id')->constrained();
-            $table->string('payment_intent_id')->unique();
+            $table->string('checkout_session_id')->unique();
+            $table->boolean('session_completed');
             $table->string('ship_postcode');
             $table->string('ship_address');
             $table->string('ship_building');
