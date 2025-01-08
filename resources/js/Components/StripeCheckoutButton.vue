@@ -45,6 +45,7 @@ async function submit() {
             tempCheckout?.mount('#checkout');
         })
         .catch(function (error) {
+            router.reload();
             console.log(error.response.data.status);
             console.log(error.response.data.message);
         })

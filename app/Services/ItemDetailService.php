@@ -16,7 +16,7 @@ class ItemDetailService
         $item_detail = $item->toArray();
 
         // 売却済みフラグ
-        $item_detail['is_sold'] = $item->soldItem->isNotEmpty();
+        $item_detail['is_sold'] = $item->isSold();
 
         // お気に入り登録有無フラグ
         $item_detail['is_like'] = $item->isLike();

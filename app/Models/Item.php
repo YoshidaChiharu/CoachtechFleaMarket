@@ -29,7 +29,7 @@ class Item extends Model
         return $this->belongsToMany('App\Models\User', 'sold_items');
     }
 
-    public function soldItem (): HasMany {
+    public function soldItems (): HasMany {
         return $this->hasMany('App\Models\SoldItem');
     }
 
@@ -57,5 +57,10 @@ class Item extends Model
     public function isLike(): bool {
         $like = $this->likes->where('user_id', Auth::user()->id ?? null);
         return $like->isNotEmpty();
+    }
+
+    public function isSold(): bool {
+        $sold_items = $this->soldItems->where('session_completed', true);
+        return $sold_items->isNotEmpty();
     }
 }

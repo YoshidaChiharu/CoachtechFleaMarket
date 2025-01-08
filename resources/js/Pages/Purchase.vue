@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import ItemImage from "@/Components/ItemImage.vue";
 import StripeCheckoutButton from "@/Components/StripeCheckoutButton.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
     item: Object,
@@ -16,7 +17,7 @@ const props = defineProps({
             <div class="w-3/5 p-10">
                 <div class="flex gap-10 items-center">
                     <div class="w-32 p-4">
-                        <ItemImage :path="item.image_url" />
+                        <ItemImage :item="item" />
                     </div>
                     <div>
                         <h2 class="text-2xl font-bold">{{ item.name }}</h2>
@@ -60,7 +61,8 @@ const props = defineProps({
                     </table>
                 </div>
                 <div class="mt-14">
-                    <StripeCheckoutButton :itemId="item.id">購入する</StripeCheckoutButton>
+                    <PrimaryButton v-if="item.is_sold === true" disabled>SOLD OUT</PrimaryButton>
+                    <StripeCheckoutButton v-else :itemId="item.id">購入する</StripeCheckoutButton>
                 </div>
             </div>
         </div>
