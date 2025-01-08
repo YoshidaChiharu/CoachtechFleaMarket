@@ -36,6 +36,9 @@ class ItemService
             $this->withLike();
         }
 
+        // is_soldフラグを付与
+        $this->withSold();
+
         return $this->items;
     }
 
@@ -49,6 +52,9 @@ class ItemService
 
         // is_likeフラグを付与
         $this->withLike();
+
+        // is_soldフラグを付与
+        $this->withSold();
 
         return $this->items;
     }
@@ -64,6 +70,9 @@ class ItemService
         // is_likeフラグを付与
         $this->withLike();
 
+        // is_soldフラグを付与
+        $this->withSold();
+
         return $this->items;
     }
 
@@ -73,10 +82,13 @@ class ItemService
      * @return Collection
      */
     public function getPurchasedItemsWithLike() : Collection {
-        $this->items = Auth::user()->purchasedItems;
+        $this->items = Auth::user()->getPurchasedItems();
 
         // is_likeフラグを付与
         $this->withLike();
+
+        // is_soldフラグを付与
+        $this->withSold();
 
         return $this->items;
     }
@@ -109,6 +121,9 @@ class ItemService
         // is_likeフラグを付与
         $this->withLike();
 
+        // is_soldフラグを付与
+        $this->withSold();
+
         return $this->items;
     }
 
@@ -117,10 +132,18 @@ class ItemService
      *
      * @return void
      */
-    private function withLike() : void {
+    private function withLike(): void {
         // $items配列内に 'is_like' フラグを追加
         $this->items->map(function ($item) {
             $item['is_like'] = $item->isLike();
+            return $item;
+        });
+    }
+
+    private function withSold(): void {
+        // $items配列内に 'is_sold' フラグを追加
+        $this->items->map(function ($item) {
+            $item['is_sold'] = $item->isSold();
             return $item;
         });
     }

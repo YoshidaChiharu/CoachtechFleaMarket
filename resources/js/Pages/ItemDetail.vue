@@ -17,7 +17,7 @@ const props = defineProps({
         <div class="flex w-full">
             <!-- 商品画像(左側) -->
             <div class="w-1/2 p-20">
-                <ItemImage :path="item.image_url" />
+                <ItemImage :item="item" />
             </div>
             <!-- 詳細情報(右側) -->
             <div class="w-1/2 p-20">
@@ -33,7 +33,8 @@ const props = defineProps({
                     </Link>
                 </div>
                 <div class="mt-4">
-                    <Link :href="route('top')">
+                    <PrimaryButton v-if="item.is_sold === true" disabled>SOLD OUT</PrimaryButton>
+                    <Link v-else :href="'/purchase/' + item.id">
                         <PrimaryButton>購入する</PrimaryButton>
                     </Link>
                 </div>
