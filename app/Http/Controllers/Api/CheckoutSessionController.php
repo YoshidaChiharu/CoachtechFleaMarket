@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Stripe\StripeClient;
 use App\Models\SoldItem;
+use App\Models\PaymentMethod;
 
 class CheckoutSessionController extends Controller
 {
@@ -77,9 +78,9 @@ class CheckoutSessionController extends Controller
 
             // カスタマーIDを取得（なければここで作成？もしくは別で作成させる）
 
-           //Checkoutセッション作成
+            //Checkoutセッション作成
             $checkout = $stripe->checkout->sessions->create([
-                'line_items'             => [[
+                'line_items' => [[
                     'price'    => 'price_1QdnKOBli9nlS8GV5hoD5foG',
                     'quantity' => 1,
                 ],
@@ -93,8 +94,14 @@ class CheckoutSessionController extends Controller
                     'card' => [
                         'setup_future_usage' => 'on_session',
                     ],
+                    'customer_balance' => [
+                        'funding_type' => 'bank_transfer',
+                        'bank_transfer' => [
+                            'type' => 'jp_bank_transfer',
+                        ],
+                    ]
                 ],
-                'payment_method_types'   => ['card'],
+                'payment_method_types'   => [PaymentMethod::find($request->paymentMethodId)->payment_method_type],
                 // セッションの有効期限設定（設定可能な最短時間：30分）
                 'expires_at' => Carbon::now()->addMinutes(30)->format('U'),
                 // metadataに user_id, item_id を埋め込む
@@ -108,7 +115,7 @@ class CheckoutSessionController extends Controller
             SoldItem::create([
                 'user_id' => $user->id,
                 'item_id' => $item_id,
-                'payment_method_id' => '1', // 仮でクレジット決済固定
+                'payment_method_id' => $request->paymentMethodId,
                 'checkout_session_id' => $checkout->id,
                 'session_completed' => false,
                 'ship_postcode' => $user->profile->postcode,
