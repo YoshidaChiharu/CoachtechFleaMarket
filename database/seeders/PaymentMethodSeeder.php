@@ -14,9 +14,18 @@ class PaymentMethodSeeder extends Seeder
     public function run(): void
     {
         $param = [
-            ['name' => 'クレジットカード決済'],
-            ['name' => 'コンビニ払い'],
-            ['name' => '銀行振込'],
+            [
+                'name' => 'クレジットカード決済',
+                'payment_method_type' => 'card'
+            ],
+            [
+                'name' => 'コンビニ払い',
+                'payment_method_type' => 'konbini'
+            ],
+            [
+                'name' => '銀行振込',
+                'payment_method_type' => 'customer_balance'
+            ],
         ];
         DB::table('payment_methods')->insert($param);
     }
