@@ -12,12 +12,6 @@ const props = defineProps({
 
 const open = ref(false);
 const selectedId = ref(1);
-const paymentMethodList = {
-    1: "クレジットカード決済",
-    2: "コンビニ払い",
-    3: "銀行振込",
-};
-
 </script>
 
 <template>
