@@ -7,6 +7,7 @@ import { loadStripe } from '@stripe/stripe-js'
 
 const props = defineProps({
     itemId: Number,
+    paymentMethodId: Number,
 });
 
 onUnmounted(() => {
@@ -22,7 +23,9 @@ async function submit() {
     const stripe = await loadStripe(stripeKey);
 
     await axios
-        .post('/api/purchase/' + props.itemId)
+        .post('/api/purchase/' + props.itemId, {
+            paymentMethodId: props.paymentMethodId,
+        })
         .then(async (res) => {
             open.value = true;
 
@@ -79,5 +82,6 @@ async function hide() {
                 </div>
             </div>
         </Teleport>
+
     </div>
 </template>

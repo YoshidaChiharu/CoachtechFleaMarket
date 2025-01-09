@@ -1,12 +1,17 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue'
 import ItemImage from "@/Components/ItemImage.vue";
 import StripeCheckoutButton from "@/Components/StripeCheckoutButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
     item: Object,
+    paymentMethods: Object,
 });
+
+const open = ref(false);
+const selectedId = ref(1);
 </script>
 
 <template>
@@ -29,7 +34,7 @@ const props = defineProps({
                 </div>
                 <div class="flex justify-between mt-2">
                     <span class="font-bold text-lg">支払い方法</span>
-                    <button class="text-[#2085D2]">変更する</button>
+                    <button class="text-[#2085D2]" @click="open = true">変更する</button>
                 </div>
                 <div class="flex justify-between mt-44">
                     <span class="font-bold text-lg">配送先</span>
@@ -42,29 +47,49 @@ const props = defineProps({
                     <table class="w-full text-left">
                         <tbody>
                             <tr>
-                                <th class="w-3/5 font-normal py-4">商品代金</th>
+                                <th class="w-1/2 font-normal py-4">商品代金</th>
                                 <td>{{ item.price }}</td>
                             </tr>
                             <tr>
-                                <th class="w-3/5 font-normal py-4"><br></th>
+                                <th class="w-1/2 font-normal py-4"><br></th>
                                 <td></td>
                             </tr>
                             <tr>
-                                <th class="w-3/5 font-normal py-4">支払い金額</th>
+                                <th class="w-1/2 font-normal py-4">支払い金額</th>
                                 <td>{{ item.price }}</td>
                             </tr>
                             <tr>
-                                <th class="w-3/5 font-normal py-4">支払い方法</th>
-                                <td>コンビニ払い</td>
+                                <th class="w-1/2 font-normal py-4">支払い方法</th>
+                                <td>{{ paymentMethods[selectedId] }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="mt-14">
-                    <PrimaryButton v-if="item.is_sold === true" disabled>SOLD OUT</PrimaryButton>
-                    <StripeCheckoutButton v-else :itemId="item.id">購入する</StripeCheckoutButton>
+                    <PrimaryButton v-if="item.is_sold === true" disabled>
+                        SOLD OUT
+                    </PrimaryButton>
+                    <StripeCheckoutButton v-else :itemId="item.id" :paymentMethodId="selectedId">
+                        購入する
+                    </StripeCheckoutButton>
                 </div>
             </div>
         </div>
+        <!-- 支払い方法変更モーダル -->
+        <Teleport to="body">
+            <div
+                v-if="open"
+                class="fixed top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,.3)]"
+            >
+                <div class="fixed top-1/2 left-1/2 z-50 bg-white translate-y-[-50%] translate-x-[-50%] drop-shadow-xl py-10 px-20 max-h-[85vh] overflow-auto">
+                    <div v-for="(name, id) in paymentMethods" :key="id" class="flex items-center mb-2">
+                        <input type="radio" v-model="selectedId" :value="id" :id="name">
+                        <label :for="name" class="ml-2 font-bold">{{ name }}</label>
+                    </div>
+
+                    <button @click="open = false" class="block w-3/4 mx-auto mt-10">Close</button>
+                </div>
+            </div>
+        </Teleport>
     </div>
 </template>
