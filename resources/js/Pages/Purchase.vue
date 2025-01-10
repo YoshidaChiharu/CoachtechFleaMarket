@@ -42,7 +42,7 @@ const selectedId = ref(1);
                 <!-- 配送先設定 & 登録住所表示 -->
                 <div class="flex justify-between mt-44">
                     <span class="font-bold text-lg">配送先</span>
-                    <Link :href="route('top')" class="text-[#2085D2]">変更する</Link>
+                    <Link :href="route('purchase.address', item.id)" class="text-[#2085D2]">変更する</Link>
                 </div>
                 <div v-if="shipAddress.postcode && shipAddress.address" class="py-5 px-10">
                     <table class="text-left">
