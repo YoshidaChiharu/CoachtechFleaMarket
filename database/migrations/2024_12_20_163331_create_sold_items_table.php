@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('session_completed');
             $table->string('ship_postcode');
             $table->string('ship_address');
-            $table->string('ship_building');
+            $table->string('ship_building')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });

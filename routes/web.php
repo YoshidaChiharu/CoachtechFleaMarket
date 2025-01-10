@@ -11,6 +11,7 @@ use App\Http\Controllers\ItemDetailController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Api\CheckoutSessionController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ShipAddressController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -45,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/api/purchase/{checkout_session_id}', [CheckoutSessionController::class, 'expireCheckoutSession']);
     Route::post('/api/purchase/completed/{checkout_session_id}', [CheckoutSessionController::class, 'completeCheckoutSession']);
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase');
+    Route::get('/purchase/address/{item_id}', [ShipAddressController::class, 'edit'])->name('purchase.address');
+    Route::post('/purchase/address/{item_id}', [ShipAddressController::class, 'update']);
 });
 
 require __DIR__.'/auth.php';
