@@ -4,6 +4,7 @@ import { router } from '@inertiajs/vue3'
 import axios from 'axios'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { loadStripe } from '@stripe/stripe-js'
+import ErrorModal from "@/Components/ErrorModal.vue";
 
 const props = defineProps({
     itemId: Number,
@@ -18,6 +19,9 @@ onUnmounted(() => {
 const stripeKey = "pk_test_51QBad1Bli9nlS8GV0wskk4eK8OoTM6vLGUuQ7igRELuoB3B4YlbN4ubnUKFPaFeXeTqju80TN1vyXrMS7LWFY4zb00Pd2mQYT5";
 const checkout = ref(null);
 const open = ref(false);
+
+const showErrorModal = ref(false);
+const errorMessage = ref('');
 
 async function submit() {
     const stripe = await loadStripe(stripeKey);
@@ -49,8 +53,7 @@ async function submit() {
         })
         .catch(function (error) {
             router.reload();
-            console.log(error.response.data.status);
-            console.log(error.response.data.message);
+            showError(error.response.data.message)
         })
 }
 
@@ -62,6 +65,11 @@ async function hide() {
     await checkout.value?.destroy();
     checkout.value = null;
     open.value = false;
+}
+
+async function showError(message) {
+    errorMessage.value = message;
+    showErrorModal.value = true;
 }
 </script>
 
@@ -82,6 +90,8 @@ async function hide() {
                 </div>
             </div>
         </Teleport>
+
+        <ErrorModal v-model="showErrorModal">{{ errorMessage }}</ErrorModal>
 
     </div>
 </template>

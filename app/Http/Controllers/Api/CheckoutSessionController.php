@@ -72,6 +72,17 @@ class CheckoutSessionController extends Controller
                 }
             }
 
+            // 登録住所の確認（無い場合はエラーを返す）
+            $ship_postcode = $user->profile->postcode;
+            $ship_address = $user->profile->address;
+            $ship_building = $user->profile->building;
+            if (!$ship_postcode || !$ship_address) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => '配送先が正しく登録されていません'
+                ], 500);
+            }
+
             DB::beginTransaction();
 
             // 商品の価格IDの取得
@@ -118,9 +129,9 @@ class CheckoutSessionController extends Controller
                 'payment_method_id' => $request->paymentMethodId,
                 'checkout_session_id' => $checkout->id,
                 'session_completed' => false,
-                'ship_postcode' => $user->profile->postcode,
-                'ship_address' => $user->profile->address,
-                'ship_building' => $user->profile->building,
+                'ship_postcode' => $ship_postcode,
+                'ship_address' => $ship_address,
+                'ship_building' => $ship_building,
             ]);
 
             DB::commit();
@@ -132,7 +143,7 @@ class CheckoutSessionController extends Controller
             DB::rollBack();
             return response()->json([
                 'status' => 'error',
-                'message' => '不明なエラー'
+                'message' => 'エラーが発生しました'
             ], 500);
         }
     }
