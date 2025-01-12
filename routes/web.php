@@ -12,6 +12,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Api\CheckoutSessionController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ShipAddressController;
+use App\Http\Controllers\SellController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -25,9 +26,7 @@ use App\Http\Controllers\ShipAddressController;
 Route::get('/', [TopPageController::class, 'index'])->name('top');
 Route::get('/item/{item_id}', [ItemDetailController::class, 'show'])->name('item.detail');
 
-// Route::get('/test', function () {
-//     return Inertia::render('Test');
-// });
+// Route::get('/test', function () { return Inertia::render('Test'); });
 
 Route::middleware('auth')->group(function () {
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -48,6 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase');
     Route::get('/purchase/address/{item_id}', [ShipAddressController::class, 'edit'])->name('purchase.address');
     Route::post('/purchase/address/{item_id}', [ShipAddressController::class, 'update']);
+    Route::get('/sell', [SellController::class, 'create'])->name('sell');
+    Route::post('/sell', [SellController::class, 'store']);
 });
 
 require __DIR__.'/auth.php';

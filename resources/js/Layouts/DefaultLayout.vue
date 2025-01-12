@@ -30,7 +30,7 @@ const isLogined = (usePage().props.auth.user !== null);
                             <NavLink v-if="!isLogined" :href="route('login')">ログイン</NavLink>
                             <NavLink v-if="!isLogined" :href="route('register')">会員登録</NavLink>
                             <!-- 全ユーザー共通 -->
-                            <Link :href="route('login')" as="button" type="button" class="py-1 px-4 bg-white text-black text-sm font-bold rounded">出品</Link>
+                            <Link :href="route('sell')" as="button" type="button" class="py-1 px-4 bg-white text-black text-sm font-bold rounded">出品</Link>
                         </nav>
                     </div>
                 </div>
