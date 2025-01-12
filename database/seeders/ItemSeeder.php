@@ -24,6 +24,7 @@ class ItemSeeder extends Seeder
                 'image_url' => '/img/dummy_item.png',
                 'condition_id' => fake()->numberBetween(1, $condition_num),
                 'user_id' => '1',
+                'stripe_price_id' => 'price_1QdnKOBli9nlS8GV5hoD5foG',
             ];
             DB::table('items')->insert($param);
         }
