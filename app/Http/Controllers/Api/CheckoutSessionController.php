@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Stripe\StripeClient;
+use App\Models\Item;
 use App\Models\SoldItem;
 use App\Models\PaymentMethod;
 
@@ -85,19 +86,33 @@ class CheckoutSessionController extends Controller
 
             DB::beginTransaction();
 
-            // 商品の価格IDの取得
+            // Stripe価格IDの取得
+            $price_id = Item::find($item_id)->stripe_price_id;
 
-            // カスタマーIDを取得（なければここで作成？もしくは別で作成させる）
+            // Stripe顧客IDを取得（未作成の場合はここで作成）
+            $customer_id = $user->stripe_customer_id;
+            if ($customer_id === null) {
+                $customer = $stripe->customers->create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ]);
+
+                $user->update([
+                    'stripe_customer_id' => $customer->id,
+                ]);
+
+                $customer_id = $customer->id;
+            }
 
             //Checkoutセッション作成
             $checkout = $stripe->checkout->sessions->create([
                 'line_items' => [[
-                    'price'    => 'price_1QdnKOBli9nlS8GV5hoD5foG',
+                    'price'    => $price_id,
                     'quantity' => 1,
                 ],
                 ],
                 'mode'                   => 'payment',
-                'customer'               => 'cus_RWr3vVgmr9PlMD',
+                'customer'               => $customer_id,
                 'ui_mode' => 'embedded',
                 'return_url' => 'http://localhost/',
                 'redirect_on_completion'=> 'if_required',

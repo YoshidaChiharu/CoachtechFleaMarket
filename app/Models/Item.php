@@ -29,23 +29,23 @@ class Item extends Model
         return $this->belongsToMany('App\Models\User', 'sold_items');
     }
 
-    public function soldItems (): HasMany {
+    public function soldItems(): HasMany {
         return $this->hasMany('App\Models\SoldItem');
     }
 
-    public function categories (): BelongsToMany {
+    public function categories(): BelongsToMany {
         return $this->belongsToMany('App\Models\Category');
     }
 
-    public function condition (): BelongsTo {
+    public function condition(): BelongsTo {
         return $this->belongsTo('App\Models\Condition');
     }
 
-    public function comments (): HasMany {
+    public function comments(): HasMany {
         return $this->hasMany('App\Models\Comment');
     }
 
-    public function commentUsers (): BelongsToMany {
+    public function commentUsers(): BelongsToMany {
         return $this->belongsToMany('App\Models\User', 'comments');
     }
 
