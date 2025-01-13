@@ -6,6 +6,7 @@ import TextInput from "@/Components/TextInput.vue";
 import TextAreaInput from "@/Components/TextAreaInput.vue";
 import PriceInput from "@/Components/PriceInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import CheckboxInput from "@/Components/CheckboxInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import ImageInput from "@/Components/ImageInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -62,12 +63,7 @@ function imageReset() {
             <SectionTitle>商品の詳細</SectionTitle>
             <div class="pt-6">
                 <InputLabel>カテゴリー</InputLabel>
-                <div class="flex flex-wrap gap-x-6 p-4 border rounded border-gray-600 shadow-sm">
-                    <div v-for="(name, id) in categories" :key="id" class="flex items-center gap-1">
-                        <input type="checkbox" :id="name" :value="id" v-model="form.categories">
-                        <label :for="name">{{ name }}</label>
-                    </div>
-                </div>
+                <CheckboxInput :options="categories" v-model="form.categories" />
                 <InputError class="mt-2" :message="form.errors.categories" />
             </div>
             <div class="pt-6">
