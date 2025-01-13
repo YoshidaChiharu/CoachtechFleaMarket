@@ -5,6 +5,7 @@ import InputError from '@/Components/InputError.vue';
 import TextInput from "@/Components/TextInput.vue";
 import TextAreaInput from "@/Components/TextAreaInput.vue";
 import PriceInput from "@/Components/PriceInput.vue";
+import SelectInput from "@/Components/SelectInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import ImageInput from "@/Components/ImageInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -71,11 +72,7 @@ function imageReset() {
             </div>
             <div class="pt-6">
                 <InputLabel>商品の状態</InputLabel>
-                <select v-model="form.condition_id" class="w-full rounded">
-                    <option v-for="(name, id) in conditions" :key="id" :value="id">
-                        {{ name }}
-                    </option>
-                </select>
+                <SelectInput :options="conditions" v-model="form.condition_id" />
                 <InputError class="mt-2" :message="form.errors.condition_id" />
             </div>
             <SectionTitle>商品名と説明</SectionTitle>
