@@ -176,6 +176,10 @@ return [
         'postcode' => [
             'regex' => '使用できない文字が含まれています（使用可能文字：数字のみ）',
         ],
+        'price' => [
+            'min' => '300円以上の価格を設定してください',
+        ],
+
     ],
 
     /*
@@ -197,7 +201,9 @@ return [
         'available' => '利用可能',
         'birthday' => '誕生日',
         'body' => '本文',
+        'brand' => 'ブランド',
         'building' => '建物名',
+        'categories' => 'カテゴリー',
         'city' => '市',
         'content' => 'コンテンツ',
         'country' => '国',

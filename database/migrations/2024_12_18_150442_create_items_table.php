@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('brand')->nullable();
             $table->integer('price');
-            $table->string('description');
+            $table->string('description', 1000);
             $table->string('image_url');
             $table->foreignId('condition_id')->constrained();
             $table->foreignId('user_id')->constrained();

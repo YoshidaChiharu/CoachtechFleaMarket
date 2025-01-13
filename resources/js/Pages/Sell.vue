@@ -28,12 +28,13 @@ const form = useForm({
 const previewUrl = ref('');
 
 function submit() {
-    form
-    // .transform((data) => {
-    //     console.log(data);
-    // })
-    .post(route('sell'));
+    form.post(route('sell'));
 };
+
+function imageReset() {
+    form.image = null;
+    previewUrl.value = null;
+}
 </script>
 
 <template>
@@ -43,12 +44,18 @@ function submit() {
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="max-w-2xl">
                 <InputLabel>商品画像</InputLabel>
-                <img v-if="previewUrl" :src="previewUrl" alt="no image" class="w-full">
+                <div v-if="previewUrl">
+                    <img :src="previewUrl" alt="no image" class="w-full">
+                    <button @click="imageReset()" class="w-full text-center rounded-md border border-red-500 bg-white mt-2 px-8 font-bold tracking-widest text-red-500 shadow-sm transition duration-150 ease-in-out hover:bg-red-500 hover:text-white disabled:opacity-25">
+                        画像をリセットする
+                    </button>
+                </div>
                 <div v-else class="w-full h-40 border border-black border-dashed flex justify-center items-center">
                     <ImageInput v-model:previewUrl="previewUrl" v-model:file="form.image">
                         画像を選択する
                     </ImageInput>
                 </div>
+                <InputError class="mt-2" :message="form.errors.image" />
             </div>
             <SectionTitle>商品の詳細</SectionTitle>
             <div class="pt-6">
@@ -71,7 +78,6 @@ function submit() {
                 <InputError class="mt-2" :message="form.errors.condition_id" />
             </div>
             <SectionTitle>商品名と説明</SectionTitle>
-            <InputError class="mt-2" :message="form.errors.image" />
             <div class="pt-6">
                 <InputLabel>商品名</InputLabel>
                 <TextInput v-model="form.name" required />
