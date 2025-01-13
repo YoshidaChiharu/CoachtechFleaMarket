@@ -4,6 +4,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 import InputError from '@/Components/InputError.vue';
 import TextInput from "@/Components/TextInput.vue";
 import TextAreaInput from "@/Components/TextAreaInput.vue";
+import PriceInput from "@/Components/PriceInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import ImageInput from "@/Components/ImageInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -19,7 +20,7 @@ const form = useForm({
     image: null,
     name: '',
     brand: '',
-    price: 0,
+    price: null,
     description: '',
     condition_id: 0,
     categories: [],
@@ -96,7 +97,7 @@ function imageReset() {
             <SectionTitle>販売価格</SectionTitle>
             <div class="pt-6">
                 <InputLabel>販売価格</InputLabel>
-                <TextInput type="number" v-model="form.price" required />
+                <PriceInput v-model="form.price" required />
                 <InputError class="mt-2" :message="form.errors.price" />
             </div>
             <div class="pt-16">
