@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Condition;
 use App\Models\Item;
 use Stripe\StripeClient;
+use App\Http\Requests\ItemRegisterRequest;
 
 class SellController extends Controller
 {
@@ -21,7 +22,7 @@ class SellController extends Controller
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(ItemRegisterRequest $request) {
         $user = $request->user();
 
         try {
@@ -55,7 +56,7 @@ class SellController extends Controller
             $image_path = str_replace("img", "/storage/img", $image_path);
 
             // 商品登録処理
-            Item::create([
+            $item = Item::create([
                 'name' => $request->name,
                 'brand' => $request->brand,
                 'price' => $request->price,
@@ -65,6 +66,9 @@ class SellController extends Controller
                 'user_id' => $user->id,
                 'stripe_price_id' => $price->id,
             ]);
+
+            // カテゴリー登録処理
+            $item->categories()->attach($request->categories);
 
             DB::commit();
         } catch (\Exception $e) {
