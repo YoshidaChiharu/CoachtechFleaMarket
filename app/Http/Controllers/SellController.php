@@ -38,7 +38,7 @@ class SellController extends Controller
                 ]);
 
                 $user->update([
-                    'stripe_customer_id' => null,
+                    'stripe_customer_id' => $customer->id,
                 ]);
             }
 
