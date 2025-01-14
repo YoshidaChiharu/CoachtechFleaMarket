@@ -15,6 +15,8 @@ use Database\Seeders\CategorySeeder;
 use Database\Seeders\CategoryItemSeeder;
 use Database\Seeders\LikeSeeder;
 use Database\Seeders\CommentSeeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\UserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,11 +25,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'),
-        ]);
+        $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
         User::factory(10)->create();
         $this->call(ProfileSeeder::class);
         $this->call(ConditionSeeder::class);
