@@ -4,9 +4,10 @@ import NavLink from '@/Components/NavLink.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SearchItems from "../Components/SearchItems.vue";
 import { Head, Link } from '@inertiajs/vue3';
-
 import { usePage } from "@inertiajs/vue3";
+
 const isLogined = (usePage().props.auth.user !== null);
+const isAdmin = (usePage().props.auth.user.role_id === 1);
 </script>
 
 <template>
@@ -24,6 +25,7 @@ const isLogined = (usePage().props.auth.user !== null);
                         </div>
                         <nav class="flex items-center gap-10 text-white">
                             <!-- ログイン済みユーザーのみ表示 -->
+                            <NavLink v-if="isAdmin" :href="route('admin.user')">管理画面</NavLink>
                             <NavLink v-if="isLogined" :href="route('logout')" as="button" type="button" method="post">ログアウト</NavLink>
                             <NavLink v-if="isLogined" :href="route('mypage')">マイページ</NavLink>
                             <!-- 未ログインユーザーのみ表示 -->
