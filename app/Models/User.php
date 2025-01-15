@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -53,6 +54,18 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Created_at カラムのアクセサ
+     * 「yyyy-mm-dd hh:ii:ss」形式の文字列として取得
+     *
+     * @param [type] $value
+     * @return string
+     */
+    public function getCreatedAtAttribute($value) : string
+    {
+        return Carbon::parse($value)->timezone('Asia/Tokyo')->format('Y-m-d H:i:s');
+    }
+
     public function likes(): HasMany {
         return $this->hasMany('App\Models\Like');
     }
@@ -84,4 +97,29 @@ class User extends Authenticatable
         });
         return $items;
     }
+
+    public function scopeSearchId($query, $id) {
+        if (!empty($id)) {
+            $query->find($id);
+        }
+    }
+
+    public function scopeSearchName($query, $name) {
+        if (!empty($name)) {
+            $query->where('name', 'like', "%{$name}%");
+        }
+    }
+
+    public function scopeSearchEmail($query, $email) {
+        if (!empty($email)) {
+            $query->where('email', 'like', "%{$email}%");
+        }
+    }
+
+    public function scopeSearchCreateAt($query, $date) {
+        if (!empty($date)) {
+            $query->where('created_at', 'like', "{$date}%");
+        }
+    }
+
 }
