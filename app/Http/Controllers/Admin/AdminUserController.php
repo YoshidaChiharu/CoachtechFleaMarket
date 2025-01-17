@@ -17,8 +17,7 @@ class AdminUserController extends Controller
         $email = $searchParam['email'] ?? null;
         $date = $searchParam['date'] ?? null;
 
-        $users = User::where('role_id', 2)
-                     ->SearchId($id)
+        $users = User::SearchId($id)
                      ->SearchName($name)
                      ->SearchEmail($email)
                      ->SearchCreateAt($date)

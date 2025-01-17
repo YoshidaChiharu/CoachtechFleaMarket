@@ -103,7 +103,13 @@ function deleteUser(id) {
             <tbody>
                 <tr v-for="user in users" :key="user.id" class="even:bg-zinc-200">
                     <td class="text-center">
-                        <button @click="openModal(user.id, user.name)" class="bg-red-500 text-sm text-white px-2 rounded">削除</button>
+                        <button
+                            v-if="user.role_id !== 1"
+                            @click="openModal(user.id, user.name)"
+                            class="bg-red-500 text-sm text-white px-2 rounded"
+                        >
+                            削除
+                        </button>
                     </td>
                     <td class="px-2">{{ user.id }}</td>
                     <td class="px-2">{{ user.name }}</td>
