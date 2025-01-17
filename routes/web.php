@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
 // 管理者専用ページ
 Route::middleware('auth', 'admin')->group(function () {
     Route::get('/admin/user', [AdminUserController::class, 'index'])->name('admin.user');
+    Route::post('/admin/user', [AdminUserController::class, 'destroy']);
 });
 
 require __DIR__.'/auth.php';

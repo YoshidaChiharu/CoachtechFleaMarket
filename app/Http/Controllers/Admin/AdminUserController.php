@@ -17,7 +17,8 @@ class AdminUserController extends Controller
         $email = $searchParam['email'] ?? null;
         $date = $searchParam['date'] ?? null;
 
-        $users = User::SearchId($id)
+        $users = User::where('role_id', 2)
+                     ->SearchId($id)
                      ->SearchName($name)
                      ->SearchEmail($email)
                      ->SearchCreateAt($date)
@@ -25,6 +26,23 @@ class AdminUserController extends Controller
 
         return Inertia::render('Admin/AdminUser', [
             'users' => $users,
+        ]);
+    }
+
+    public function destroy(Request $request) {
+        // dd('ユーザー削除', User::find($request->user_id));
+        try {
+            User::find($request->user_id)->delete();
+            $status = 'success';
+            $message = 'ユーザーを削除しました';
+        } catch (\Exception $e) {
+            $status = 'error';
+            $message = '削除に失敗しました';
+            Log::error($e);
+        }
+        return to_route('admin.user')->with([
+            'status' => $status,
+            'message' => $message,
         ]);
     }
 }

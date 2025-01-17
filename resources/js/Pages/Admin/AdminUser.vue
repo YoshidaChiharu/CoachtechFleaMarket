@@ -1,11 +1,12 @@
 <script setup>
-import { Head, router } from '@inertiajs/vue3';
-import { reactive, ref } from 'vue'
+import { Head, router, usePage } from '@inertiajs/vue3';
+import { reactive, ref, computed } from 'vue'
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import PageTitle from "@/Components/PageTitle.vue"
 import Pagination from "@/Components/Pagination.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import FlashMassageModal from "@/Components/FlashMassageModal.vue";
 
 defineOptions({ layout: AdminLayout })
 
@@ -19,6 +20,13 @@ const searchParam = reactive({
     email: null,
     date: null,
 });
+const open = ref(false);
+const selectedId = ref(null);
+const selectedName = ref('');
+
+const showFlashMessage = ref(false);
+const message = computed(() => usePage().props.flash.message);
+const status = computed(() => usePage().props.flash.status);
 
 function searchUser() {
     router.reload({
@@ -27,8 +35,18 @@ function searchUser() {
     });
 }
 
+function openModal(id, name) {
+    selectedId.value = id;
+    selectedName.value = name;
+    open.value = true;
+}
+
 function deleteUser(id) {
-    console.log('[削除] ユーザーID:' + id);
+    router.post(route('admin.user'), {
+        user_id: id,
+    });
+    open.value = false;
+    showFlashMessage.value = true;
 }
 </script>
 
@@ -36,6 +54,7 @@ function deleteUser(id) {
     <div class="max-w-5xl mx-auto p-5">
         <Head title="ユーザー管理ページ" />
         <PageTitle>ユーザー管理ページ</PageTitle>
+
         <!-- ユーザー検索 -->
         <div class="p-4 border rounded bg-gradient-to-t from-zinc-300 to-zinc-100">
             <div class="flex items-center gap-2 py-1">
@@ -84,7 +103,7 @@ function deleteUser(id) {
             <tbody>
                 <tr v-for="user in users" :key="user.id" class="even:bg-zinc-200">
                     <td class="text-center">
-                        <button @click="deleteUser(user.id)" class="bg-red-500 text-sm text-white px-2 rounded">削除</button>
+                        <button @click="openModal(user.id, user.name)" class="bg-red-500 text-sm text-white px-2 rounded">削除</button>
                     </td>
                     <td class="px-2">{{ user.id }}</td>
                     <td class="px-2">{{ user.name }}</td>
@@ -93,5 +112,40 @@ function deleteUser(id) {
                 </tr>
             </tbody>
         </table>
+
+        <!-- 削除確認モーダル -->
+        <Teleport to="body">
+            <div
+                v-if="open"
+                class="fixed top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,.3)]"
+            >
+                <div class="fixed top-1/2 left-1/2 z-50 bg-white rounded translate-y-[-50%] translate-x-[-50%] drop-shadow-xl max-h-[50vh] overflow-auto">
+                    <div class="py-6 px-10">
+                        <p class="text-center mb-4 font-bold">【ユーザー削除】</p>
+                        <p>
+                            <span class="mr-2">ユーザーID : </span>
+                            <span class="font-bold">{{ selectedId }}</span><br>
+                            <span class="mr-2">ユーザー名 : </span>
+                            <span class="font-bold">{{ selectedName }}</span>
+                        </p>
+                        <p class="mt-5">このユーザーを削除してよろしいですか？</p>
+                    </div>
+                    <div class="grid grid-cols-2 border-t">
+                        <div class="border-r text-center">
+                            <button @click="open = false" class="py-2 px-4 font-bold text-blue-500">キャンセル</button>
+                        </div>
+                        <div class="text-center">
+                            <button @click="deleteUser(selectedId)" class="py-2 px-4 font-bold text-red-500">削除</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Teleport>
+
+        <!-- フラッシュメッセージモーダル -->
+        <FlashMassageModal v-model:status="status" v-model:show="showFlashMessage">
+            {{ message }}
+        </FlashMassageModal>
+
     </div>
 </template>
