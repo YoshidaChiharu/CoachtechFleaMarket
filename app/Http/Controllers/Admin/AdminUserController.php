@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
@@ -22,6 +23,23 @@ class AdminUserController extends Controller
                      ->SearchEmail($email)
                      ->SearchCreateAt($date)
                      ->get();
+
+        // ページネーション
+        $users = new LengthAwarePaginator
+        (
+            $users->forPage($request->page, 30),
+            $users->count(),
+            30,
+            $request->page,
+            [
+                'path' => request()->url() .
+                (
+                    request()->except('page')
+                    ? '?' .  http_build_query(request()->except('page'))
+                    : ''
+                )
+            ]
+        );
 
         return Inertia::render('Admin/AdminUser', [
             'users' => $users,

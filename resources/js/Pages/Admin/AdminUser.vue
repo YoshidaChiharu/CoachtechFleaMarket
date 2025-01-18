@@ -15,10 +15,10 @@ defineProps({
 })
 
 const searchParam = reactive({
-    id: null,
-    name: null,
-    email: null,
-    date: null,
+    id: route().params.searchParam?.id,
+    name: route().params.searchParam?.name,
+    email: route().params.searchParam?.email,
+    date: route().params.searchParam?.date,
 });
 const open = ref(false);
 const selectedId = ref(null);
@@ -30,7 +30,10 @@ const status = computed(() => usePage().props.flash.status);
 
 function searchUser() {
     router.reload({
-        data: { searchParam },
+        data: {
+            searchParam: searchParam,
+            page: 1,
+        },
         only: ['users'],
     });
 }
@@ -101,7 +104,7 @@ function deleteUser(id) {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in users" :key="user.id" class="even:bg-zinc-200">
+                <tr v-for="user in users.data" :key="user.id" class="even:bg-zinc-200">
                     <td class="text-center">
                         <button
                             v-if="user.role_id !== 1"
@@ -118,6 +121,8 @@ function deleteUser(id) {
                 </tr>
             </tbody>
         </table>
+
+        <Pagination :links="users.links" />
 
         <!-- 削除確認モーダル -->
         <Teleport to="body">
