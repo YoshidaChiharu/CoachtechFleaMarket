@@ -66,6 +66,21 @@ class User extends Authenticatable
         return Carbon::parse($value)->timezone('Asia/Tokyo')->format('Y-m-d H:i:s');
     }
 
+    /**
+     * モデルの"booted"メソッド
+     */
+    protected static function booted(): void
+    {
+        // ユーザー削除時にリレーション先も併せて削除
+        static::deleting(function (User $user) {
+            $user->profile()->delete();
+            $user->likes()->delete();
+            $user->items->each(function($item){
+                $item->delete();
+            });
+        });
+    }
+
     public function likes(): HasMany {
         return $this->hasMany('App\Models\Like');
     }

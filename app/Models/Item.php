@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,6 +12,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Item extends Model
 {
+    use SoftDeletes;
+
+    /**
+     * モデルの"booted"メソッド
+     */
+    protected static function booted(): void
+    {
+        // 商品削除時にリレーション先も併せて削除
+        static::deleting(function (Item $item) {
+            $item->likes()->delete();
+            $item->categories()->detach();
+            $item->comments()->delete();
+        });
+    }
+
     protected $guarded = ['id'];
 
     public function likes(): HasMany {
@@ -36,6 +52,10 @@ class Item extends Model
     public function categories(): BelongsToMany {
         return $this->belongsToMany('App\Models\Category');
     }
+
+    // public function categoryItems(): HasMany {
+    //     return $this->hasMany('App\Models\Category_item');
+    // }
 
     public function condition(): BelongsTo {
         return $this->belongsTo('App\Models\Condition');

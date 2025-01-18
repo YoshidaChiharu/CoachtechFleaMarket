@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('stripe_price_id');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
+            $table->softDeletes();
         });
     }
 
