@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\CheckoutSessionController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ShipAddressController;
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\Admin\AdminUserController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -28,6 +29,7 @@ Route::get('/item/{item_id}', [ItemDetailController::class, 'show'])->name('item
 
 // Route::get('/test', function () { return Inertia::render('Test'); });
 
+// 一般ユーザー向けページ
 Route::middleware('auth')->group(function () {
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -49,6 +51,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/purchase/address/{item_id}', [ShipAddressController::class, 'update']);
     Route::get('/sell', [SellController::class, 'create'])->name('sell');
     Route::post('/sell', [SellController::class, 'store']);
+});
+
+// 管理者専用ページ
+Route::middleware('auth', 'admin')->group(function () {
+    Route::get('/admin/user', [AdminUserController::class, 'index'])->name('admin.user');
+    Route::post('/admin/user', [AdminUserController::class, 'destroy']);
 });
 
 require __DIR__.'/auth.php';

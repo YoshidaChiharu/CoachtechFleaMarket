@@ -24,7 +24,7 @@ const isLogined = (usePage().props.auth.user !== null);
 
             <main class="flex grow">
                 <!-- サイドメニュー -->
-                <div class="w-72 p-4 text-lg text-white font-bold bg-slate-800">
+                <div class="w-1/5 max-w-72 p-4 text-lg text-white font-bold bg-slate-800">
                     <ul>
                         <li class="py-2">
                             <Link href="/">サイトトップへ</Link>

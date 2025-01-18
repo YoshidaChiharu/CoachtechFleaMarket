@@ -28,8 +28,8 @@ class ItemDetailService
         $comments = $item->comments;
         foreach ($comments as $comment) {
             $item_detail['comments'][] = [
-                'name' => $comment->user->profile->name,
-                'image_url' => $comment->user->profile->image_url,
+                'name' => $comment->user->profile->name ?? 'Unknown User',
+                'image_url' => $comment->user->profile->image_url ?? '/img/default_user_icon.png',
                 'comment' => $comment->comment,
                 'is_mine' => ($comment->user_id == Auth::id()),
             ];
