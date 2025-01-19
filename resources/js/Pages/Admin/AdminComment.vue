@@ -1,16 +1,12 @@
 <script setup>
 import { Head, router, usePage } from '@inertiajs/vue3';
-import { reactive, ref, computed, onMounted } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import PageTitle from "@/Components/PageTitle.vue"
 import Pagination from "@/Components/Pagination.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import FlashMassageModal from "@/Components/FlashMassageModal.vue";
-
-onMounted(() => {
-    console.log(usePage().props.comments);
-});
 
 defineOptions({ layout: AdminLayout })
 
@@ -27,7 +23,8 @@ const searchParam = reactive({
 });
 const open = ref(false);
 const selectedId = ref(null);
-const selectedName = ref('');
+const selectedUserName = ref('');
+const selectedComment = ref('')
 
 const showFlashMessage = ref(false);
 const message = computed(() => usePage().props.flash.message);
@@ -43,7 +40,10 @@ function searchComment() {
     });
 }
 
-function openModal() {
+function openModal(id, userName, comment) {
+    selectedId.value = id;
+    selectedUserName.value = userName;
+    selectedComment.value = comment;
     open.value = true;
 }
 
@@ -94,7 +94,7 @@ function deleteComment(id) {
                 </div>
             </div>
             <div class="flex items-center gap-2 py-1">
-                <InputLabel class="w-24">登録日:</InputLabel>
+                <InputLabel class="w-24">投稿日:</InputLabel>
                 <div>
                     <TextInput v-model="searchParam.date" type="date" @change="searchComment()" class="py-0" />
                 </div>
@@ -117,7 +117,7 @@ function deleteComment(id) {
                 <tr v-for="comment in comments.data" :key="comment.id" class="even:bg-zinc-200">
                     <td class="text-center">
                         <button
-                            @click="openModal()"
+                            @click="openModal(comment.id, comment.user_name, comment.comment)"
                             class="bg-red-500 text-sm text-white px-2 rounded"
                         >
                             削除
@@ -126,7 +126,7 @@ function deleteComment(id) {
                     <td class="px-2">{{ comment.id }}</td>
                     <td class="px-2">{{ comment.item_name }}</td>
                     <td class="px-2">{{ comment.user_name }}</td>
-                    <td class="px-2">{{ comment.comment }}</td>
+                    <td class="px-2 max-w-60 truncate">{{ comment.comment }}</td>
                     <td class="px-2">{{ comment.created_at }}</td>
                 </tr>
             </tbody>
@@ -140,9 +140,18 @@ function deleteComment(id) {
                 v-if="open"
                 class="fixed top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,.3)]"
             >
-                <div class="fixed top-1/2 left-1/2 z-50 bg-white rounded translate-y-[-50%] translate-x-[-50%] drop-shadow-xl max-h-[50vh] overflow-auto">
+                <div class="fixed top-1/2 left-1/2 z-50 bg-white rounded translate-y-[-50%] translate-x-[-50%] drop-shadow-xl max-w-[40vw] max-h-[50vh] overflow-auto">
                     <div class="py-6 px-10">
                         <p class="text-center mb-4 font-bold">【コメント削除】</p>
+                        <p>
+                            <span class="mr-2">ID : </span>
+                            <span class="font-bold">{{ selectedId }}</span><br>
+                            <span class="mr-2">投稿者 : </span>
+                            <span class="font-bold">{{ selectedUserName }}</span>
+                        </p>
+                        <div class="mt-1 p-2 bg-gray-200 rounded break-words whitespace-pre-wrap">
+                            {{ selectedComment }}
+                        </div>
                         <p class="mt-5">このコメントを削除してよろしいですか？</p>
                     </div>
                     <div class="grid grid-cols-2 border-t">

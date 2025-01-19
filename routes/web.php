@@ -59,6 +59,7 @@ Route::middleware('auth', 'admin')->group(function () {
     Route::get('/admin/user', [AdminUserController::class, 'index'])->name('admin.user');
     Route::post('/admin/user', [AdminUserController::class, 'destroy']);
     Route::get('/admin/comment', [AdminCommentController::class, 'index'])->name('admin.comment');
+    Route::post('/admin/comment', [AdminCommentController::class, 'destroy']);
 });
 
 require __DIR__.'/auth.php';

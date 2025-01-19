@@ -54,4 +54,20 @@ class AdminCommentController extends Controller
             'comments' => $comments,
         ]);
     }
+
+    public function destroy(Request $request) {
+        try {
+            Comment::find($request->comment_id)->delete();
+            $status = 'success';
+            $message = 'コメントを削除しました';
+        } catch (\Exception $e) {
+            $status = 'error';
+            $message = '削除に失敗しました';
+            Log::error($e);
+        }
+        return to_route('admin.comment')->with([
+            'status' => $status,
+            'message' => $message,
+        ]);
+    }
 }
