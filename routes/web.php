@@ -14,6 +14,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ShipAddressController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminCommentController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -57,6 +58,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth', 'admin')->group(function () {
     Route::get('/admin/user', [AdminUserController::class, 'index'])->name('admin.user');
     Route::post('/admin/user', [AdminUserController::class, 'destroy']);
+    Route::get('/admin/comment', [AdminCommentController::class, 'index'])->name('admin.comment');
 });
 
 require __DIR__.'/auth.php';
