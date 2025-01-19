@@ -13,19 +13,21 @@ use App\Models\Comment;
 class AdminCommentController extends Controller
 {
     public function index(Request $request) {
-        // $searchParam = $request->searchParam;
-        // $id = $searchParam['id'] ?? null;
-        // $name = $searchParam['name'] ?? null;
-        // $email = $searchParam['email'] ?? null;
-        // $date = $searchParam['date'] ?? null;
+        $searchParam = $request->searchParam;
+        $id = $searchParam['id'] ?? null;
+        $item_name = $searchParam['itemName'] ?? null;
+        $user_name = $searchParam['userName'] ?? null;
+        $comment = $searchParam['comment'] ?? null;
+        $date = $searchParam['date'] ?? null;
 
-        // $users = User::SearchId($id)
-        //              ->SearchName($name)
-        //              ->SearchEmail($email)
-        //              ->SearchCreateAt($date)
-        //              ->get();
+        $comments = Comment::IdSearch($id)
+                           ->ItemNameSearch($item_name)
+                           ->UserNameSearch($user_name)
+                           ->CommentSearch($comment)
+                           ->CreatedAtSearch($date)
+                           ->get();
 
-        $comments = Comment::all()->map(function ($comment) {
+        $comments = $comments->map(function ($comment) {
             $comment['item_name'] = $comment->item->name;
             $comment['user_name'] = $comment->user->name ?? '<< Deleted User >>';
             return $comment->only('id', 'comment', 'created_at', 'item_name', 'user_name');
@@ -34,9 +36,9 @@ class AdminCommentController extends Controller
         // ページネーション
         $comments = new LengthAwarePaginator
         (
-            $comments->forPage($request->page, 30),
+            $comments->forPage($request->page, 20),
             $comments->count(),
-            30,
+            20,
             $request->page,
             [
                 'path' => request()->url() .

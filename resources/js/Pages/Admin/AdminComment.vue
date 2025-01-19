@@ -20,8 +20,9 @@ defineProps({
 
 const searchParam = reactive({
     id: route().params.searchParam?.id,
-    name: route().params.searchParam?.name,
-    email: route().params.searchParam?.email,
+    itemName: route().params.searchParam?.itemName,
+    userName: route().params.searchParam?.userName,
+    comment: route().params.searchParam?.comment,
     date: route().params.searchParam?.date,
 });
 const open = ref(false);
@@ -75,15 +76,21 @@ function deleteComment(id) {
                 </div>
             </div>
             <div class="flex items-center gap-2 py-1">
-                <InputLabel class="w-24">ユーザー名:</InputLabel>
+                <InputLabel class="w-24">商品名:</InputLabel>
                 <div>
-                    <TextInput v-model="searchParam.name" @change="searchComment()" class="py-0" />
+                    <TextInput v-model="searchParam.itemName" @change="searchComment()" class="py-0" />
                 </div>
             </div>
             <div class="flex items-center gap-2 py-1">
-                <InputLabel class="w-24">メールアドレス:</InputLabel>
+                <InputLabel class="w-24">投稿者名:</InputLabel>
                 <div>
-                    <TextInput v-model="searchParam.email" type="email" @change="searchComment()" class="py-0" />
+                    <TextInput v-model="searchParam.userName" @change="searchComment()" class="py-0" />
+                </div>
+            </div>
+            <div class="flex items-center gap-2 py-1">
+                <InputLabel class="w-24">コメント:</InputLabel>
+                <div>
+                    <TextInput v-model="searchParam.comment" type="email" @change="searchComment()" class="py-0" />
                 </div>
             </div>
             <div class="flex items-center gap-2 py-1">
