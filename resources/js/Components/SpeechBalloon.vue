@@ -17,6 +17,6 @@ const direction = props.comment.is_mine ? "flex-row-reverse" : "flex-row" ;
             </div>
             <span class="font-bold">{{ comment.name }}</span>
         </div>
-        <div class="mt-1 p-2 bg-gray-200 rounded break-words">{{ comment.comment }}</div>
+        <div class="mt-1 p-2 bg-gray-200 rounded break-words whitespace-pre-wrap">{{ comment.comment }}</div>
     </div>
 </template>
