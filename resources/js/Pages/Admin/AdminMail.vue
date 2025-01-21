@@ -21,13 +21,14 @@ const form = useForm({
     mainText: null,
 });
 
-function submit() {
-    form.post(route('admin.mail'));
-};
-
 const showFlashMessage = ref(false);
 const message = computed(() => usePage().props.flash.message);
 const status = computed(() => usePage().props.flash.status);
+
+function submit() {
+    form.post(route('admin.mail'));
+    showFlashMessage.value = true;
+};
 </script>
 
 <template>
@@ -43,12 +44,17 @@ const status = computed(() => usePage().props.flash.status);
                 <TextInput v-model="form.subject" rows="10" required />
                 <InputError class="mt-2" :message="form.errors.subject" />
             </div>
-            <div class="pt-6 grow flex flex-col">
+            <div class="mt-6 grow flex flex-col">
                 <InputLabel>本文</InputLabel>
+                <p class="my-2 text-lg">○○様</p>
                 <TextAreaInput v-model="form.mainText" class="grow" required />
                 <InputError class="mt-2" :message="form.errors.mainText" />
+                <div class="my-2">
+                    <p>※本メールは送信専用です</p>
+                    <p class="pt-1 border-t border-black">配信元&nbsp;:&nbsp;COACHTECHフリーマーケット</p>
+                </div>
             </div>
-            <div class="pt-6">
+            <div class="pt-8">
                 <PrimaryButton>送信する</PrimaryButton><br>
             </div>
         </form>
