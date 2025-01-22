@@ -84,7 +84,7 @@ async function showError(message) {
                 v-if="open"
                 class="fixed top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,.3)]"
             >
-                <div class="fixed top-1/2 left-1/2 z-50 bg-white translate-y-[-50%] translate-x-[-50%] drop-shadow-xl py-10 px-20 max-h-[85vh] overflow-auto">
+                <div class="fixed top-1/2 left-1/2 z-50 bg-white translate-y-[-50%] translate-x-[-50%] drop-shadow-xl py-10 px-20 max-sm:px-6 max-h-[85vh] overflow-auto w-max">
                     <div id="checkout"></div>
                     <button @click="hide()" class="block w-3/4 mx-auto mt-10">Close</button>
                 </div>
