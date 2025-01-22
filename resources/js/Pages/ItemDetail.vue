@@ -14,13 +14,13 @@ const props = defineProps({
 <template>
     <div class="max-w-5xl mx-auto py-10">
         <Head title="商品詳細" />
-        <div class="flex w-full">
+        <div class="flex w-full max-sm:flex-col">
             <!-- 商品画像(左側) -->
-            <div class="w-1/2 p-20">
+            <div class="max-sm:w-full max-sm:max-w-96 max-sm:mx-auto sm:w-1/2 p-6 md:p-16">
                 <ItemImage :item="item" />
             </div>
             <!-- 詳細情報(右側) -->
-            <div class="w-1/2 p-20">
+            <div class="sm:w-1/2 p-6 md:p-16">
                 <h2 class="text-2xl font-bold">{{ item.name }}</h2>
                 <span class="text-sm">{{ item.brand }}</span>
                 <div class="text-xl mt-4">
