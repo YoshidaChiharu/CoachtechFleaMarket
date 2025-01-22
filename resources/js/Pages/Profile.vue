@@ -29,12 +29,12 @@ function submit() {
 </script>
 
 <template>
-    <div class="max-w-xl mx-auto">
+    <div class="max-w-xl mx-auto px-6 pb-10">
         <Head title="Profile" />
         <PageTitle>プロフィール設定</PageTitle>
         <form @submit.prevent="submit" enctype="multipart/form-data">
-            <div class="flex items-center gap-10">
-                <div class="w-32">
+            <div class="flex items-center gap-10 max-sm:gap-4">
+                <div class="w-32 max-sm:w-24">
                     <UserIcon v-if="previewUrl" :path="previewUrl" />
                     <UserIcon v-else :path="profile.image_url" />
                 </div>
