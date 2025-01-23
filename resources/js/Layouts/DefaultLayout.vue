@@ -4,7 +4,7 @@ import NavLink from '@/Components/NavLink.vue';
 import SearchItems from "../Components/SearchItems.vue";
 import { Head, Link } from '@inertiajs/vue3';
 import { usePage } from "@inertiajs/vue3";
-import HamburgerMenu from "@/Components/HamburgerMenu.vue";
+import HamburgerMenu from "@/Components/UserHamburgerMenu.vue";
 
 const isLogined = (usePage().props.auth.user !== null);
 const isAdmin = (isLogined === true) && (usePage().props.auth.user.role_id === 1);
@@ -15,18 +15,18 @@ const isAdmin = (isLogined === true) && (usePage().props.auth.user.role_id === 1
         <Head title="COACHTECHフリマ" />
         <div class="min-h-screen">
             <header>
-                <div class="py-2 px-6 flex justify-between items-center bg-black">
-                    <Link href="/">
-                        <ApplicationLogo class="w-64" />
-                    </Link>
+                <div class="py-2 px-6 flex md:justify-between items-center gap-6 bg-black">
                     <div class="md:hidden">
                         <HamburgerMenu :isAdmin="isAdmin" :isLogined="isLogined" />
                     </div>
-                    <div class="hidden md:flex gap-5">
+                    <Link href="/">
+                        <ApplicationLogo class="w-52 lg:w-64" />
+                    </Link>
+                    <div class="hidden md:flex gap-3 lg:gap-5">
                         <div>
                             <SearchItems />
                         </div>
-                        <nav class="flex items-center gap-5 text-white">
+                        <nav class="flex items-center gap-3 lg:gap-5 text-white">
                             <!-- ログイン済み＆管理者ユーザーのみ表示 -->
                             <NavLink v-if="isAdmin" :href="route('admin.user')">管理画面</NavLink>
 
