@@ -93,34 +93,36 @@ function deleteUser(id) {
         </div>
 
         <!-- ユーザー一覧 -->
-        <table class="w-full mt-10">
-            <thead class="text-sm text-left bg-gradient-to-t from-zinc-400 to-zinc-100">
-                <tr>
-                    <th class="px-2 border-r border-white">操作</th>
-                    <th class="px-2 border-r border-white">ID</th>
-                    <th class="px-2 border-r border-white">ユーザー名</th>
-                    <th class="px-2 border-r border-white">メールアドレス</th>
-                    <th class="px-2">登録日時</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="user in users.data" :key="user.id" class="even:bg-zinc-200">
-                    <td class="text-center">
-                        <button
-                            v-if="user.role_id !== 1"
-                            @click="openModal(user.id, user.name)"
-                            class="bg-red-500 text-sm text-white px-2 rounded"
-                        >
-                            削除
-                        </button>
-                    </td>
-                    <td class="px-2">{{ user.id }}</td>
-                    <td class="px-2">{{ user.name }}</td>
-                    <td class="px-2">{{ user.email }}</td>
-                    <td class="px-2">{{ user.created_at }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="overflow-x-scroll">
+            <table class="w-full mt-10 min-w-[562px]">
+                <thead class="text-sm text-left bg-gradient-to-t from-zinc-400 to-zinc-100">
+                    <tr>
+                        <th class="px-2 border-r border-white">操作</th>
+                        <th class="px-2 border-r border-white">ID</th>
+                        <th class="px-2 border-r border-white">ユーザー名</th>
+                        <th class="px-2 border-r border-white">メールアドレス</th>
+                        <th class="px-2">登録日時</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="user in users.data" :key="user.id" class="even:bg-zinc-200">
+                        <td class="text-center min-w-12">
+                            <button
+                                v-if="user.role_id !== 1"
+                                @click="openModal(user.id, user.name)"
+                                class="bg-red-500 text-sm text-white px-2 rounded"
+                            >
+                                削除
+                            </button>
+                        </td>
+                        <td class="px-2">{{ user.id }}</td>
+                        <td class="px-2">{{ user.name }}</td>
+                        <td class="px-2">{{ user.email }}</td>
+                        <td class="px-2">{{ user.created_at }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <Pagination :links="users.links" />
 

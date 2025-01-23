@@ -15,18 +15,18 @@ const isLogined = (usePage().props.auth.user !== null);
         <Head title="COACHTECHフリマ" />
         <div class="min-h-screen flex flex-col">
             <header>
-                <div class="py-2 px-6 flex items-center bg-black gap-6">
+                <div class="py-2 px-6 flex items-center bg-black gap-4">
                     <HamburgerMenu class="md:hidden" />
                     <Link href="/">
-                        <ApplicationLogo class="w-52 lg:w-64" />
+                        <ApplicationLogo class="max-sm:hidden w-48 md:w-64" />
                     </Link>
-                    <span class="text-white text-xl lg:text-3xl font-bold">管理画面</span>
+                    <span class="text-white text-xl md:text-3xl font-bold">管理画面</span>
                 </div>
             </header>
 
             <main class="flex grow">
                 <!-- サイドメニュー -->
-                <div class="w-1/5 max-w-72 p-4 text-lg text-white font-bold bg-slate-800 max-md:hidden">
+                <div class="min-w-48 p-4 text-lg text-white font-bold bg-slate-800 max-md:hidden">
                     <ul>
                         <li class="py-2">
                             <Link href="/">サイトトップへ</Link>
@@ -43,7 +43,7 @@ const isLogined = (usePage().props.auth.user !== null);
                     </ul>
                 </div>
                 <!-- メインコンテンツ -->
-                <div class="grow">
+                <div class="grow overflow-x-auto">
                     <slot />
                 </div>
             </main>
