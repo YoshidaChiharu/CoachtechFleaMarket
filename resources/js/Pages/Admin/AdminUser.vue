@@ -132,7 +132,7 @@ function deleteUser(id) {
                 v-if="open"
                 class="fixed top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,.3)]"
             >
-                <div class="fixed top-1/2 left-1/2 z-50 bg-white rounded translate-y-[-50%] translate-x-[-50%] drop-shadow-xl max-h-[50vh] overflow-auto">
+                <div class="fixed top-1/2 left-1/2 z-50 bg-white rounded translate-y-[-50%] translate-x-[-50%] drop-shadow-xl max-md:w-[90vw] md:max-w-[70vw] lg:max-w-xl max-h-[80vh] overflow-auto">
                     <div class="py-6 px-10">
                         <p class="text-center mb-4 font-bold">【ユーザー削除】</p>
                         <p>
