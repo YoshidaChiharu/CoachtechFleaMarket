@@ -24,7 +24,7 @@ function submit() {
 </script>
 
 <template>
-    <div class="max-w-xl mx-auto">
+    <div class="max-w-xl mx-auto px-6">
         <Head title="Profile" />
         <PageTitle>住所の変更</PageTitle>
         <form @submit.prevent="submit" enctype="multipart/form-data">

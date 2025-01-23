@@ -102,35 +102,37 @@ function deleteComment(id) {
         </div>
 
         <!-- コメント一覧 -->
-        <table class="w-full mt-10">
-            <thead class="text-sm text-left bg-gradient-to-t from-zinc-400 to-zinc-100">
-                <tr>
-                    <th class="px-2 border-r border-white">操作</th>
-                    <th class="px-2 border-r border-white">ID</th>
-                    <th class="px-2 border-r border-white">商品名</th>
-                    <th class="px-2 border-r border-white">投稿者</th>
-                    <th class="px-2 border-r border-white">コメント</th>
-                    <th class="px-2">投稿日時</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="comment in comments.data" :key="comment.id" class="even:bg-zinc-200">
-                    <td class="text-center">
-                        <button
-                            @click="openModal(comment.id, comment.user_name, comment.comment)"
-                            class="bg-red-500 text-sm text-white px-2 rounded"
-                        >
-                            削除
-                        </button>
-                    </td>
-                    <td class="px-2">{{ comment.id }}</td>
-                    <td class="px-2">{{ comment.item_name }}</td>
-                    <td class="px-2">{{ comment.user_name }}</td>
-                    <td class="px-2 max-w-60 truncate">{{ comment.comment }}</td>
-                    <td class="px-2">{{ comment.created_at }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="overflow-x-scroll">
+            <table class="w-full mt-10 min-w-[600px] ">
+                <thead class="text-sm text-left bg-gradient-to-t from-zinc-400 to-zinc-100">
+                    <tr>
+                        <th class="px-2 border-r border-white">操作</th>
+                        <th class="px-2 border-r border-white">ID</th>
+                        <th class="px-2 border-r border-white">コメント</th>
+                        <th class="px-2 border-r border-white">商品名</th>
+                        <th class="px-2 border-r border-white">投稿者</th>
+                        <th class="px-2">投稿日時</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="comment in comments.data" :key="comment.id" class="even:bg-zinc-200">
+                        <td class="text-center min-w-12">
+                            <button
+                                @click="openModal(comment.id, comment.user_name, comment.comment)"
+                                class="bg-red-500 text-sm text-white px-2 rounded"
+                            >
+                                削除
+                            </button>
+                        </td>
+                        <td class="px-2">{{ comment.id }}</td>
+                        <td class="px-2 max-w-60 truncate">{{ comment.comment }}</td>
+                        <td class="px-2">{{ comment.item_name }}</td>
+                        <td class="px-2">{{ comment.user_name }}</td>
+                        <td class="px-2">{{ comment.created_at }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <Pagination :links="comments.links" />
 
@@ -140,7 +142,7 @@ function deleteComment(id) {
                 v-if="open"
                 class="fixed top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,.3)]"
             >
-                <div class="fixed top-1/2 left-1/2 z-50 bg-white rounded translate-y-[-50%] translate-x-[-50%] drop-shadow-xl max-w-[40vw] max-h-[50vh] overflow-auto">
+                <div class="fixed top-1/2 left-1/2 z-50 bg-white rounded translate-y-[-50%] translate-x-[-50%] drop-shadow-xl max-md:w-[90vw] md:max-w-[70vw] lg:max-w-xl max-h-[80vh] overflow-auto">
                     <div class="py-6 px-10">
                         <p class="text-center mb-4 font-bold">【コメント削除】</p>
                         <p>

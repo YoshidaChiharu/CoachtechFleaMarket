@@ -7,8 +7,6 @@ import TextInput from '@/Components/TextInput.vue';
 import PageTitle from "@/Components/PageTitle.vue"
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
-defineOptions({ layout: GuestLayout })
-
 const form = useForm({
     email: '',
     password: '',
@@ -22,7 +20,7 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="max-w-xl mx-auto">
+    <div class="max-w-xl mx-auto px-6">
         <Head title="会員登録" />
 
         <PageTitle>会員登録</PageTitle>

@@ -8,8 +8,6 @@ import TextInput from '@/Components/TextInput.vue';
 import PageTitle from "@/Components/PageTitle.vue"
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
-defineOptions({ layout: GuestLayout })
-
 defineProps({
     canResetPassword: {
         type: Boolean,
@@ -32,7 +30,7 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="max-w-xl mx-auto">
+    <div class="max-w-xl mx-auto px-6">
         <Head title="ログイン" />
 
         <PageTitle>ログイン</PageTitle>

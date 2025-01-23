@@ -33,7 +33,7 @@ function closeModal() {
             <Transition>
                 <div
                     v-if="show"
-                    class="fixed top-14 right-20 z-50 drop-shadow-xl py-4 px-8 rounded bg-gray-600"
+                    class="fixed top-14 right-6 md:right-20 z-50 drop-shadow-xl py-4 px-8 rounded bg-gray-600"
                     :class = "{
                         'bg-red-500' : status == 'error',
                         'bg-green-600' : status == 'success'

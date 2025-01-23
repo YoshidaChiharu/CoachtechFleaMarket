@@ -18,9 +18,9 @@ const selectedId = ref(1);
 <template>
     <div class="max-w-6xl mx-auto py-10">
         <Head title="購入ページ" />
-        <div class="flex w-full">
+        <div class="flex w-full max-md:flex-col">
             <!-- 商品情報／支払い方法／配送先(左側) -->
-            <div class="w-3/5 p-10">
+            <div class="w-full sm:w-4/5 md:w-3/5 mx-auto p-6 lg:p-10">
                 <!-- 商品情報表示 -->
                 <div class="flex gap-10 items-center">
                     <div class="w-32 p-4">
@@ -40,32 +40,32 @@ const selectedId = ref(1);
                     <button class="text-[#2085D2]" @click="open = true">変更する</button>
                 </div>
                 <!-- 配送先設定 & 登録住所表示 -->
-                <div class="flex justify-between mt-44">
+                <div class="flex justify-between mt-44 max-md:mt-12">
                     <span class="font-bold text-lg">配送先</span>
                     <Link :href="route('purchase.address', item.id)" class="text-[#2085D2]">変更する</Link>
                 </div>
-                <div v-if="shipAddress.postcode && shipAddress.address" class="py-5 px-10">
+                <div v-if="shipAddress.postcode && shipAddress.address" class="py-5 lg:px-6">
                     <table class="text-left">
                         <tbody>
                             <tr>
-                                <th class="font-normal p-1">郵便番号</th>
-                                <td>: {{ shipAddress.postcode }}</td>
+                                <th class="font-normal p-1 min-w-20">郵便番号: </th>
+                                <td>{{ shipAddress.postcode }}</td>
                             </tr>
                             <tr>
-                                <th class="font-normal p-1">住所</th>
-                                <td>: {{ shipAddress.address }}</td>
+                                <th class="font-normal p-1">住所: </th>
+                                <td>{{ shipAddress.address }}</td>
                             </tr>
                             <tr>
-                                <th class="font-normal p-1">建物名</th>
-                                <td>: {{ shipAddress.building }}</td>
+                                <th class="font-normal p-1">建物名: </th>
+                                <td>{{ shipAddress.building }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <!-- 支払い情報／購入ボタン(右側) -->
-            <div class="w-2/5 p-10">
-                <div class="p-10 border border-gray-500">
+            <div class="w-full sm:w-4/5 md:w-2/5 mx-auto p-6 lg:p-10">
+                <div class="p-6 lg:p-10 border border-gray-500">
                     <table class="w-full text-left">
                         <tbody>
                             <tr>
@@ -103,7 +103,7 @@ const selectedId = ref(1);
                 v-if="open"
                 class="fixed top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,.3)]"
             >
-                <div class="fixed top-1/2 left-1/2 z-50 bg-white translate-y-[-50%] translate-x-[-50%] drop-shadow-xl py-10 px-20 max-h-[85vh] overflow-auto">
+                <div class="fixed top-1/2 left-1/2 z-50 bg-white translate-y-[-50%] translate-x-[-50%] drop-shadow-xl py-10 px-20 max-sm:px-10 max-h-[85vh] overflow-auto w-max">
                     <div v-for="(name, id) in paymentMethods" :key="id" class="flex items-center mb-2">
                         <input type="radio" v-model="selectedId" :value="id" :id="name">
                         <label :for="name" class="ml-2 font-bold">{{ name }}</label>

@@ -41,7 +41,7 @@ function imageReset() {
 </script>
 
 <template>
-    <div class="max-w-xl mx-auto mb-20">
+    <div class="max-w-xl mx-auto px-6 pb-20">
         <Head title="出品ページ" />
         <PageTitle>商品の出品</PageTitle>
         <form @submit.prevent="submit" enctype="multipart/form-data">
