@@ -40,7 +40,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/api/like/{item_id}', [LikeController::class, 'store']);
     Route::delete('/api/like/{item_id}', [LikeController::class, 'destroy']);
     Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage');
-    Route::get('/mypage/purchased', [MyPageController::class, 'showPurchased'])->name('mypage.purchased');
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('mypage.profile');
     Route::post('/mypage/profile', [ProfileController::class, 'update']);
     Route::get('/item/comment/{item_id}', [CommentController::class, 'index'])->name('item.comment');
