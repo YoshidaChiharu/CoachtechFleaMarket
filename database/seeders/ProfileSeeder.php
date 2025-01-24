@@ -18,7 +18,6 @@ class ProfileSeeder extends Seeder
         for ($i=1; $i<=$user_num; $i++) {
             $param = [
                 'user_id' => $i,
-                'name' => "User Name",
                 'image_url' => '/img/default_user_icon.png',
             ];
             DB::table('profiles')->insert($param);
