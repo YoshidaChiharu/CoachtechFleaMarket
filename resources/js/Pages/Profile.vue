@@ -10,12 +10,13 @@ import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue'
 
 const props = defineProps({
+    userName: String,
     profile: Object,
 })
 
 const form = useForm({
     image: null,
-    name: props.profile.name,
+    name: props.userName,
     postcode: props.profile.postcode,
     address: props.profile.address,
     building: props.profile.building,

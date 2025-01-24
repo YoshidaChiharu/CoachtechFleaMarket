@@ -22,6 +22,7 @@ class ProfileController extends Controller
         $profile = $request->user()->profile;
 
         return Inertia::render('Profile', [
+            'userName' => $request->user()->name,
             'profile' => $profile,
         ]);
     }
@@ -31,17 +32,18 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request)
     {
-        $profile = $request->user()->profile;
-
         try {
+            // usersテーブルの更新処理（ユーザー名のみ）
+            $request->user()->update(['name' => $request->name]);
+
+            // profilesテーブルの更新処理（郵便番号、住所、建物名、アイコン画像）
             $param = [
-                'name' => $request->name,
                 'postcode' => $request->postcode,
                 'address' => $request->address,
                 'building' => $request->building,
             ];
 
-            // サムネイル画像の保存
+            // アイコン画像の保存
             if ($request->image) {
                 $image = $request->file('image');
                 $file_name = $image->getClientOriginalName();
@@ -49,12 +51,14 @@ class ProfileController extends Controller
                 $param['image_url'] = str_replace("img", "/storage/img", $image_path);
             }
 
+            $profile = $request->user()->profile;
             $profile->update($param);
         } catch (\Exception $e) {
             Log::error($e);
         }
 
         return Inertia::render('Profile', [
+            'userName' => $request->user()->name,
             'profile' => $profile,
         ]);
     }

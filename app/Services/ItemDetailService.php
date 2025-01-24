@@ -28,7 +28,7 @@ class ItemDetailService
         $comments = $item->comments;
         foreach ($comments as $comment) {
             $item_detail['comments'][] = [
-                'name' => $comment->user->profile->name ?? 'Unknown User',
+                'name' => $comment->user->name ?? 'Unknown User',
                 'image_url' => $comment->user->profile->image_url ?? '/img/default_user_icon.png',
                 'comment' => $comment->comment,
                 'is_mine' => ($comment->user_id == Auth::id()),
@@ -45,7 +45,7 @@ class ItemDetailService
         $item_detail['condition_name'] = $item->condition->name;
 
         // 出品者情報
-        $item_detail['user_name'] =  $item->user->profile->name;
+        $item_detail['user_name'] =  $item->user->name;
 
         return $item_detail;
     }
