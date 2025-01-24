@@ -38,7 +38,6 @@ class ProfileController extends Controller
 
             // profilesテーブルの更新処理（郵便番号、住所、建物名、アイコン画像）
             $param = [
-                // 'name' => $request->name,
                 'postcode' => $request->postcode,
                 'address' => $request->address,
                 'building' => $request->building,
