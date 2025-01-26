@@ -17,25 +17,13 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminCommentController;
 use App\Http\Controllers\Admin\AdminMailController;
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
+// Route::get('/test', function () { return Inertia::render('Test'); });
 
 Route::get('/', [TopPageController::class, 'index'])->name('top');
 Route::get('/item/{item_id}', [ItemDetailController::class, 'show'])->name('item.detail');
 
-// Route::get('/test', function () { return Inertia::render('Test'); });
-
 // 一般ユーザー向けページ
-Route::middleware('auth')->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware('verified', 'auth')->group(function () {
     Route::get('/mylist', [TopPageController::class, 'showMylist'])->name('top.mylist');
     Route::post('/api/like/{item_id}', [LikeController::class, 'store']);
     Route::delete('/api/like/{item_id}', [LikeController::class, 'destroy']);
