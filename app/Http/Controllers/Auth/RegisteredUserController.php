@@ -68,6 +68,6 @@ class RegisteredUserController extends Controller
             DB::rollBack();
         }
 
-        return redirect(route('top', absolute: false));
+        return redirect(route('verification.notice', absolute: false));
     }
 }
