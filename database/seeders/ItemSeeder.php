@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Condition;
 
 class ItemSeeder extends Seeder
 {
@@ -14,17 +13,19 @@ class ItemSeeder extends Seeder
      */
     public function run(): void
     {
-        $condition_num = Condition::count();
+        $file_path = database_path('json/items.json');
+        $json = file_get_contents($file_path);
+        $items = json_decode($json, true);
 
-        for ($i=1; $i<=50; $i++) {
+        foreach ($items as $item) {
             $param = [
-                'name' => "商品名_{$i}",
-                'price' => (fake()->numberBetween(1, 100)) * 1000,
-                'description' => '商品詳細テキスト',
-                'image_url' => '/img/dummy_item.png',
-                'condition_id' => fake()->numberBetween(1, $condition_num),
-                'user_id' => '1',
-                'stripe_price_id' => 'price_1QdnKOBli9nlS8GV5hoD5foG',
+                'name' => $item['name'],
+                'price' => $item['price'],
+                'description' => $item['description'],
+                'image_url' => $item['image_url'],
+                'condition_id' => $item['condition_id'],
+                'user_id' => $item['user_id'],
+                'stripe_price_id' => $item['stripe_price_id'],
             ];
             DB::table('items')->insert($param);
         }
