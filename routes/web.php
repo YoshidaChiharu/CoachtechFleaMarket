@@ -16,6 +16,8 @@ use App\Http\Controllers\SellController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminCommentController;
 use App\Http\Controllers\Admin\AdminMailController;
+use App\Http\Controllers\Api\PaymentIntentController;
+use App\Http\Controllers\Api\SoldItemController;
 
 // Route::get('/test', function () { return Inertia::render('Test'); });
 
@@ -32,9 +34,14 @@ Route::middleware('verified', 'auth')->group(function () {
     Route::post('/mypage/profile', [ProfileController::class, 'update']);
     Route::get('/item/comment/{item_id}', [CommentController::class, 'index'])->name('item.comment');
     Route::post('/item/comment/{item_id}', [CommentController::class, 'store']);
-    Route::post('/api/purchase/{item_id}', [CheckoutSessionController::class, 'createCheckoutSession']);
+
+    Route::post('/api/purchase/{item_id}', [PaymentIntentController::class, 'createPaymentIntent']);
+    Route::get('/api/purchase/sold_item/{item_id}', [SoldItemController::class, 'confirmStock']);
+    Route::post('/api/purchase/sold_item/{item_id}', [SoldItemController::class, 'store']);
+    Route::delete('/api/purchase/sold_item/{sold_item_id}', [SoldItemController::class, 'destroy']);
+    Route::get('/purchase/complete/{item_id}', [PurchaseController::class, 'confirmPaymentIntentStatus'])->name('purchase.complete');
+
     Route::delete('/api/purchase/{checkout_session_id}', [CheckoutSessionController::class, 'expireCheckoutSession']);
-    Route::post('/api/purchase/completed/{checkout_session_id}', [CheckoutSessionController::class, 'completeCheckoutSession']);
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase');
     Route::get('/purchase/address/{item_id}', [ShipAddressController::class, 'edit'])->name('purchase.address');
     Route::post('/purchase/address/{item_id}', [ShipAddressController::class, 'update']);
