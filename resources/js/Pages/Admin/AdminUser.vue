@@ -93,7 +93,7 @@ function deleteUser(id) {
         </div>
 
         <!-- ユーザー一覧 -->
-        <div class="overflow-x-scroll">
+        <div class="overflow-x-auto">
             <table class="w-full mt-10 min-w-[562px]">
                 <thead class="text-sm text-left bg-gradient-to-t from-zinc-400 to-zinc-100">
                     <tr>
