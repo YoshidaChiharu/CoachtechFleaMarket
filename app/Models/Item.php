@@ -80,7 +80,7 @@ class Item extends Model
     }
 
     public function isSold(): bool {
-        $sold_items = $this->soldItems->where('session_completed', true);
+        $sold_items = $this->soldItems;
         return $sold_items->isNotEmpty();
     }
 }

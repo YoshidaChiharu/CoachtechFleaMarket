@@ -31,7 +31,7 @@ class CheckoutSessionController extends Controller
 
                     // 完了（購入済み）セッション  ※通常この状態は発生しないが保険の為
                     if ($session->status === 'complete') {
-                        $sold_item->update(['session_completed' => true]);
+                        $sold_item->update(['payment_completed' => true]);
                     }
                     // 決済前セッション  ※期限切れにして該当するsold_itemsレコードを削除
                     if ($session->status === 'open') {
@@ -55,7 +55,7 @@ class CheckoutSessionController extends Controller
 
                     // 「購入済み(決済完了済み)」判別処理
                     if ($session->status === 'complete') {
-                        $sold_item->update(['session_completed' => true]);
+                        $sold_item->update(['payment_completed' => true]);
                         return response()->json([
                             'status' => 'error',
                             'message' => 'この商品は既に売却済みです'
@@ -143,7 +143,7 @@ class CheckoutSessionController extends Controller
                 'item_id' => $item_id,
                 'payment_method_id' => $request->paymentMethodId,
                 'checkout_session_id' => $checkout->id,
-                'session_completed' => false,
+                'payment_completed' => false,
                 'ship_postcode' => $ship_postcode,
                 'ship_address' => $ship_address,
                 'ship_building' => $ship_building,
@@ -179,7 +179,7 @@ class CheckoutSessionController extends Controller
         SoldItem::where('checkout_session_id', $checkout_session_id)
                 ->first()
                 ->update([
-                    'session_completed' => true
+                    'payment_completed' => true
                 ]);
     }
 

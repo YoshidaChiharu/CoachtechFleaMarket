@@ -1,9 +1,10 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
-import { ref } from 'vue'
+import { Head, Link, usePage } from '@inertiajs/vue3';
+import { ref, computed } from 'vue'
 import ItemImage from "@/Components/ItemImage.vue";
-import StripeCheckoutButton from "@/Components/StripeCheckoutButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import PurchaseButton from "@/Components/PurchaseButton.vue";
+import FlashMassageModal from "@/Components/FlashMassageModal.vue";
 
 const props = defineProps({
     item: Object,
@@ -13,6 +14,10 @@ const props = defineProps({
 
 const open = ref(false);
 const selectedId = ref(1);
+
+const showFlashMessage = ref(true);
+const message = computed(() => usePage().props.flash.message);
+const status = computed(() => usePage().props.flash.status);
 </script>
 
 <template>
@@ -91,9 +96,7 @@ const selectedId = ref(1);
                     <PrimaryButton v-if="item.is_sold === true" disabled>
                         SOLD OUT
                     </PrimaryButton>
-                    <StripeCheckoutButton v-else :itemId="item.id" :paymentMethodId="selectedId">
-                        購入する
-                    </StripeCheckoutButton>
+                    <PurchaseButton v-else :itemId="item.id" :paymentMethodId="selectedId" class="mt-5" />
                 </div>
             </div>
         </div>
@@ -113,5 +116,10 @@ const selectedId = ref(1);
                 </div>
             </div>
         </Teleport>
+
+        <!-- フラッシュメッセージモーダル -->
+        <FlashMassageModal v-if="status" v-model:status="status" v-model:show="showFlashMessage">
+            {{ message }}
+        </FlashMassageModal>
     </div>
 </template>

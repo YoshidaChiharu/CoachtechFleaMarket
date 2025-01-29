@@ -96,7 +96,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function checkoutItems(): BelongsToMany {
         return $this->belongsToMany('App\Models\Item', 'sold_items')
-                    ->withPivot('session_completed');
+                    ->withPivot('payment_completed');
     }
 
     public function profile(): HasOne {
@@ -109,7 +109,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getPurchasedItems() {
         $items = $this->checkoutItems->filter(function($item) {
-            return $item->pivot->session_completed;
+            return $item->pivot->payment_completed;
         });
         return $items;
     }

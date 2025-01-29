@@ -16,7 +16,7 @@ class SoldItem extends Model
     protected function casts(): array
     {
         return [
-            'session_completed' => 'boolean',
+            'payment_completed' => 'boolean',
         ];
     }
 }
