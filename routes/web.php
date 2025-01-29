@@ -9,7 +9,6 @@ use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ItemDetailController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\Api\CheckoutSessionController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ShipAddressController;
 use App\Http\Controllers\SellController;
@@ -35,14 +34,13 @@ Route::middleware('verified', 'auth')->group(function () {
     Route::get('/item/comment/{item_id}', [CommentController::class, 'index'])->name('item.comment');
     Route::post('/item/comment/{item_id}', [CommentController::class, 'store']);
 
+    Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase');
     Route::post('/api/purchase/{item_id}', [PaymentIntentController::class, 'createPaymentIntent']);
     Route::get('/api/purchase/sold_item/{item_id}', [SoldItemController::class, 'confirmStock']);
     Route::post('/api/purchase/sold_item/{item_id}', [SoldItemController::class, 'store']);
     Route::delete('/api/purchase/sold_item/{sold_item_id}', [SoldItemController::class, 'destroy']);
     Route::get('/purchase/complete/{item_id}', [PurchaseController::class, 'confirmPaymentIntentStatus'])->name('purchase.complete');
 
-    Route::delete('/api/purchase/{checkout_session_id}', [CheckoutSessionController::class, 'expireCheckoutSession']);
-    Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase');
     Route::get('/purchase/address/{item_id}', [ShipAddressController::class, 'edit'])->name('purchase.address');
     Route::post('/purchase/address/{item_id}', [ShipAddressController::class, 'update']);
     Route::get('/sell', [SellController::class, 'create'])->name('sell');
