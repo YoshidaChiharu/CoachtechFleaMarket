@@ -8,7 +8,7 @@ import TextAreaInput from "@/Components/TextAreaInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import FlashMassageModal from "@/Components/FlashMassageModal.vue";
+import FlashMessageModal from "@/Components/FlashMessageModal.vue";
 
 defineOptions({ layout: AdminLayout })
 
@@ -60,9 +60,9 @@ function submit() {
         </form>
 
         <!-- フラッシュメッセージモーダル -->
-        <FlashMassageModal v-model:status="status" v-model:show="showFlashMessage">
+        <FlashMessageModal v-model:status="status" v-model:show="showFlashMessage">
             {{ message }}
-        </FlashMassageModal>
+        </FlashMessageModal>
 
     </div>
 </template>

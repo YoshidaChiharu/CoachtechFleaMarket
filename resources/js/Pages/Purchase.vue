@@ -4,7 +4,7 @@ import { ref, computed } from 'vue'
 import ItemImage from "@/Components/ItemImage.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import PurchaseButton from "@/Components/PurchaseButton.vue";
-import FlashMassageModal from "@/Components/FlashMassageModal.vue";
+import FlashMessageModal from "@/Components/FlashMessageModal.vue";
 
 const props = defineProps({
     item: Object,
@@ -118,8 +118,8 @@ const status = computed(() => usePage().props.flash.status);
         </Teleport>
 
         <!-- フラッシュメッセージモーダル -->
-        <FlashMassageModal v-if="status" v-model:status="status" v-model:show="showFlashMessage">
+        <FlashMessageModal v-if="status" v-model:status="status" v-model:show="showFlashMessage">
             {{ message }}
-        </FlashMassageModal>
+        </FlashMessageModal>
     </div>
 </template>
