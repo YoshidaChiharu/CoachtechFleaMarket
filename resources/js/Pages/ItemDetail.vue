@@ -9,6 +9,7 @@ import CategoryIcon from "@/Components/CategoryIcon.vue";
 const props = defineProps({
     item: Object,
 });
+const price = `￥${props.item.price.toLocaleString()}`;
 </script>
 
 <template>
@@ -24,7 +25,7 @@ const props = defineProps({
                 <h2 class="text-2xl font-bold">{{ item.name }}</h2>
                 <span class="text-sm">{{ item.brand }}</span>
                 <div class="text-xl mt-4">
-                    {{ item.price }}
+                    {{ price }}
                 </div>
                 <div class="flex gap-8 mt-4 px-2">
                     <LikeIcon :item="item">{{ item.likes_count }}</LikeIcon>

@@ -11,6 +11,7 @@ const props = defineProps({
     paymentMethods: Object,
     shipAddress: Object,
 });
+const price = `￥${props.item.price.toLocaleString()}`;
 
 const open = ref(false);
 const selectedId = ref(1);
@@ -35,7 +36,7 @@ const status = computed(() => usePage().props.flash.status);
                         <h2 class="text-2xl font-bold">{{ item.name }}</h2>
                         <span class="text-sm">{{ item.brand }}</span>
                         <div class="text-xl mt-8">
-                            {{ item.price }}
+                            {{ price }}
                         </div>
                     </div>
                 </div>
@@ -75,7 +76,7 @@ const status = computed(() => usePage().props.flash.status);
                         <tbody>
                             <tr>
                                 <th class="w-1/2 font-normal py-4">商品代金</th>
-                                <td>{{ item.price }}</td>
+                                <td>{{ price }}</td>
                             </tr>
                             <tr>
                                 <th class="w-1/2 font-normal py-4"><br></th>
@@ -83,7 +84,7 @@ const status = computed(() => usePage().props.flash.status);
                             </tr>
                             <tr>
                                 <th class="w-1/2 font-normal py-4">支払い金額</th>
-                                <td>{{ item.price }}</td>
+                                <td>{{ price }}</td>
                             </tr>
                             <tr>
                                 <th class="w-1/2 font-normal py-4">支払い方法</th>
