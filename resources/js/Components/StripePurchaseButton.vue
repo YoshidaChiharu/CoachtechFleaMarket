@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import { loadStripe } from '@stripe/stripe-js'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import FlashMassageModal from "@/Components/FlashMassageModal.vue";
+import FlashMessageModal from "@/Components/FlashMessageModal.vue";
 
 const props = defineProps({
     item: Object,
@@ -107,9 +107,9 @@ async function hide() {
         </Teleport>
 
         <!-- フラッシュメッセージモーダル -->
-        <FlashMassageModal v-model:status="status" v-model:show="showFlashMessage">
+        <FlashMessageModal v-model:status="status" v-model:show="showFlashMessage">
             {{ message }}
-        </FlashMassageModal>
+        </FlashMessageModal>
 
     </div>
 </template>

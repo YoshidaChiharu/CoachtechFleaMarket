@@ -6,7 +6,7 @@ import PageTitle from "@/Components/PageTitle.vue"
 import Pagination from "@/Components/Pagination.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import FlashMassageModal from "@/Components/FlashMassageModal.vue";
+import FlashMessageModal from "@/Components/FlashMessageModal.vue";
 
 defineOptions({ layout: AdminLayout })
 
@@ -156,9 +156,9 @@ function deleteUser(id) {
         </Teleport>
 
         <!-- フラッシュメッセージモーダル -->
-        <FlashMassageModal v-model:status="status" v-model:show="showFlashMessage">
+        <FlashMessageModal v-model:status="status" v-model:show="showFlashMessage">
             {{ message }}
-        </FlashMassageModal>
+        </FlashMessageModal>
 
     </div>
 </template>
