@@ -3,9 +3,10 @@ import { Link } from '@inertiajs/vue3';
 import LikeIcon from "../Components/LikeIcon.vue";
 import ItemImage from "../Components/ItemImage.vue";
 
-defineProps({
+const props = defineProps({
     item: Object,
 })
+const price = `￥${props.item.price.toLocaleString()}`;
 </script>
 
 <template>
@@ -25,7 +26,7 @@ defineProps({
             <div
                 class="py-1 pl-2 pr-4 bg-gray-600 opacity-80 inline-block rounded-r-full absolute bottom-0 left-0"
             >
-                <span class="opacity-100 text-white font-bold">￥{{ item.price }}</span>
+                <span class="opacity-100 text-white font-bold">{{ price }}</span>
             </div>
         </div>
         <!-- 商品名 -->
