@@ -13,7 +13,7 @@ const props = defineProps({
         >
         <!-- SOLD OUTアイコン -->
         <div v-if="item.is_sold" class="w-2/5 absolute top-0 left-0">
-            <img src="/img/sold_out.png" alt="">
+            <img src="/img/sold_out.png">
         </div>
     </div>
 </template>
