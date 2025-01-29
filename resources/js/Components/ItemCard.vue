@@ -27,10 +27,6 @@ defineProps({
             >
                 <span class="opacity-100 text-white font-bold">￥{{ item.price }}</span>
             </div>
-            <!-- SOLD OUTアイコン -->
-            <div v-if="item.is_sold" class="w-20 absolute top-0 left-0">
-                <img src="img/sold_out.png" alt="">
-            </div>
         </div>
         <!-- 商品名 -->
         <span>{{ item.name }}</span>
