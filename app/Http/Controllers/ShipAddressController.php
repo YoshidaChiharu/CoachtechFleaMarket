@@ -10,11 +10,19 @@ use App\Http\Requests\AddressUpdateRequest;
 
 class ShipAddressController extends Controller
 {
+    public function create(Request $request) {
+        dd('配送先作成ページ表示');
+    }
+
+    public function store(Request $request) {
+        dd('配送先の新規登録');
+    }
+
     public function edit(Request $request)
     {
         $profile = $request->user()->profile;
 
-        return Inertia::render('ShipAddress', [
+        return Inertia::render('EditShipAddress', [
             'profile' => $profile,
             'itemId' => $request->item_id,
         ]);
@@ -36,5 +44,9 @@ class ShipAddressController extends Controller
         }
 
         return to_route('purchase', $request->item_id);
+    }
+
+    public function destroy(Request $request) {
+        dd('配送先の削除');
     }
 }
