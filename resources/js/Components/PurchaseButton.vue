@@ -9,6 +9,7 @@ import ErrorModal from "@/Components/ErrorModal.vue";
 const props = defineProps({
     itemId: Number,
     paymentMethodId: Number,
+    addressId: Number,
 });
 
 const stripeKey = "pk_test_51QBad1Bli9nlS8GV0wskk4eK8OoTM6vLGUuQ7igRELuoB3B4YlbN4ubnUKFPaFeXeTqju80TN1vyXrMS7LWFY4zb00Pd2mQYT5";
@@ -27,6 +28,7 @@ async function showForm() {
     await axios
         .post('/api/purchase/' + props.itemId, {
             paymentMethodId: props.paymentMethodId,
+            addressId: props.addressId,
         })
         .then(async (res) => {
             open.value = true;
@@ -72,6 +74,7 @@ async function submit() {
             .post('/api/purchase/sold_item/' + props.itemId, {
                 paymentMethodId: props.paymentMethodId,
                 paymentIntentId: stripePaymentIntentId.value,
+                addressId: props.addressId,
             })
             .then(async (res) => {
                 soldItemId.value = res.data.soldItemId;

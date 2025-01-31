@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Item;
 use App\Models\SoldItem;
+use App\Models\Address;
 
 class SoldItemController extends Controller
 {
@@ -33,6 +34,23 @@ class SoldItemController extends Controller
         try {
             $user = $request->user();
 
+            // 配送先住所の取得
+            $address_id = $request->addressId;
+            if ($address_id == 0) {
+                $ship_name = $user->name;
+                $ship_postcode = $user->profile->postcode;
+                $ship_address = $user->profile->address;
+                $ship_building = $user->profile->building;
+            }
+            if ($address_id != 0) {
+                $address = Address::find($address_id);
+
+                $ship_name = $address->name;
+                $ship_postcode = $address->postcode;
+                $ship_address = $address->address;
+                $ship_building = $address->building;
+            }
+
             // sold_itemテーブルにレコード登録
             $sold_item = SoldItem::create([
                 'user_id' => $user->id,
@@ -40,9 +58,10 @@ class SoldItemController extends Controller
                 'payment_method_id' => $request->paymentMethodId,
                 'payment_intent_id' => $request->paymentIntentId,
                 'payment_completed' => false,
-                'ship_postcode' => $user->profile->postcode,
-                'ship_address' => $user->profile->address,
-                'ship_building' => $user->profile->building,
+                'ship_name' => $ship_name,
+                'ship_postcode' => $ship_postcode,
+                'ship_address' => $ship_address,
+                'ship_building' => $ship_building,
             ]);
 
             return response()->json([

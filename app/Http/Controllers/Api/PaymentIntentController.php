@@ -20,13 +20,15 @@ class PaymentIntentController extends Controller
             $stripe = new StripeClient("sk_test_51QBad1Bli9nlS8GVTqk4Uty9r2jQqd3WwJlYOrZJZmNPZQWZBqPR4VOJNVPWaZMO88CJT7H9fDoXkJuIp6fTDo1K00UkjRgzAt");
 
             // 登録住所の確認（無い場合はエラーを返す）
-            $ship_postcode = $user->profile->postcode;
-            $ship_address = $user->profile->address;
-            if (!$ship_postcode || !$ship_address) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => '配送先が正しく登録されていません'
-                ], 500);
+            if ($request->addressId == 0) {
+                $ship_postcode = $user->profile->postcode;
+                $ship_address = $user->profile->address;
+                if (!$ship_postcode || !$ship_address) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => '配送先が正しく登録されていません'
+                    ], 500);
+                }
             }
 
             DB::beginTransaction();

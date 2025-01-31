@@ -101,7 +101,7 @@ function deleteAddress(addressId) {
                     <PrimaryButton v-if="item.is_sold === true" disabled>
                         SOLD OUT
                     </PrimaryButton>
-                    <PurchaseButton v-else :itemId="item.id" :paymentMethodId="paymentMethodModal.selectedId" class="mt-5" />
+                    <PurchaseButton v-else :itemId="item.id" :paymentMethodId="paymentMethodModal.selectedId" :addressId="addresses[shipAddressModal.selectedId].id" class="mt-5" />
                 </div>
             </div>
         </div>
@@ -131,7 +131,7 @@ function deleteAddress(addressId) {
                 <div class="fixed top-1/2 left-1/2 z-50 bg-white translate-y-[-50%] translate-x-[-50%] drop-shadow-xl py-10 px-20 max-sm:px-10 max-w-[90vw] max-h-[85vh] overflow-auto w-max">
                     <div v-for="(address, id) in addresses" :key="id" class="flex items-center gap-4 mb-4 rounded py-2 px-4 bg-gray-100">
                         <input type="radio" v-model="shipAddressModal.selectedId" :value="id">
-                        <label class="px-2 font-bold grow break-words whitespace-pre-wrap">
+                        <div class="px-2 font-bold grow">
                             <div class="break-all">{{ address.name }}<br></div>
                             <span v-if="address.postcode">〒{{ address.postcode }}<br></span>
                             <span v-if="address.address" class="break-all">{{ address.address }}</span>
@@ -151,7 +151,7 @@ function deleteAddress(addressId) {
                                     <button @click="deleteAddress(address.id)"><img src="/img/delete_icon.svg" class="w-5"></button>
                                 </div>
                             </div>
-                        </label>
+                        </div>
                     </div>
 
                     <Link :href="route('purchase.address.register', {'item_id':item.id})" class="text-[#2085D2]">＋ 新しい住所を登録する</Link>
