@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('payment_method_id')->constrained();
             $table->string('payment_intent_id')->unique();
             $table->boolean('payment_completed');
+            $table->string('ship_name');
             $table->string('ship_postcode');
             $table->string('ship_address');
             $table->string('ship_building')->nullable();
