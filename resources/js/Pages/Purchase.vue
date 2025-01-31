@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, usePage } from '@inertiajs/vue3';
+import { Head, Link, usePage, router } from '@inertiajs/vue3';
 import { ref, computed, reactive } from 'vue'
 import ItemImage from "@/Components/ItemImage.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -9,7 +9,6 @@ import FlashMessageModal from "@/Components/FlashMessageModal.vue";
 const props = defineProps({
     item: Object,
     paymentMethods: Object,
-    shipAddress: Object,
     addresses: Object,
 });
 const price = `￥${props.item.price.toLocaleString()}`;
@@ -26,6 +25,13 @@ const shipAddressModal = reactive({
 const showFlashMessage = ref(true);
 const message = computed(() => usePage().props.flash.message);
 const status = computed(() => usePage().props.flash.status);
+
+function deleteAddress(addressId) {
+    router.delete(route('purchase.address.edit', addressId), {
+        data: {'item_id':props.item.id},
+    });
+    shipAddressModal.selectedId = 0;
+}
 </script>
 
 <template>
@@ -122,21 +128,28 @@ const status = computed(() => usePage().props.flash.status);
                 v-if="shipAddressModal.open"
                 class="fixed top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,.3)]"
             >
-                <div class="fixed top-1/2 left-1/2 z-50 bg-white translate-y-[-50%] translate-x-[-50%] drop-shadow-xl py-10 px-20 max-sm:px-10 max-h-[85vh] overflow-auto w-max">
-                    <div v-for="(address, id) in addresses" :key="id" class="flex items-center gap-2 mb-4">
+                <div class="fixed top-1/2 left-1/2 z-50 bg-white translate-y-[-50%] translate-x-[-50%] drop-shadow-xl py-10 px-20 max-sm:px-10 max-w-[90vw] max-h-[85vh] overflow-auto w-max">
+                    <div v-for="(address, id) in addresses" :key="id" class="flex items-center gap-4 mb-4 rounded py-2 px-4 bg-gray-100">
                         <input type="radio" v-model="shipAddressModal.selectedId" :value="id">
-                        <label class="ml-2 font-bold">
-                            <span>{{ address.name }}<br></span>
+                        <label class="px-2 font-bold grow break-words whitespace-pre-wrap">
+                            <div class="break-all">{{ address.name }}<br></div>
                             <span v-if="address.postcode">〒{{ address.postcode }}<br></span>
-                            <span v-if="address.address">{{ address.address }}</span>
-                            <span v-if="address.building">{{ address.building }}<br></span>
+                            <span v-if="address.address" class="break-all">{{ address.address }}</span>
+                            <span v-if="address.building" class="ml-4 break-all">{{ address.building }}<br></span>
                             <!-- 住所登録が無い場合 -->
                             <span v-if="!address.postcode && !address.address">
                                 <span class="text-red-500">※住所が登録されていません</span><br>
                             </span>
-                            <div class="flex items-center gap-4">
-                                <Link :href="route('purchase.address.edit', {'address_id':address.id, 'item_id':item.id})">編集</Link>
-                                <Link :href="route('purchase', item.id)">削除</Link>
+                            <div class="mt-2">
+                                <div v-if="address.id == 0">
+                                    <Link :href="route('mypage.profile')">
+                                        <img src="/img/edit_icon.svg" class="w-5">
+                                    </Link>
+                                </div>
+                                <div v-else class="flex items-center gap-4">
+                                    <Link :href="route('purchase.address.edit', {'address_id':address.id, 'item_id':item.id})"><img src="/img/edit_icon.svg" class="w-5"></Link>
+                                    <button @click="deleteAddress(address.id)"><img src="/img/delete_icon.svg" class="w-5"></button>
+                                </div>
                             </div>
                         </label>
                     </div>

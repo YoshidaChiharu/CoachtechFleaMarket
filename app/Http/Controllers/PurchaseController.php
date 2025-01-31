@@ -23,17 +23,11 @@ class PurchaseController extends Controller
         // 支払い方法一覧
         $paymentMethods = PaymentMethod::all()->pluck('name', 'id');
 
-        // ユーザーの登録住所
-        $profile = $request->user()->profile;
-        $ship_address = [
-            'postcode' => $profile->postcode,
-            'address' => $profile->address,
-            'building' => $profile->building
-        ];
-
         // 配送先住所一覧
         $addresses = Address::where('user_id', $request->user()->id)->get();
         $addresses = $addresses->map->only('id', 'name', 'postcode', 'address', 'building');
+
+        $profile = $request->user()->profile;
         $addresses->prepend([
             'id' => 0,
             'name' => $request->user()->name . '（プロフィール登録住所）',
@@ -45,7 +39,6 @@ class PurchaseController extends Controller
         return Inertia::render('Purchase', [
             'item' => $item,
             'paymentMethods' => $paymentMethods,
-            'shipAddress' => $ship_address,
             'addresses' => $addresses,
         ]);
     }

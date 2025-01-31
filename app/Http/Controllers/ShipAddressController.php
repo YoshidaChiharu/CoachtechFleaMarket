@@ -35,33 +35,51 @@ class ShipAddressController extends Controller
 
     public function edit(Request $request)
     {
-        $profile = $request->user()->profile;
+        $address = Address::find($request->address_id);
 
-        return Inertia::render('EditShipAddress', [
-            'profile' => $profile,
-            'itemId' => $request->item_id,
-        ]);
+        if ($address && $address->user_id === $request->user()->id) {
+            return Inertia::render('EditShipAddress', [
+                'address' => $address,
+                'itemId' => $request->item_id,
+            ]);
+        }
+
+        // $address_idが不正な値の場合
+        return to_route('top');
     }
 
     public function update(AddressUpdateRequest $request) {
         try {
-            $profile = $request->user()->profile;
+            $address = Address::find($request->address_id);
 
-            $param = [
-                'postcode' => $request->postcode,
-                'address' => $request->address,
-                'building' => $request->building,
-            ];
+            if ($address && $address->user_id === $request->user()->id) {
+                $param = [
+                    'name' => $request->name,
+                    'postcode' => $request->postcode,
+                    'address' => $request->address,
+                    'building' => $request->building,
+                ];
 
-            $profile->update($param);
+                $address->update($param);
+            }
         } catch (\Exception $e) {
             Log::error($e);
         }
 
-        return to_route('purchase', $request->item_id);
+        return to_route('purchase', ['item_id' => $request->item_id, 'modalOpen' => true]);
     }
 
     public function destroy(Request $request) {
-        dd('配送先の削除');
+        try {
+            $address = Address::find($request->address_id);
+
+            if ($address && $address->user_id === $request->user()->id) {
+                $address->delete();
+            }
+        } catch (\Exception $e) {
+            Log::error($e);
+        }
+
+        return to_route('purchase', ['item_id' => $request->item_id, 'modalOpen' => true]);
     }
 }
