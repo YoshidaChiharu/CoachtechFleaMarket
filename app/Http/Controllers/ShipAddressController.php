@@ -7,15 +7,30 @@ use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Requests\AddressUpdateRequest;
+use App\Models\Address;
 
 class ShipAddressController extends Controller
 {
     public function create(Request $request) {
-        dd('配送先作成ページ表示');
+        return Inertia::render('RegisterShipAddress', [
+            'itemId' => $request->item_id,
+        ]);
     }
 
-    public function store(Request $request) {
-        dd('配送先の新規登録');
+    public function store(AddressUpdateRequest $request) {
+        try {
+            Address::create([
+                'user_id' => $request->user()->id,
+                'name' => $request->name,
+                'postcode' => $request->postcode,
+                'address' => $request->address,
+                'building' => $request->building,
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e);
+        }
+
+        return to_route('purchase', ['item_id' => $request->item_id, 'modalOpen' => true]);
     }
 
     public function edit(Request $request)
