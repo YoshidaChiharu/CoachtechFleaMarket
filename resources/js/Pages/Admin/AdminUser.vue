@@ -25,8 +25,6 @@ const selectedId = ref(null);
 const selectedName = ref('');
 
 const showFlashMessage = ref(false);
-const message = computed(() => usePage().props.flash.message);
-const status = computed(() => usePage().props.flash.status);
 
 function searchUser() {
     router.reload({
@@ -156,9 +154,7 @@ function deleteUser(id) {
         </Teleport>
 
         <!-- フラッシュメッセージモーダル -->
-        <FlashMessageModal v-model:status="status" v-model:show="showFlashMessage">
-            {{ message }}
-        </FlashMessageModal>
+        <FlashMessageModal v-model:show="showFlashMessage" />
 
     </div>
 </template>

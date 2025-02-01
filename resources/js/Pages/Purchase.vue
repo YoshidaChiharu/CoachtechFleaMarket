@@ -24,7 +24,6 @@ const shipAddressModal = reactive({
 
 const showFlashMessage = ref(true);
 const message = computed(() => usePage().props.flash.message);
-const status = computed(() => usePage().props.flash.status);
 
 function deleteAddress(addressId) {
     router.delete(route('purchase.address.edit', addressId), {
@@ -162,8 +161,6 @@ function deleteAddress(addressId) {
         </Teleport>
 
         <!-- フラッシュメッセージモーダル -->
-        <FlashMessageModal v-if="status" v-model:status="status" v-model:show="showFlashMessage">
-            {{ message }}
-        </FlashMessageModal>
+        <FlashMessageModal v-if="message" v-model:show="showFlashMessage" />
     </div>
 </template>

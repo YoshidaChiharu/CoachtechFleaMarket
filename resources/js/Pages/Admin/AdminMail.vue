@@ -22,8 +22,6 @@ const form = useForm({
 });
 
 const showFlashMessage = ref(false);
-const message = computed(() => usePage().props.flash.message);
-const status = computed(() => usePage().props.flash.status);
 
 function submit() {
     form.post(route('admin.mail'));
@@ -60,9 +58,7 @@ function submit() {
         </form>
 
         <!-- フラッシュメッセージモーダル -->
-        <FlashMessageModal v-model:status="status" v-model:show="showFlashMessage">
-            {{ message }}
-        </FlashMessageModal>
+        <FlashMessageModal v-model:show="showFlashMessage" />
 
     </div>
 </template>
