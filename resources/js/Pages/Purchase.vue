@@ -67,10 +67,10 @@ function deleteAddress(addressId) {
                     v-if="addresses[shipAddressModal.selectedId].postcode && addresses[shipAddressModal.selectedId].address"
                     class="py-5 lg:px-6"
                 >
-                    {{ addresses[shipAddressModal.selectedId].name }}<br>
+                    <span class="break-all">{{ addresses[shipAddressModal.selectedId].name }}</span><br>
                     〒{{ addresses[shipAddressModal.selectedId].postcode }}<br>
-                    {{ addresses[shipAddressModal.selectedId].address }}
-                    {{ addresses[shipAddressModal.selectedId].building }}
+                    <span class="break-all">{{ addresses[shipAddressModal.selectedId].address }}</span>
+                    <span class="break-all">{{ addresses[shipAddressModal.selectedId].building }}</span>
                 </div>
             </div>
             <!-- 支払い情報／購入ボタン(右側) -->
@@ -132,7 +132,7 @@ function deleteAddress(addressId) {
                     <div v-for="(address, id) in addresses" :key="id" class="flex items-center gap-4 mb-4 rounded py-2 px-4 bg-gray-100">
                         <input type="radio" v-model="shipAddressModal.selectedId" :value="id">
                         <div class="px-2 font-bold grow">
-                            <div class="break-all">{{ address.name }}<br></div>
+                            <span class="break-all">{{ address.name }}<br></span>
                             <span v-if="address.postcode">〒{{ address.postcode }}<br></span>
                             <span v-if="address.address" class="break-all">{{ address.address }}</span>
                             <span v-if="address.building" class="ml-4 break-all">{{ address.building }}<br></span>
