@@ -12,6 +12,7 @@ use App\Models\PaymentMethod;
 use Stripe\StripeClient;
 use App\Models\Item;
 use App\Models\SoldItem;
+use App\Models\Address;
 
 class PurchaseController extends Controller
 {
@@ -22,18 +23,23 @@ class PurchaseController extends Controller
         // 支払い方法一覧
         $paymentMethods = PaymentMethod::all()->pluck('name', 'id');
 
-        // ユーザーの登録住所
+        // 配送先住所一覧
+        $addresses = Address::where('user_id', $request->user()->id)->get();
+        $addresses = $addresses->map->only('id', 'name', 'postcode', 'address', 'building');
+
         $profile = $request->user()->profile;
-        $ship_address = [
+        $addresses->prepend([
+            'id' => 0,
+            'name' => $request->user()->name . '（プロフィール登録住所）',
             'postcode' => $profile->postcode,
             'address' => $profile->address,
             'building' => $profile->building
-        ];
+        ]);
 
         return Inertia::render('Purchase', [
             'item' => $item,
             'paymentMethods' => $paymentMethods,
-            'shipAddress' => $ship_address,
+            'addresses' => $addresses,
         ]);
     }
 

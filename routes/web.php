@@ -41,8 +41,13 @@ Route::middleware('verified', 'auth')->group(function () {
     Route::delete('/api/purchase/sold_item/{sold_item_id}', [SoldItemController::class, 'destroy']);
     Route::get('/purchase/complete/{item_id}', [PurchaseController::class, 'confirmPaymentIntentStatus'])->name('purchase.complete');
 
-    Route::get('/purchase/address/{item_id}', [ShipAddressController::class, 'edit'])->name('purchase.address');
-    Route::post('/purchase/address/{item_id}', [ShipAddressController::class, 'update']);
+    Route::get('/purchase/address/register', [ShipAddressController::class, 'create'])->name('purchase.address.register');
+    Route::post('/purchase/address/register', [ShipAddressController::class, 'store']);
+
+    Route::get('/purchase/address/edit/{address_id}', [ShipAddressController::class, 'edit'])->name('purchase.address.edit');
+    Route::post('/purchase/address/edit/{address_id}', [ShipAddressController::class, 'update']);
+    Route::delete('/purchase/address/edit/{address_id}', [ShipAddressController::class, 'destroy']);
+
     Route::get('/sell', [SellController::class, 'create'])->name('sell');
     Route::post('/sell', [SellController::class, 'store']);
 });

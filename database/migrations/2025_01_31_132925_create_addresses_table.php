@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sold_items', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('item_id')->constrained()->unique();
-            $table->foreignId('payment_method_id')->constrained();
-            $table->string('payment_intent_id')->unique();
-            $table->boolean('payment_completed');
-            $table->string('ship_name');
-            $table->string('ship_postcode');
-            $table->string('ship_address');
-            $table->string('ship_building')->nullable();
+            $table->string('name');
+            $table->string('postcode');
+            $table->string('address');
+            $table->string('building')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sold_items');
+        Schema::dropIfExists('addresses');
     }
 };

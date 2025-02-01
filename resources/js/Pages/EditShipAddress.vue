@@ -8,26 +8,32 @@ import PrimaryButton from "../Components/PrimaryButton.vue";
 import PageTitle from "../Components/PageTitle.vue"
 
 const props = defineProps({
-    profile: Object,
+    address: Object,
     itemId: Number,
 })
 
 const form = useForm({
-    postcode: props.profile.postcode,
-    address: props.profile.address,
-    building: props.profile.building,
+    name: props.address.name,
+    postcode: props.address.postcode,
+    address: props.address.address,
+    building: props.address.building,
 });
 
 function submit() {
-    form.post(route('purchase.address', props.itemId));
+    form.post(route('purchase.address.edit', {'address_id':props.address.id, 'item_id':props.itemId}));
 };
 </script>
 
 <template>
     <div class="max-w-xl mx-auto px-6">
-        <Head title="Profile" />
+        <Head title="住所変更ページ" />
         <PageTitle>住所の変更</PageTitle>
         <form @submit.prevent="submit" enctype="multipart/form-data">
+            <div>
+                <InputLabel>宛名</InputLabel>
+                <TextInput v-model="form.name" />
+                <InputError class="mt-2" :message="form.errors.name" />
+            </div>
             <div class="pt-10">
                 <InputLabel>郵便番号</InputLabel>
                 <TextInput v-model="form.postcode" inputmode="numeric" placeholder="1234567 ※ハイフンなしの数字7桁" />
