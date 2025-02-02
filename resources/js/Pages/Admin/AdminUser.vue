@@ -114,9 +114,9 @@ function deleteUser(id) {
                             </button>
                         </td>
                         <td class="px-2">{{ user.id }}</td>
-                        <td class="px-2">{{ user.name }}</td>
-                        <td class="px-2">{{ user.email }}</td>
-                        <td class="px-2">{{ user.created_at }}</td>
+                        <td class="px-2 max-w-60 truncate">{{ user.name }}</td>
+                        <td class="px-2 max-w-60 truncate">{{ user.email }}</td>
+                        <td class="px-2 whitespace-nowrap">{{ user.created_at }}</td>
                     </tr>
                 </tbody>
             </table>
