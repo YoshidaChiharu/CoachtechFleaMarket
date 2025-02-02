@@ -12,7 +12,7 @@ const direction = props.comment.is_mine ? "flex-row-reverse" : "flex-row" ;
 <template>
     <div class="mb-4">
         <div class="flex items-center gap-2" :class="direction">
-            <div class="w-8">
+            <div class="w-8 min-w-8">
                 <UserIcon :path="comment.image_url" />
             </div>
             <span class="font-bold">{{ comment.name }}</span>
