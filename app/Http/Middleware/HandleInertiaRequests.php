@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
                 'message' => $request->session()->get('message'),
                 'status' => $request->session()->get('status'),
             ],
+            'stripe_key' => config('stripe.stripe_key'),
         ];
     }
 }
