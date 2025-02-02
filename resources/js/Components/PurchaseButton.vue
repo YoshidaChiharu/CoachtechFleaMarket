@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onUnmounted } from 'vue'
-import { router } from '@inertiajs/vue3'
+import { ref } from 'vue'
+import { router, usePage } from '@inertiajs/vue3'
 import axios from 'axios'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { loadStripe } from '@stripe/stripe-js'
@@ -12,7 +12,7 @@ const props = defineProps({
     addressId: Number,
 });
 
-const stripeKey = "pk_test_51QBad1Bli9nlS8GV0wskk4eK8OoTM6vLGUuQ7igRELuoB3B4YlbN4ubnUKFPaFeXeTqju80TN1vyXrMS7LWFY4zb00Pd2mQYT5";
+const stripeKey = usePage().props.stripe_key;
 const stripeInstance = ref(null);
 const stripeElements = ref(null);
 const stripePaymentIntentId = ref(null);

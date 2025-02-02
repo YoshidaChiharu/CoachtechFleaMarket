@@ -17,7 +17,7 @@ class PaymentIntentController extends Controller
         try {
             $user = $request->user();
             $item_id = $request->item_id;
-            $stripe = new StripeClient("sk_test_51QBad1Bli9nlS8GVTqk4Uty9r2jQqd3WwJlYOrZJZmNPZQWZBqPR4VOJNVPWaZMO88CJT7H9fDoXkJuIp6fTDo1K00UkjRgzAt");
+            $stripe = new StripeClient(config('stripe.stripe_secret'));
 
             // 登録住所の確認（無い場合はエラーを返す）
             if ($request->addressId == 0) {
