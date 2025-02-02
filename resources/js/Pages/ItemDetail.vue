@@ -45,7 +45,7 @@ const message = computed(() => usePage().props.flash.message);
                 </div>
                 <div class=" mt-8">
                     <h3 class="text-xl font-bold">商品説明</h3>
-                    <p class="whitespace-pre">{{ item.description }}</p>
+                    <p class="break-words whitespace-pre-wrap">{{ item.description }}</p>
                 </div>
                 <div class=" mt-12">
                     <h3 class="text-xl font-bold">商品の情報</h3>
