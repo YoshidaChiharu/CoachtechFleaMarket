@@ -47,7 +47,7 @@ class PurchaseController extends Controller
         try {
             $payment_intent_id = $request->payment_intent;
             $sold_item = SoldItem::where('payment_intent_id', $payment_intent_id)->first();
-            $stripe = new StripeClient("sk_test_51QBad1Bli9nlS8GVTqk4Uty9r2jQqd3WwJlYOrZJZmNPZQWZBqPR4VOJNVPWaZMO88CJT7H9fDoXkJuIp6fTDo1K00UkjRgzAt");
+            $stripe = new StripeClient(config('stripe.stripe_secret'));
 
             $payment_intent = $stripe->paymentIntents->retrieve($payment_intent_id);
 

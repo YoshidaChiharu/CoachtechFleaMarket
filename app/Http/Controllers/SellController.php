@@ -28,7 +28,7 @@ class SellController extends Controller
         try {
             DB::beginTransaction();
 
-            $stripe = new StripeClient("sk_test_51QBad1Bli9nlS8GVTqk4Uty9r2jQqd3WwJlYOrZJZmNPZQWZBqPR4VOJNVPWaZMO88CJT7H9fDoXkJuIp6fTDo1K00UkjRgzAt");
+            $stripe = new StripeClient(config('stripe.stripe_secret'));
 
             // Stripe顧客情報の作成処理
             if ($user->stripe_customer_id === null) {
