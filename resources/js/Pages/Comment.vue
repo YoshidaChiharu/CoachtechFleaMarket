@@ -21,9 +21,9 @@ const form = useForm({
 
 function submit() {
     form.post('/item/comment/' + props.item.id, {
-        preserveScroll: true
+        preserveScroll: true,
+        onSuccess: () => form.reset(),
     });
-    form.comment = null;
 };
 </script>
 

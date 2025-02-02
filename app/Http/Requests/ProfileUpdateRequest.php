@@ -24,7 +24,7 @@ class ProfileUpdateRequest extends FormRequest
                 'extensions:jpeg,jpg,png,bmp',
                 'max:10240'
             ],
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:50'],
             'postcode' => ['nullable', 'regex:/^[0-9]+$/', 'digits:7'],
             'address' => ['nullable', 'string', 'max:255'],
             'building' => ['nullable', 'string', 'max:255'],
