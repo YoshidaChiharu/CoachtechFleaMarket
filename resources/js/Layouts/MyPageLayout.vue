@@ -29,11 +29,11 @@ function showItems(filter) {
                     <div class="w-24 md:w-32">
                         <UserIcon :path="user.image_url" />
                     </div>
-                    <span class="font-bold text-2xl">{{ user.name }}</span>
+                    <div class="font-bold text-2xl">{{ user.name }}</div>
                 </div>
                 <div class="max-sm:mt-5 max-sm:w-full">
                     <Link href="/mypage/profile">
-                        <SecondaryButton class="w-full">プロフィールを編集</SecondaryButton>
+                        <SecondaryButton class="w-max max-sm:w-full">プロフィールを編集</SecondaryButton>
                     </Link>
                 </div>
             </div>
