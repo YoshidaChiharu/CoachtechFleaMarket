@@ -30,6 +30,6 @@ const price = `￥${props.item.price.toLocaleString()}`;
             </div>
         </div>
         <!-- 商品名 -->
-        <span>{{ item.name }}</span>
+        <div class="truncate">{{ item.name }}</div>
     </div>
 </template>

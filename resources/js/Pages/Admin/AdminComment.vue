@@ -23,6 +23,7 @@ const searchParam = reactive({
 });
 const open = ref(false);
 const selectedId = ref(null);
+const selectedItemName = ref('');
 const selectedUserName = ref('');
 const selectedComment = ref('')
 
@@ -38,8 +39,9 @@ function searchComment() {
     });
 }
 
-function openModal(id, userName, comment) {
+function openModal(id, itemName, userName, comment) {
     selectedId.value = id;
+    selectedItemName.value = itemName,
     selectedUserName.value = userName;
     selectedComment.value = comment;
     open.value = true;
@@ -116,7 +118,7 @@ function deleteComment(id) {
                     <tr v-for="comment in comments.data" :key="comment.id" class="even:bg-zinc-200">
                         <td class="text-center min-w-12">
                             <button
-                                @click="openModal(comment.id, comment.user_name, comment.comment)"
+                                @click="openModal(comment.id, comment.item_name, comment.user_name, comment.comment)"
                                 class="bg-red-500 text-sm text-white px-2 rounded"
                             >
                                 削除
@@ -124,9 +126,9 @@ function deleteComment(id) {
                         </td>
                         <td class="px-2">{{ comment.id }}</td>
                         <td class="px-2 max-w-60 truncate">{{ comment.comment }}</td>
-                        <td class="px-2">{{ comment.item_name }}</td>
-                        <td class="px-2">{{ comment.user_name }}</td>
-                        <td class="px-2">{{ comment.created_at }}</td>
+                        <td class="px-2 max-w-60 truncate">{{ comment.item_name }}</td>
+                        <td class="px-2 max-w-60 truncate">{{ comment.user_name }}</td>
+                        <td class="px-2 whitespace-nowrap">{{ comment.created_at }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -142,17 +144,23 @@ function deleteComment(id) {
             >
                 <div class="fixed top-1/2 left-1/2 z-50 bg-white rounded translate-y-[-50%] translate-x-[-50%] drop-shadow-xl max-md:w-[90vw] md:max-w-[70vw] lg:max-w-xl max-h-[80vh] overflow-auto">
                     <div class="py-6 px-10">
-                        <p class="text-center mb-4 font-bold">【コメント削除】</p>
-                        <p>
+                        <div class="text-center mb-4 font-bold">【コメント削除】</div>
+                        <div>
                             <span class="mr-2">ID : </span>
-                            <span class="font-bold">{{ selectedId }}</span><br>
+                            <span class="font-bold">{{ selectedId }}</span>
+                        </div>
+                        <div>
+                            <span class="mr-2">商品名 : </span>
+                            <span class="font-bold">{{ selectedItemName }}</span>
+                        </div>
+                        <div>
                             <span class="mr-2">投稿者 : </span>
                             <span class="font-bold">{{ selectedUserName }}</span>
-                        </p>
+                        </div>
                         <div class="mt-1 p-2 bg-gray-200 rounded break-words whitespace-pre-wrap">
                             {{ selectedComment }}
                         </div>
-                        <p class="mt-5">このコメントを削除してよろしいですか？</p>
+                        <div class="mt-5">このコメントを削除してよろしいですか？</div>
                     </div>
                     <div class="grid grid-cols-2 border-t">
                         <div class="border-r text-center">

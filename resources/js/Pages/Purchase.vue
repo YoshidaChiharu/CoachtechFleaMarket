@@ -41,7 +41,7 @@ function deleteAddress(addressId) {
             <div class="w-full sm:w-4/5 md:w-3/5 mx-auto p-6 lg:p-10">
                 <!-- 商品情報表示 -->
                 <div class="flex gap-10 items-center">
-                    <div class="w-32 p-4">
+                    <div class="w-32 min-w-32 p-4">
                         <ItemImage :item="item" />
                     </div>
                     <div>
@@ -66,10 +66,10 @@ function deleteAddress(addressId) {
                     v-if="addresses[shipAddressModal.selectedId].postcode && addresses[shipAddressModal.selectedId].address"
                     class="py-5 lg:px-6"
                 >
-                    <span class="break-all">{{ addresses[shipAddressModal.selectedId].name }}</span><br>
+                    <span class="break-words">{{ addresses[shipAddressModal.selectedId].name }}</span><br>
                     〒{{ addresses[shipAddressModal.selectedId].postcode }}<br>
-                    <span class="break-all">{{ addresses[shipAddressModal.selectedId].address }}</span>
-                    <span class="break-all">{{ addresses[shipAddressModal.selectedId].building }}</span>
+                    <span class="break-words">{{ addresses[shipAddressModal.selectedId].address }}</span>
+                    <span class="break-words">{{ addresses[shipAddressModal.selectedId].building }}</span>
                 </div>
             </div>
             <!-- 支払い情報／購入ボタン(右側) -->
@@ -131,10 +131,10 @@ function deleteAddress(addressId) {
                     <div v-for="(address, id) in addresses" :key="id" class="flex items-center gap-4 mb-4 rounded py-2 px-4 bg-gray-100">
                         <input type="radio" v-model="shipAddressModal.selectedId" :value="id">
                         <div class="px-2 font-bold grow">
-                            <span class="break-all">{{ address.name }}<br></span>
+                            <span class="break-words">{{ address.name }}<br></span>
                             <span v-if="address.postcode">〒{{ address.postcode }}<br></span>
-                            <span v-if="address.address" class="break-all">{{ address.address }}</span>
-                            <span v-if="address.building" class="ml-4 break-all">{{ address.building }}<br></span>
+                            <span v-if="address.address" class="break-words">{{ address.address }}</span>
+                            <span v-if="address.building" class="ml-4 break-words">{{ address.building }}<br></span>
                             <!-- 住所登録が無い場合 -->
                             <span v-if="!address.postcode && !address.address">
                                 <span class="text-red-500">※住所が登録されていません</span><br>
