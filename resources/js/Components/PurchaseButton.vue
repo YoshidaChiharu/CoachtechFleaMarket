@@ -22,6 +22,8 @@ const open = ref(false);
 const showErrorModal = ref(false);
 const errorMessage = ref('');
 
+const purchaseProcessing = ref(false);
+
 async function showForm() {
     const stripe = await loadStripe(stripeKey);
 
@@ -55,6 +57,9 @@ async function showForm() {
 
 async function submit() {
     try {
+        // 「支払う」ボタンを無効化
+        purchaseProcessing.value = true;
+
         // 売り切れ確認
         await axios
             .get('/api/purchase/sold_item/' + props.itemId)
@@ -107,6 +112,9 @@ async function submit() {
 
     } catch (e) {
         showError(e.message);
+
+        // 「支払う」ボタンを有効化
+        purchaseProcessing.value = false;
     }
 }
 
@@ -134,7 +142,7 @@ async function showError(message) {
                 <div class="fixed top-1/2 left-1/2 z-50 bg-white translate-y-[-50%] translate-x-[-50%] drop-shadow-xl py-10 px-20 max-sm:px-6 max-h-[85vh] overflow-auto w-max">
                     <form @submit.prevent="submit()">
                         <div id="checkout"></div>
-                        <PrimaryButton class="mt-10">支払う</PrimaryButton>
+                        <PrimaryButton class="mt-10" :disabled="purchaseProcessing">支払う</PrimaryButton>
                     </form>
                     <button @click="hide()" class="block w-3/4 mx-auto mt-10">Close</button>
                 </div>
