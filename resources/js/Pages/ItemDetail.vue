@@ -1,15 +1,19 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
+import { ref, computed } from 'vue'
 import ItemImage from "@/Components/ItemImage.vue";
 import LikeIcon from "@/Components/LikeIcon.vue";
 import CommentIcon from "@/Components/CommentIcon.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import CategoryIcon from "@/Components/CategoryIcon.vue";
+import FlashMessageModal from "@/Components/FlashMessageModal.vue";
 
 const props = defineProps({
     item: Object,
 });
 const price = `￥${props.item.price.toLocaleString()}`;
+const showFlashMessage = ref(true);
+const message = computed(() => usePage().props.flash.message);
 </script>
 
 <template>
@@ -48,7 +52,7 @@ const price = `￥${props.item.price.toLocaleString()}`;
                     <div class="mt-8 flex items-center flex-wrap gap-4">
                         <span class="font-bold">カテゴリー</span>
                         <div class="flex flex-wrap gap-2">
-                            <CategoryIcon v-for="name in item.category_names">
+                            <CategoryIcon v-for="name in item.category_names" :key="name">
                                 {{ name }}
                             </CategoryIcon>
                         </div>
@@ -60,5 +64,8 @@ const price = `￥${props.item.price.toLocaleString()}`;
                 </div>
             </div>
         </div>
+
+        <!-- フラッシュメッセージモーダル -->
+        <FlashMessageModal v-if="message" v-model:show="showFlashMessage" />
     </div>
 </template>

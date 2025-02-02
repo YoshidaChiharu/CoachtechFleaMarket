@@ -1,13 +1,18 @@
 <script setup>
 import MyPageLayout from '@/Layouts/MyPageLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
+import { ref, computed } from 'vue'
 import ItemCard from "@/Components/ItemCard.vue";
 import Pagination from "@/Components/Pagination.vue";
+import FlashMessageModal from "@/Components/FlashMessageModal.vue";
 
 defineProps({
     items: Object,
     user: Object,
 })
+
+const showFlashMessage = ref(true);
+const message = computed(() => usePage().props.flash.message);
 </script>
 
 <template>
@@ -21,6 +26,9 @@ defineProps({
                 </div>
             </div>
             <Pagination :links="items.links" />
+
+            <!-- フラッシュメッセージモーダル -->
+            <FlashMessageModal v-if="message" v-model:show="showFlashMessage" />
         </div>
     </MyPageLayout>
 </template>
