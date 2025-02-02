@@ -71,11 +71,20 @@ class SellController extends Controller
             $item->categories()->attach($request->categories);
 
             DB::commit();
+
+            $status = 'success';
+            $message = '出品しました';
         } catch (\Exception $e) {
             Log::error($e);
             DB::rollBack();
+
+            $status = 'error';
+            $message = '出品に失敗しました';
         }
 
-        return to_route('top');
+        return to_route('item.detail', $item->id)->with([
+            'status' => $status,
+            'message' => $message,
+        ]);
     }
 }

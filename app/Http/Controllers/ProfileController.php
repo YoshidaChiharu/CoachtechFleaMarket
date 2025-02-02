@@ -53,13 +53,19 @@ class ProfileController extends Controller
 
             $profile = $request->user()->profile;
             $profile->update($param);
+
+            $status = 'success';
+            $message = 'プロフィールを編集しました';
         } catch (\Exception $e) {
             Log::error($e);
+
+            $status = 'error';
+            $message = 'プロフィール編集に失敗しました';
         }
 
-        return Inertia::render('Profile', [
-            'userName' => $request->user()->name,
-            'profile' => $profile,
+        return to_route('mypage')->with([
+            'status' => $status,
+            'message' => $message,
         ]);
     }
 }
