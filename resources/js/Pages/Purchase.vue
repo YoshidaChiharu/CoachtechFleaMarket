@@ -131,10 +131,10 @@ function deleteAddress(addressId) {
                     <div v-for="(address, id) in addresses" :key="id" class="flex items-center gap-4 mb-4 rounded py-2 px-4 bg-gray-100">
                         <input type="radio" v-model="shipAddressModal.selectedId" :value="id">
                         <div class="px-2 font-bold grow">
-                            <span class="break-words">{{ address.name }}<br></span>
+                            <span class="break-all">{{ address.name }}<br></span>
                             <span v-if="address.postcode">〒{{ address.postcode }}<br></span>
-                            <span v-if="address.address" class="break-words">{{ address.address }}</span>
-                            <span v-if="address.building" class="ml-4 break-words">{{ address.building }}<br></span>
+                            <span v-if="address.address" class="break-all">{{ address.address }}</span>
+                            <span v-if="address.building" class="ml-4 break-all">{{ address.building }}<br></span>
                             <!-- 住所登録が無い場合 -->
                             <span v-if="!address.postcode && !address.address">
                                 <span class="text-red-500">※住所が登録されていません</span><br>
