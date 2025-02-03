@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * categoriesテーブルモデル
@@ -24,9 +25,25 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
+    /**
+     * 変更不可プロパティ
+     *
+     * @var list<string>
+     */
     protected $guarded = ['id'];
 
-    public function items () {
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * 該当カテゴリに属する商品の一覧を取得
+     *
+     * @return BelongsToMany
+     */
+    public function items(): BelongsToMany {
         return $this->belongsToMany('App\Models\Item');
     }
 }

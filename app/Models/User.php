@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -15,7 +14,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Carbon\Carbon;
 
 /**
- * 
+ * usersテーブルモデル
  *
  * @property int $id
  * @property int $role_id
@@ -28,7 +27,7 @@ use Carbon\Carbon;
  * @property string $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Item> $checkoutItems
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Item> $purchasedItems
  * @property-read int|null $checkout_items_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
  * @property-read int|null $comments_count
@@ -46,10 +45,10 @@ use Carbon\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User searchCreateAt($date)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User searchEmail($email)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User searchId($id)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User searchName($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User searchCreateAt(string|null $date)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User searchEmail(string|null $email)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User searchId(int|null $id)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User searchName(string|null $name)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
@@ -67,11 +66,10 @@ use Carbon\Carbon;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
+     * 変更可能プロパティ
      *
      * @var list<string>
      */
@@ -84,7 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * 非表示プロパティ
      *
      * @var list<string>
      */
@@ -94,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * キャストするプロパティ
      *
      * @return array<string, string>
      */
@@ -107,19 +105,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Created_at カラムのアクセサ
-     * 「yyyy-mm-dd hh:ii:ss」形式の文字列として取得
-     *
-     * @param [type] $value
-     * @return string
-     */
-    public function getCreatedAtAttribute($value) : string
-    {
-        return Carbon::parse($value)->timezone('Asia/Tokyo')->format('Y-m-d H:i:s');
-    }
-
-    /**
      * モデルの"booted"メソッド
+     *
+     * @return void
      */
     protected static function booted(): void
     {
@@ -133,59 +121,147 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサ・ミューテタ
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Created_at カラムのアクセサ
+     * 「yyyy-mm-dd hh:ii:ss」形式の文字列として取得
+     *
+     * @param [type] $value
+     * @return string
+     */
+    public function getCreatedAtAttribute($value) : string
+    {
+        return Carbon::parse($value)->timezone('Asia/Tokyo')->format('Y-m-d H:i:s');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * お気に入り情報の取得
+     *
+     * @return HasMany
+     */
     public function likes(): HasMany {
         return $this->hasMany('App\Models\Like');
     }
 
+    /**
+     * お気に入り登録済み商品の取得
+     *
+     * @return BelongsToMany
+     */
     public function likeItems(): BelongsToMany {
         return $this->belongsToMany('App\Models\Item', 'likes');
     }
 
+    /**
+     * 出品済み商品の取得
+     *
+     * @return HasMany
+     */
     public function items(): HasMany {
         return $this->hasMany('App\Models\Item');
     }
 
-    public function checkoutItems(): BelongsToMany {
-        return $this->belongsToMany('App\Models\Item', 'sold_items')
-                    ->withPivot('payment_completed');
+    /**
+     * 購入した商品の取得
+     *
+     * @return BelongsToMany
+     */
+    public function purchasedItems(): BelongsToMany {
+        return $this->belongsToMany('App\Models\Item', 'sold_items');
     }
 
+    /**
+     * プロフィール情報の取得
+     *
+     * @return HasOne
+     */
     public function profile(): HasOne {
         return $this->hasOne('App\Models\Profile');
     }
 
+    /**
+     * 投稿済みコメント情報の取得
+     *
+     * @return HasMany
+     */
     public function comments(): HasMany {
         return $this->hasMany('App\Models\Comment');
     }
 
-    public function getPurchasedItems() {
-        $items = $this->checkoutItems->filter(function($item) {
-            return $item->pivot->payment_completed;
-        });
-        return $items;
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | ローカルスコープ
+    |--------------------------------------------------------------------------
+    */
 
-    public function scopeSearchId($query, $id) {
+    /**
+     * ユーザーIDでの検索
+     *
+     * @param Builder $query
+     * @param integer|null $id
+     * @return Builder|User
+     */
+    public function scopeSearchId(Builder $query, int|null $id): Builder|User {
         if (!empty($id)) {
-            $query->find($id);
+            return $query->where('id', $id);
+        } else {
+            return $query;
         }
     }
 
-    public function scopeSearchName($query, $name) {
+    /**
+     * ユーザー名での検索
+     *
+     * @param Builder $query
+     * @param string|null $name
+     * @return Builder|User
+     */
+    public function scopeSearchName(Builder $query, string|null $name): Builder|User {
         if (!empty($name)) {
-            $query->where('name', 'like', "%{$name}%");
+            return $query->where('name', 'like', "%{$name}%");
+        } else {
+            return $query;
         }
     }
 
-    public function scopeSearchEmail($query, $email) {
+    /**
+     * メールアドレスでの検索
+     *
+     * @param Builder $query
+     * @param string|null $email
+     * @return Builder|User
+     */
+    public function scopeSearchEmail(Builder $query, string|null $email): Builder|User {
         if (!empty($email)) {
-            $query->where('email', 'like', "%{$email}%");
+            return $query->where('email', 'like', "%{$email}%");
+        } else {
+            return $query;
         }
     }
 
-    public function scopeSearchCreateAt($query, $date) {
+    /**
+     * ユーザー登録日での検索
+     *
+     * @param Builder $query
+     * @param string|null $date
+     * @return Builder|User
+     */
+    public function scopeSearchCreateAt(Builder $query, string|null $date): Builder|User {
         if (!empty($date)) {
-            $query->where('created_at', 'like', "{$date}%");
+            return $query->where('created_at', 'like', "{$date}%");
+        } else {
+            return $query;
         }
     }
 

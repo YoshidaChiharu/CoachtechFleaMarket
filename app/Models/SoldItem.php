@@ -38,10 +38,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SoldItem extends Model
 {
+    /**
+     * 変更不可プロパティ
+     *
+     * @var list<string>
+     */
     protected $guarded = ['id'];
 
     /**
-     * Get the attributes that should be cast.
+     * キャストするプロパティ
      *
      * @return array<string, string>
      */

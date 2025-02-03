@@ -24,5 +24,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PaymentMethod extends Model
 {
+    /**
+     * 変更不可プロパティ
+     *
+     * @var list<string>
+     */
     protected $guarded = ['id'];
 }

@@ -29,5 +29,10 @@ class Like extends Model
     /** @use HasFactory<\Database\Factories\LikeFactory> */
     use HasFactory;
 
+    /**
+     * 変更不可プロパティ
+     *
+     * @var list<string>
+     */
     protected $guarded = ['id'];
 }

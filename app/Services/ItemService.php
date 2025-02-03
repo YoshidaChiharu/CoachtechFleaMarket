@@ -82,7 +82,7 @@ class ItemService
      * @return Collection
      */
     public function getPurchasedItemsWithLike() : Collection {
-        $this->items = Auth::user()->getPurchasedItems();
+        $this->items = Auth::user()->purchasedItems;
 
         // is_likeフラグを付与
         $this->withLike();

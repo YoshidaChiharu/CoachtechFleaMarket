@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * profilesテーブルモデル
@@ -39,9 +40,25 @@ class Profile extends Model
 {
     use SoftDeletes;
 
+    /**
+     * 変更不可プロパティ
+     *
+     * @var list<string>
+     */
     protected $guarded = ['id'];
 
-    public function user() {
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * プロフィールに紐づくユーザーを取得
+     *
+     * @return HasOne
+     */
+    public function user(): HasOne {
         return $this->hasOne('App\Models\User');
     }
 }

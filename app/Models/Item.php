@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -27,13 +26,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Category> $categories
  * @property-read int|null $categories_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $commentUsers
- * @property-read int|null $comment_users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
  * @property-read int|null $comments_count
  * @property-read \App\Models\Condition $condition
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $likeUsers
- * @property-read int|null $like_users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Like> $likes
  * @property-read int|null $likes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $purchasedUser
@@ -67,6 +62,8 @@ class Item extends Model
 
     /**
      * モデルの"booted"メソッド
+     *
+     * @return void
      */
     protected static function booted(): void
     {
@@ -78,47 +75,87 @@ class Item extends Model
         });
     }
 
+    /**
+     * 変更不可プロパティ
+     *
+     * @var list<string>
+     */
     protected $guarded = ['id'];
 
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * 商品に紐づくお気に入り情報を取得
+     *
+     * @return HasMany
+     */
     public function likes(): HasMany {
         return $this->hasMany('App\Models\Like');
     }
 
-    public function likeUsers(): BelongsToMany {
-        return $this->belongsToMany('App\Models\User', 'likes');
-    }
-
+    /**
+     * 出品者を取得
+     *
+     * @return BelongsTo
+     */
     public function user(): BelongsTo {
         return $this->belongsTo('App\Models\User');
     }
 
+    /**
+     * 購入者を取得
+     *
+     * @return BelongsToMany
+     */
     public function purchasedUser(): BelongsToMany {
         return $this->belongsToMany('App\Models\User', 'sold_items');
     }
 
+    /**
+     * 商品に紐づく購入済み情報の取得
+     *
+     * @return HasMany
+     */
     public function soldItems(): HasMany {
         return $this->hasMany('App\Models\SoldItem');
     }
 
+    /**
+     * 商品に設定されているカテゴリー一覧の取得
+     *
+     * @return BelongsToMany
+     */
     public function categories(): BelongsToMany {
         return $this->belongsToMany('App\Models\Category');
     }
 
-    // public function categoryItems(): HasMany {
-    //     return $this->hasMany('App\Models\Category_item');
-    // }
-
+    /**
+     * 商品に設定されている商品状態（未使用or良好or傷／汚れあり）の取得
+     *
+     * @return BelongsTo
+     */
     public function condition(): BelongsTo {
         return $this->belongsTo('App\Models\Condition');
     }
 
+    /**
+     * 商品に投稿されているコメント一覧の取得
+     *
+     * @return HasMany
+     */
     public function comments(): HasMany {
         return $this->hasMany('App\Models\Comment');
     }
 
-    public function commentUsers(): BelongsToMany {
-        return $this->belongsToMany('App\Models\User', 'comments');
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | その他自作メソッド
+    |--------------------------------------------------------------------------
+    */
 
     /**
      * ログインユーザーがお気に入り登録している商品かどうかの判別メソッド
@@ -130,6 +167,11 @@ class Item extends Model
         return $like->isNotEmpty();
     }
 
+    /**
+     * 商品が売却済みかどうかの判別メソッド
+     *
+     * @return boolean
+     */
     public function isSold(): bool {
         $sold_items = $this->soldItems;
         return $sold_items->isNotEmpty();

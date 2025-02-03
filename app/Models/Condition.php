@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * conditionsテーブルモデル
@@ -24,9 +25,25 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Condition extends Model
 {
+    /**
+     * 変更不可プロパティ
+     *
+     * @var list<string>
+     */
     protected $guarded = ['id'];
 
-    public function items() {
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * 該当の商品状態（未使用or良好or傷／汚れあり）が設定されている商品を一覧取得
+     *
+     * @return HasMany
+     */
+    public function items(): HasMany {
         return $this->hasMany('App\Models\Item');
     }
 }

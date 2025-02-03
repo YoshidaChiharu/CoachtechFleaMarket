@@ -18,5 +18,10 @@ class Category_item extends Model
     /** @use HasFactory<\Database\Factories\CategoryItemFactory> */
     use HasFactory;
 
+    /**
+     * 変更不可プロパティ
+     *
+     * @var list<string>
+     */
     protected $guarded = ['id'];
 }
