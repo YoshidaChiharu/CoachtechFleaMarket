@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Condition;
 use App\Models\Category;
-use Ramsey\Uuid\Type\Integer;
 
 /**
  * 商品情報取得用サービスクラス
