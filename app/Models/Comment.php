@@ -8,6 +8,33 @@ use Carbon\Carbon;
 use App\Models\Item;
 use App\Models\User;
 
+/**
+ * commentsテーブルモデル
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $item_id
+ * @property string $comment
+ * @property string $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Item $item
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment commentSearch($comment)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment createdAtSearch($date)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment idSearch($id)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment itemNameSearch($item_name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment userNameSearch($user_name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereItemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Comment extends Model
 {
     protected $guarded = ['id'];
