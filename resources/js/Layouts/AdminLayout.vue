@@ -2,7 +2,6 @@
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import NavLink from '@/Components/NavLink.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SearchItems from "../Components/SearchItems.vue";
 import HamburgerMenu from "@/Components/AdminHamburgerMenu.vue";
 import { Head, Link } from '@inertiajs/vue3';
 

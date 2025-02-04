@@ -2,10 +2,10 @@
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue'
 import InputError from '@/Components/InputError.vue';
-import TextInput from "../Components/TextInput.vue";
-import InputLabel from "../Components/InputLabel.vue";
-import PrimaryButton from "../Components/PrimaryButton.vue";
-import PageTitle from "../Components/PageTitle.vue"
+import TextInput from "@/Components/TextInput.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import PageTitle from "@/Components/PageTitle.vue"
 
 const props = defineProps({
     itemId: Number,

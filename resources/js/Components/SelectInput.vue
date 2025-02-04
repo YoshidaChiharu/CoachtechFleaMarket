@@ -1,6 +1,4 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-
 const model = defineModel({
     type: Number,
     required: true,

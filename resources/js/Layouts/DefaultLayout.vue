@@ -1,9 +1,8 @@
 <script setup>
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import NavLink from '@/Components/NavLink.vue';
-import SearchItems from "../Components/SearchItems.vue";
-import { Head, Link } from '@inertiajs/vue3';
-import { usePage } from "@inertiajs/vue3";
+import SearchItems from "@/Components/SearchItems.vue";
 import HamburgerMenu from "@/Components/UserHamburgerMenu.vue";
 
 const isLogined = (usePage().props.auth.user !== null);

@@ -1,6 +1,6 @@
 <script setup>
-import { Head, router, useForm, usePage } from '@inertiajs/vue3';
-import { reactive, ref, computed } from 'vue'
+import { Head, router, useForm } from '@inertiajs/vue3';
+import { reactive, ref } from 'vue'
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import PageTitle from "@/Components/PageTitle.vue"
 import TextInput from "@/Components/TextInput.vue";

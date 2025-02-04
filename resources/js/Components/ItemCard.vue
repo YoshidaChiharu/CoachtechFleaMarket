@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import LikeIcon from "../Components/LikeIcon.vue";
-import ItemImage from "../Components/ItemImage.vue";
+import LikeIcon from "@/Components/LikeIcon.vue";
+import ItemImage from "@/Components/ItemImage.vue";
 
 const props = defineProps({
     item: Object,
