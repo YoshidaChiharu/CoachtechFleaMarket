@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Models\Item;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Services\ItemService;
 
+/**
+ * トップページ用コントローラークラス
+ */
 class TopPageController extends Controller
 {
-    public function index(Request $request) {
+    /**
+     * トップページ（おすすめ）の表示
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function index(Request $request): Response
+    {
         // 全商品を取得（お気に入り商品かどうかの「is_like」フラグ付き）
         $item_service = new ItemService;
         if ($request->searchWord) {
@@ -40,7 +48,14 @@ class TopPageController extends Controller
         ]);
     }
 
-    public function showMylist(Request $request) {
+    /**
+     * トップページ（マイリスト）の表示
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function showMylist(Request $request): Response
+    {
         // お気に入り登録商品を取得
         $item_service = new ItemService;
         $items = $item_service->getLikeItemsWithLike();

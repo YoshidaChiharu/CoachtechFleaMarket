@@ -3,15 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Models\Item;
 use Inertia\Inertia;
+use Inertia\Response;
 use App\Services\ItemService;
 
+/**
+ * マイページ用コントローラークラス
+ */
 class MyPageController extends Controller
 {
-    public function index(Request $request) {
+    /**
+     * マイページ表示
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function index(Request $request): Response
+    {
         // 商品一覧の取得処理
         $item_service = new ItemService;
 

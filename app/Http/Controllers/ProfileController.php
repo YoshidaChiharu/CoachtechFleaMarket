@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
+/**
+ * プロフィールページ用コントローラークラス
+ */
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * プロフィール編集ページ表示
+     *
+     * @param Request $request
+     * @return Response
      */
-    public function edit(Request $request)
+    public function edit(Request $request): Response
     {
         $profile = $request->user()->profile;
 
@@ -28,9 +31,12 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * プロフィールの更新
+     *
+     * @param ProfileUpdateRequest $request
+     * @return RedirectResponse
      */
-    public function update(ProfileUpdateRequest $request)
+    public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         try {
             // usersテーブルの更新処理（ユーザー名のみ）
