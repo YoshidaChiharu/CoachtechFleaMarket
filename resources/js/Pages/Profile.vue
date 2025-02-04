@@ -1,11 +1,11 @@
 <script setup>
 import InputError from '@/Components/InputError.vue';
-import TextInput from "../Components/TextInput.vue";
-import InputLabel from "../Components/InputLabel.vue";
-import ImageInput from "../Components/ImageInput.vue";
-import PrimaryButton from "../Components/PrimaryButton.vue";
-import PageTitle from "../Components/PageTitle.vue"
-import UserIcon from "../Components/UserIcon.vue";
+import TextInput from "@/Components/TextInput.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import ImageInput from "@/Components/ImageInput.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import PageTitle from "@/Components/PageTitle.vue"
+import UserIcon from "@/Components/UserIcon.vue";
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue'
 

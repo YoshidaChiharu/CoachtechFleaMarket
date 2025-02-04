@@ -6,13 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Comment;
 
+/**
+ * 「管理画面」＞「コメント管理」ページ用コントローラークラス
+ */
 class AdminCommentController extends Controller
 {
-    public function index(Request $request) {
+    /**
+     * コメント管理ページ表示
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function index(Request $request): Response {
         $searchParam = $request->searchParam;
         $id = $searchParam['id'] ?? null;
         $item_name = $searchParam['itemName'] ?? null;
@@ -20,11 +30,11 @@ class AdminCommentController extends Controller
         $comment = $searchParam['comment'] ?? null;
         $date = $searchParam['date'] ?? null;
 
-        $comments = Comment::IdSearch($id)
-                           ->ItemNameSearch($item_name)
-                           ->UserNameSearch($user_name)
-                           ->CommentSearch($comment)
-                           ->CreatedAtSearch($date)
+        $comments = Comment::idSearch($id)
+                           ->itemNameSearch($item_name)
+                           ->userNameSearch($user_name)
+                           ->commentSearch($comment)
+                           ->createdAtSearch($date)
                            ->get();
 
         $comments = $comments->map(function ($comment) {
@@ -55,7 +65,13 @@ class AdminCommentController extends Controller
         ]);
     }
 
-    public function destroy(Request $request) {
+    /**
+     * コメント削除
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request): RedirectResponse {
         try {
             Comment::find($request->comment_id)->delete();
             $status = 'success';

@@ -2,8 +2,8 @@
 import { ref } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 import NavLink from '@/Components/NavLink.vue';
-import SecondaryButton from "../Components/SecondaryButton.vue";
-import UserIcon from "../Components/UserIcon.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import UserIcon from "@/Components/UserIcon.vue";
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 
 defineProps({

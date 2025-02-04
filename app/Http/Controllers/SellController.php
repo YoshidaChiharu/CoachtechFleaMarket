@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Category;
@@ -13,16 +13,32 @@ use App\Models\Item;
 use Stripe\StripeClient;
 use App\Http\Requests\ItemRegisterRequest;
 
+/**
+ * 出品ページ用コントローラークラス
+ */
 class SellController extends Controller
 {
-    public function create() {
+    /**
+     * 出品ページ表示
+     *
+     * @return Response
+     */
+    public function create(): Response
+    {
         return Inertia::render('Sell', [
             'categories' => Category::all()->pluck('name', 'id'),
             'conditions' => Condition::all()->pluck('name', 'id'),
         ]);
     }
 
-    public function store(ItemRegisterRequest $request) {
+    /**
+     * 出品処理
+     *
+     * @param ItemRegisterRequest $request
+     * @return RedirectResponse
+     */
+    public function store(ItemRegisterRequest $request): RedirectResponse
+    {
         $user = $request->user();
 
         try {

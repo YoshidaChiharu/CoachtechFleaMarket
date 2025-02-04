@@ -4,20 +4,38 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Requests\AddressUpdateRequest;
 use App\Models\Address;
 
+/**
+ * 配送先の登録／編集ページ用コントローラークラス
+ */
 class ShipAddressController extends Controller
 {
-    public function create(Request $request) {
+    /**
+     * 配送先登録ページ表示
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function create(Request $request): Response
+    {
         return Inertia::render('RegisterShipAddress', [
             'itemId' => $request->item_id,
         ]);
     }
 
-    public function store(AddressUpdateRequest $request) {
+    /**
+     * 配送先登録処理
+     *
+     * @param AddressUpdateRequest $request
+     * @return RedirectResponse
+     */
+    public function store(AddressUpdateRequest $request): RedirectResponse
+    {
         try {
             Address::create([
                 'user_id' => $request->user()->id,
@@ -33,7 +51,13 @@ class ShipAddressController extends Controller
         return to_route('purchase', ['item_id' => $request->item_id, 'modalOpen' => true]);
     }
 
-    public function edit(Request $request)
+    /**
+     * 配送先編集ページ表示
+     *
+     * @param Request $request
+     * @return Response|RedirectResponse
+     */
+    public function edit(Request $request): Response|RedirectResponse
     {
         $address = Address::find($request->address_id);
 
@@ -48,7 +72,14 @@ class ShipAddressController extends Controller
         return to_route('top');
     }
 
-    public function update(AddressUpdateRequest $request) {
+    /**
+     * 配送先編集処理
+     *
+     * @param AddressUpdateRequest $request
+     * @return RedirectResponse
+     */
+    public function update(AddressUpdateRequest $request): RedirectResponse
+    {
         try {
             $address = Address::find($request->address_id);
 
@@ -69,7 +100,14 @@ class ShipAddressController extends Controller
         return to_route('purchase', ['item_id' => $request->item_id, 'modalOpen' => true]);
     }
 
-    public function destroy(Request $request) {
+    /**
+     * 配送先削除処理
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
         try {
             $address = Address::find($request->address_id);
 

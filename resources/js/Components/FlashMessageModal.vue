@@ -2,10 +2,6 @@
 import { ref, onUpdated, onMounted, computed } from 'vue'
 import { usePage } from '@inertiajs/vue3';
 
-// const status = defineModel('status', {
-//     type: String,
-// });
-
 const show = defineModel('show', {
     type: Boolean,
     required: true,

@@ -1,10 +1,8 @@
 <script setup>
-import { ref, onUpdated, onMounted } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import NavLink from '@/Components/NavLink.vue';
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 
-import { usePage } from "@inertiajs/vue3";
 const isLogined = usePage().props.auth.user !== null;
 </script>
 

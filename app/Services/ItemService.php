@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Condition;
 use App\Models\Category;
-use Ramsey\Uuid\Type\Integer;
 
 /**
  * 商品情報取得用サービスクラス
@@ -82,7 +81,7 @@ class ItemService
      * @return Collection
      */
     public function getPurchasedItemsWithLike() : Collection {
-        $this->items = Auth::user()->getPurchasedItems();
+        $this->items = Auth::user()->purchasedItems;
 
         // is_likeフラグを付与
         $this->withLike();
