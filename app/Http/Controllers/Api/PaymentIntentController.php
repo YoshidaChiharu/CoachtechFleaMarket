@@ -11,9 +11,19 @@ use Stripe\StripeClient;
 use App\Models\Item;
 use App\Models\PaymentMethod;
 
+/**
+ * StripeのPaymentIntent関連API
+ */
 class PaymentIntentController extends Controller
 {
-    public function createPaymentIntent(Request $request): JsonResponse {
+    /**
+     * PaymentIntent作成処理
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createPaymentIntent(Request $request): JsonResponse
+    {
         try {
             $user = $request->user();
             $item_id = $request->item_id;

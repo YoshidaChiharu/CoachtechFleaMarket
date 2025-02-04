@@ -10,9 +10,19 @@ use App\Models\Item;
 use App\Models\SoldItem;
 use App\Models\Address;
 
+/**
+ * sold_itemsテーブル操作用API
+ */
 class SoldItemController extends Controller
 {
-    public function confirmStock(Request $request) {
+    /**
+     * 商品が売却済みかどうかの確認処理
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function confirmStock(Request $request): JsonResponse
+    {
         try {
             $item = Item::find($request->item_id);
 
@@ -30,7 +40,14 @@ class SoldItemController extends Controller
         }
     }
 
-    public function store(Request $request) {
+    /**
+     * 商品購入時のsold_itemsレコード登録処理
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function store(Request $request): JsonResponse
+    {
         try {
             $user = $request->user();
 
@@ -78,7 +95,14 @@ class SoldItemController extends Controller
         }
     }
 
-    public function destroy(Request $request) {
+    /**
+     * 決済でエラーが発生した際のsold_itemsレコード削除処理
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function destroy(Request $request): JsonResponse
+    {
         try {
             SoldItem::find($request->sold_item_id)->delete();
             return response()->json([

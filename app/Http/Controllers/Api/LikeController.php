@@ -8,12 +8,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Like;
 
+/**
+ * お気に入り関連API
+ */
 class LikeController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
+     * お気に入り登録処理
      */
-    public function store(Request $request)
+    public function store(Request $request): void
     {
         try {
             Like::create([
@@ -26,9 +29,9 @@ class LikeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * お気に入り削除処理
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): void
     {
         try {
             $like = Like::where('user_id', Auth::id())
