@@ -79,7 +79,6 @@ class ItemDetailService
         // 出品者情報
         $item_detail['user_name'] =  $item->user->name;
 
-        dd($item_detail);
         return $item_detail;
     }
 }
