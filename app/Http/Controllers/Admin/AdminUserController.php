@@ -6,23 +6,33 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
 
+/**
+ * 「管理画面」＞「ユーザー管理」ページ用コントローラークラス
+ */
 class AdminUserController extends Controller
 {
-    public function index(Request $request) {
+    /**
+     * ユーザー管理ページ表示
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function index(Request $request): Response {
         $searchParam = $request->searchParam;
         $id = $searchParam['id'] ?? null;
         $name = $searchParam['name'] ?? null;
         $email = $searchParam['email'] ?? null;
         $date = $searchParam['date'] ?? null;
 
-        $users = User::SearchId($id)
-                     ->SearchName($name)
-                     ->SearchEmail($email)
-                     ->SearchCreateAt($date)
+        $users = User::searchId($id)
+                     ->searchName($name)
+                     ->searchEmail($email)
+                     ->searchCreateAt($date)
                      ->get();
 
         // ページネーション
@@ -47,8 +57,13 @@ class AdminUserController extends Controller
         ]);
     }
 
-    public function destroy(Request $request) {
-        // dd('ユーザー削除', User::find($request->user_id));
+    /**
+     * ユーザー削除
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request): RedirectResponse {
         try {
             User::find($request->user_id)->delete();
             $status = 'success';
