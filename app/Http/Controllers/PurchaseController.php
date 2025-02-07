@@ -60,10 +60,18 @@ class PurchaseController extends Controller
      */
     public function confirmPaymentIntentStatus(Request $request): RedirectResponse
     {
+        // 不正アクセス対策
+        if (!$request->payment_intent) { return to_route('top'); }
+
         try {
             $payment_intent_id = $request->payment_intent;
             $sold_item = SoldItem::where('payment_intent_id', $payment_intent_id)->first();
             $stripe = new StripeClient(config('stripe.stripe_secret'));
+
+            // sold_itemレコードが意図したものか念のため確認
+            if ($sold_item->user_id !== $request->user()->id || $sold_item->item_id !== $request->item_id) {
+                return to_route('top');
+            }
 
             $payment_intent = $stripe->paymentIntents->retrieve($payment_intent_id);
 
