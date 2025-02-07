@@ -38,7 +38,7 @@ class CommentController extends Controller
      * @return RedirectResponse
      */
     public function store(CommentRequest $request): RedirectResponse
-            {
+    {
         try {
             Comment::create([
                 'user_id' => $request->user()->id,
