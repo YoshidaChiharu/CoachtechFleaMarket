@@ -205,6 +205,7 @@ return [
         'building' => '建物名',
         'categories' => 'カテゴリー',
         'city' => '市',
+        'comment' => 'コメント',
         'content' => 'コンテンツ',
         'country' => '国',
         'created_at' => '作成日',

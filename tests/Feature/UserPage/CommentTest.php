@@ -39,4 +39,34 @@ class CommentTest extends TestCase
             'comment' => $comment,
         ]);
     }
+
+        /**
+     * @dataProvider commentFormDataProvider
+     */
+    public function test_コメント投稿時のバリデーション(string|null $comment, array $expected): void
+    {
+        $user = User::find(1);
+        $item_id = Item::inRandomOrder()->first()->id;
+
+        $response = $this->actingAs($user)->post(route('item.comment', [
+            'item_id' => $item_id,
+            'comment' => $comment,
+        ]));
+
+        $response->assertInvalid($expected);
+    }
+
+    public static function commentFormDataProvider(): array
+    {
+        return [
+            'コメント未入力' => [
+                'comment' => null,
+                'expected' => ['comment' => 'コメントは必ず指定してください。'],
+            ],
+            'コメント1000文字以上' => [
+                'comment' => 'dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext dummytext /',
+                'expected' => ['comment' => 'コメントは、1000文字以下で指定してください。'],
+            ],
+        ];
+    }
 }
