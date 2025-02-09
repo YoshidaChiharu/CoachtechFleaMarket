@@ -49,7 +49,7 @@ class AuthenticationTest extends TestCase
         $user = User::create([
             'role_id' => '2',
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'test2@example.com',
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ]);
