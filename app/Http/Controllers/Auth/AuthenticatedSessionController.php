@@ -32,6 +32,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // メール認証が完了していない状態でログインした場合は「確認メール送信しました」ページへリダイレクト
+        if (Auth::user()->email_verified_at === null) {
+            return redirect(route('verification.notice'));
+        }
+
         return redirect()->intended(route('top', absolute: false));
     }
 
