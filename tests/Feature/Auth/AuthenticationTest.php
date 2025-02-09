@@ -21,7 +21,7 @@ class AuthenticationTest extends TestCase
 
     public function test_ログイン(): void
     {
-        $user = User::factory()->create();
+        $user = User::inRandomOrder()->first();
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -30,18 +30,6 @@ class AuthenticationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect(route('top', absolute: false));
-    }
-
-    public function test_パスワード入力間違いによるログイン失敗(): void
-    {
-        $user = User::factory()->create();
-
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'wrong-password',
-        ]);
-
-        $this->assertGuest();
     }
 
     public function test_メール認証未完了状態でログインした場合のリダイレクト(): void
@@ -63,9 +51,44 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect(route('verification.notice', absolute: false));
     }
 
+    /**
+     * @dataProvider loginFormDataProvider
+     */
+    public function test_入力エラーによるログイン失敗(string|null $email, string|null $password, array $expected): void
+    {
+        $response = $this->post('/login', [
+            'email' => $email,
+            'password' => $password,
+        ]);
+
+        $this->assertGuest();
+        $response->assertInvalid($expected);
+    }
+
+    public static function loginFormDataProvider(): array
+    {
+        return [
+            'メールアドレス未入力' => [
+                'email' => null,
+                'password' => 'password',
+                'expected' => ['email' => 'メールアドレスは必ず指定してください。'],
+            ],
+            'パスワード未入力' => [
+                'email' => 'test@example.com',
+                'password' => null,
+                'expected' => ['password' => 'パスワードは必ず指定してください。'],
+            ],
+            'パスワード入力間違い' => [
+                'email' => 'test@example.com',
+                'password' => 'wrong-password',
+                'expected' => ['email' => 'ログイン情報が存在しません。'],
+            ],
+        ];
+    }
+
     public function test_ログアウト(): void
     {
-        $user = User::factory()->create();
+        $user = User::inRandomOrder()->first();
 
         $response = $this->actingAs($user)->post('/logout');
 
