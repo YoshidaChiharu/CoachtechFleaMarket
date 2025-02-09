@@ -36,7 +36,7 @@ class ItemRegisterRequest extends FormRequest
             'name' => ['required', 'string', 'max:100'],
             'brand' => ['nullable', 'string', 'max:50'],
             'description' => ['required', 'string', 'max:1000'],
-            'price' => ['required', 'numeric', 'integer', 'min:300'],
+            'price' => ['required', 'numeric', 'integer', 'min:300', 'max:9999999'],
         ];
     }
 
