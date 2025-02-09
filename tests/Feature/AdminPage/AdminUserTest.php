@@ -96,7 +96,7 @@ class AdminUserTest extends TestCase
         $search_param = [
             'date' => $test_param,
         ];
-        $count = User::where('created_at', $test_date_time)->count();
+        $count = User::where('created_at', 'like', $test_param . '%')->count();
 
         $response = $this->actingAs($user)->get(route('admin.user', ['searchParam' => $search_param]));
 
