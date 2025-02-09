@@ -64,7 +64,7 @@ class ProfileTest extends TestCase
         Storage::disk('public')->delete($image_path);
     }
 
-        /**
+    /**
      * @dataProvider profileFormDataProvider
      */
     public function test_プロフィール編集時のバリデーション(array $form, array $expected): void
