@@ -1,12 +1,13 @@
 <script setup>
+import { computed } from 'vue'
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import NavLink from '@/Components/NavLink.vue';
 import SearchItems from "@/Components/SearchItems.vue";
 import HamburgerMenu from "@/Components/UserHamburgerMenu.vue";
 
-const isLogined = (usePage().props.auth.user !== null);
-const isAdmin = (isLogined === true) && (usePage().props.auth.user.role_id === 1);
+const isLogined = computed(() => (usePage().props.auth.user !== null));
+const isAdmin = computed(() => (usePage().props.auth.user !== null) && (usePage().props.auth.user.role_id === 1));
 </script>
 
 <template>
