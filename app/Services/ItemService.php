@@ -23,12 +23,13 @@ class ItemService
     private Collection $items;
 
     /**
-     * 全商品を取得する（お気に入り商品判別フラグ付き）
+     * 全商品を取得する
      *
      * @return Collection
      */
     public function getAllItemsWithLike() : Collection {
-        $this->items = Item::all();
+        // 自身が出品した商品を除外して取得
+        $this->items = Item::where('user_id', '!=', Auth::id())->get();
 
         // is_likeフラグを付与（ログイン済みの場合のみ）
         if (Auth::user()) {
@@ -47,7 +48,8 @@ class ItemService
      * @return Collection
      */
     public function getLikeItemsWithLike() : Collection {
-        $this->items = Auth::user()->likeItems;
+        // 自身が出品した商品を除外して取得
+        $this->items = Auth::user()->likeItems->where('user_id', '!=', Auth::id());
 
         // is_likeフラグを付与
         $this->withLike();
@@ -116,6 +118,9 @@ class ItemService
         foreach ($results as $result) {
             $this->items = ($this->items)->merge($result->items);
         }
+
+        // 自身が出品した商品を除外
+        $this->items = $this->items->where('user_id', '!=', Auth::id());
 
         // is_likeフラグを付与
         $this->withLike();
