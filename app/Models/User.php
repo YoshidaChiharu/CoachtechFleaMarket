@@ -213,7 +213,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return Builder|User
      */
     public function scopeSearchId(Builder $query, int|null $id): Builder|User {
-        if (!empty($id)) {
+        if (isset($id)) {
             return $query->where('id', $id);
         } else {
             return $query;
@@ -228,7 +228,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return Builder|User
      */
     public function scopeSearchName(Builder $query, string|null $name): Builder|User {
-        if (!empty($name)) {
+        if (isset($name)) {
             return $query->where('name', 'like', "%{$name}%");
         } else {
             return $query;
@@ -243,7 +243,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return Builder|User
      */
     public function scopeSearchEmail(Builder $query, string|null $email): Builder|User {
-        if (!empty($email)) {
+        if (isset($email)) {
             return $query->where('email', 'like', "%{$email}%");
         } else {
             return $query;
@@ -258,7 +258,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return Builder|User
      */
     public function scopeSearchCreateAt(Builder $query, string|null $date): Builder|User {
-        if (!empty($date)) {
+        if (isset($date)) {
             return $query->where('created_at', 'like', "{$date}%");
         } else {
             return $query;

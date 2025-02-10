@@ -102,7 +102,7 @@ class Comment extends Model
      * @return Builder|Comment
      */
     public function scopeIdSearch(Builder $query, int|null $id): Builder|Comment {
-        if (!empty($id)) {
+        if (isset($id)) {
             return $query->where('id', $id);
         } else {
             return $query;
@@ -117,7 +117,7 @@ class Comment extends Model
      * @return Builder|Comment
      */
     public function scopeItemNameSearch(Builder $query, string|null $item_name): Builder|Comment {
-        if (!empty($item_name)) {
+        if (isset($item_name)) {
             $ids = Item::where('name', 'like', "%{$item_name}%")->get()->pluck('id');
             return $query->whereIn('item_id', $ids);
         } else {
@@ -133,7 +133,7 @@ class Comment extends Model
      * @return Builder|Comment
      */
     public function scopeUserNameSearch(Builder $query, string|null $user_name): Builder|Comment {
-        if (!empty($user_name)) {
+        if (isset($user_name)) {
             $ids = User::where('name', 'like', "%{$user_name}%")->get()->pluck('id');
             return $query->whereIn('user_id', $ids);
         } else {
@@ -149,7 +149,7 @@ class Comment extends Model
      * @return Builder|Comment
      */
     public function scopeCommentSearch(Builder $query, string|null $comment): Builder|Comment {
-        if (!empty($comment)) {
+        if (isset($comment)) {
             return $query->where('comment', 'like', "%{$comment}%");
         } else {
             return $query;
@@ -164,7 +164,7 @@ class Comment extends Model
      * @return Builder|Comment
      */
     public function scopeCreatedAtSearch(Builder $query, string|null $date): Builder|Comment {
-        if (!empty($date)) {
+        if (isset($date)) {
             return $query->where('created_at', 'like', "{$date}%");
         } else {
             return $query;

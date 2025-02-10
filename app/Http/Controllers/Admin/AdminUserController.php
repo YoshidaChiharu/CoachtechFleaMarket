@@ -25,8 +25,8 @@ class AdminUserController extends Controller
     public function index(Request $request): Response {
         $searchParam = $request->searchParam;
         $id = $searchParam['id'] ?? null;
-        $name = $searchParam['name'] ?? null;
-        $email = $searchParam['email'] ?? null;
+        $name = addcslashes($searchParam['name'] ?? null, '%_\\');
+        $email = addcslashes($searchParam['email'] ?? null, '%_\\');
         $date = $searchParam['date'] ?? null;
 
         $users = User::searchId($id)

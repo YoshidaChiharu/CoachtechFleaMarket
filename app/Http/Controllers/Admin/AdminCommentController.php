@@ -25,9 +25,9 @@ class AdminCommentController extends Controller
     public function index(Request $request): Response {
         $searchParam = $request->searchParam;
         $id = $searchParam['id'] ?? null;
-        $item_name = $searchParam['itemName'] ?? null;
-        $user_name = $searchParam['userName'] ?? null;
-        $comment = $searchParam['comment'] ?? null;
+        $item_name = addcslashes($searchParam['itemName'] ?? null, '%_\\');
+        $user_name = addcslashes($searchParam['userName'] ?? null, '%_\\');
+        $comment = addcslashes($searchParam['comment'] ?? null, '%_\\');
         $date = $searchParam['date'] ?? null;
 
         $comments = Comment::idSearch($id)
