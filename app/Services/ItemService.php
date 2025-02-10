@@ -103,6 +103,7 @@ class ItemService
      */
     public function searchItemsWithLike(string $search_word) : Collection {
         // [商品名] [商品説明文] 検索
+        $search_word = addcslashes($search_word, '%_\\');
         $this->items = Item::where('name', 'like', "%{$search_word}%")
                            ->orWhere('description', 'like', "%{$search_word}%")
                            ->get();

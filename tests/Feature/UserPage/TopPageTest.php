@@ -4,6 +4,7 @@ namespace Tests\Feature\UserPage;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Item;
@@ -103,32 +104,40 @@ class TopPageTest extends TestCase
 
     public function test_商品名での商品検索(): void
     {
-        $search_word = Item::find(1)->name;
+        $search_word = mb_substr(Item::inRandomOrder()->first()->name, -2);
 
         $response = $this->get(route('top', ['searchWord' => $search_word]));
 
-        $response->assertInertia(function (AssertableInertia $page) use ($search_word) {
-            $page->component('Top')
-                 ->has('items.data.0', function (AssertableInertia $page) use ($search_word) {
-                    $page->where('name', $search_word)
-                         ->etc();
-                 });
-        });
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->component('Top')
+            ->has('items.data', fn (AssertableInertia $page) => $page
+                ->each(fn (AssertableInertia $page) => $page
+                    ->where('name', function ($name) use ($search_word) {
+                        return Str::contains($name, $search_word);
+                    })
+                    ->etc()
+                )
+            )
+        );
     }
 
     public function test_商品説明文での商品検索(): void
     {
-        $search_word = Item::find(1)->description;
+        $search_word = mb_substr(Item::inRandomOrder()->first()->description, -2);
 
         $response = $this->get(route('top', ['searchWord' => $search_word]));
 
-        $response->assertInertia(function (AssertableInertia $page) use ($search_word) {
-            $page->component('Top')
-                 ->has('items.data.0', function (AssertableInertia $page) use ($search_word) {
-                    $page->where('description', $search_word)
-                         ->etc();
-                 });
-        });
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->component('Top')
+            ->has('items.data', fn (AssertableInertia $page) => $page
+                ->each(fn (AssertableInertia $page) => $page
+                    ->where('description', function ($description) use ($search_word) {
+                        return Str::contains($description, $search_word);
+                    })
+                    ->etc()
+                )
+            )
+        );
     }
 
     public function test_カテゴリ名での商品検索(): void
