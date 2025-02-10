@@ -30,6 +30,31 @@ class TopPageTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_未ログインのトップページでは全商品表示される()
+    {
+        $count = Item::all()->count();
+
+        $response = $this->get(route('top'));
+
+        $response->assertInertia(function (AssertableInertia $page) use ($count) {
+            $page->component('Top')
+                 ->where('items.total', $count);
+        });
+    }
+
+    public function test_ログイン済みのトップページでは自身の出品商品を除外して表示される()
+    {
+        $user = User::find(1);
+        $count = Item::where('user_id', '!=', $user->id)->count();
+
+        $response = $this->actingAs($user)->get(route('top'));
+
+        $response->assertInertia(function (AssertableInertia $page) use ($count) {
+            $page->component('Top')
+                 ->where('items.total', $count);
+        });
+    }
+
     public function test_未ログイン状態でマイリスト表示した際のリダイレクト(): void
     {
         $response = $this->get(route('top.mylist'));
@@ -46,22 +71,27 @@ class TopPageTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_トップページには全商品表示される()
-    {
-        $count = Item::all()->count();
-
-        $response = $this->get(route('top'));
-
-        $response->assertInertia(function (AssertableInertia $page) use ($count) {
-            $page->component('Top')
-                 ->where('items.total', $count);
-        });
-    }
-
     public function test_マイリストに表示されるのはお気に入り登録商品のみ(): void
     {
         $user = User::find(1);
-        $count = $user->likeItems->count();
+
+        $response = $this->actingAs($user)->get(route('top.mylist'));
+
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->component('Top')
+            ->has('items.data', fn (AssertableInertia $page) => $page
+                ->each(fn (AssertableInertia $page) => $page
+                    ->where('is_like', true)
+                    ->etc()
+                )
+            )
+        );
+    }
+
+    public function test_マイリストには自身の出品商品を除外して表示される(): void
+    {
+        $user = User::find(1);
+        $count = $user->likeItems->where('user_id', '!=', $user->id)->count();
 
         $response = $this->actingAs($user)->get(route('top.mylist'));
 
