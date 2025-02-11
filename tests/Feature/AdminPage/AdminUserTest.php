@@ -100,14 +100,18 @@ class AdminUserTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('admin.user', ['searchParam' => $search_param]));
 
-        $response->assertInertia(function (AssertableInertia $page) use ($test_date_time, $count) {
-            $page->component('Admin/AdminUser')
-                 ->where('users.total', $count)
-                 ->has('users.data.0', function (AssertableInertia $page) use ($test_date_time) {
-                    $page->where('created_at', $test_date_time)
-                         ->etc();
-                 });
-        });
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+        ->component('Admin/AdminUser')
+        ->where('users.total', $count)
+        ->has('users.data', fn (AssertableInertia $page) => $page
+            ->each(fn (AssertableInertia $page) => $page
+                ->where('created_at', function ($created_at) use ($test_param) {
+                    return Str::contains($created_at, $test_param);
+                })
+                ->etc()
+            )
+        )
+    );
     }
 
     public function test_ユーザー削除(): void
