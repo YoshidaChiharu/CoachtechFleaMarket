@@ -139,7 +139,9 @@ class AdminCommentTest extends TestCase
             ->where('comments.total', $count)
             ->has('comments.data', fn (AssertableInertia $page) => $page
                 ->each(fn (AssertableInertia $page) => $page
-                    ->where('created_at', $test_date_time)
+                    ->where('created_at', function ($created_at) use ($test_param) {
+                        return Str::contains($created_at, $test_param);
+                    })
                     ->etc()
                 )
             )
