@@ -38,11 +38,11 @@ commands:
           name: "Install php-gd"
           command: |
             sudo apt install -y zlib1g-dev libpng-dev
-            sudo docker-php-ext-install gd
+            sudo -E docker-php-ext-install gd
 
       - run:
           name: "Install php-mysql"
-          command: sudo docker-php-ext-install pdo_mysql
+          command: sudo -E docker-php-ext-install pdo_mysql
 
       - run:
           name: "composer install"
