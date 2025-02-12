@@ -35,10 +35,12 @@ commands:
           command: sudo apt update
 
       - run:
+          name: "Install lib"
+          command: sudo apt install -y zlib1g-dev libpng-dev
+
+      - run:
           name: "Install php-gd"
-          command: |
-            sudo apt install -y zlib1g-dev libpng-dev
-            sudo -E docker-php-ext-install gd
+          command: sudo -E docker-php-ext-install gd
 
       - run:
           name: "Install php-mysql"
