@@ -36,15 +36,19 @@ commands:
 
       - run:
           name: "Install lib"
-          command: sudo apt install -y zlib1g-dev libpng-dev libfreetype6-dev
-
-      - run:
-          name: "Install php-gd"
-          command: sudo -E docker-php-ext-install gd
+          command: sudo apt install -y zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev
 
       - run:
           name: "Install php-mysql"
           command: sudo -E docker-php-ext-install pdo_mysql
+
+      - run:
+          name: "configure php-ext"
+          command: sudo -E docker-php-ext-configure gd --with-freetype --with-jpeg
+
+      - run:
+          name: "Install php-gd"
+          command: sudo -E docker-php-ext-install gd
 
       - run:
           name: "composer install"
