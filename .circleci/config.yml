@@ -11,7 +11,7 @@ executors:
           DB_DATABASE: laravel_db
           DB_USERNAME: 'root'
           DB_PASSWORD: ''
-      - image: circleci/mysql:8.0.33
+      - image: cimg/mysql:8.0.33
         environment:
           MYSQL_DATABASE: laravel_db
           MYSQL_ROOT_HOST: '%'
