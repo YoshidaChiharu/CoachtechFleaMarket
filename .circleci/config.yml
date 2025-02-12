@@ -68,7 +68,7 @@ commands:
 
       - run:
           name: "run phpunit"
-          command: php artisan test
+          command: vendor/bin/phpunit
 
 jobs:
   run_test:
