@@ -8,6 +8,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Item;
 use App\Models\Comment;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class CommentTest extends TestCase
 {
@@ -40,9 +41,7 @@ class CommentTest extends TestCase
         ]);
     }
 
-        /**
-     * @dataProvider commentFormDataProvider
-     */
+    #[DataProvider('commentFormDataProvider')]
     public function test_コメント投稿時のバリデーション(string|null $comment, array $expected): void
     {
         $user = User::find(1);

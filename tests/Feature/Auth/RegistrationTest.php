@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use Inertia\Testing\AssertableInertia;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RegistrationTest extends TestCase
 {
@@ -29,9 +30,7 @@ class RegistrationTest extends TestCase
         $response->assertRedirect(route('verification.notice', absolute: false));
     }
 
-    /**
-     * @dataProvider registerUserDataProvider
-     */
+    #[DataProvider('registerUserDataProvider')]
     public function test_会員登録時のバリデーション(string|null $email, string|null $password, array $expected): void
     {
         $response = $this->post('/register', [

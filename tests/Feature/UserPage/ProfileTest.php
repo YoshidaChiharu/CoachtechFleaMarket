@@ -10,6 +10,7 @@ use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Profile;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ProfileTest extends TestCase
 {
@@ -64,9 +65,7 @@ class ProfileTest extends TestCase
         Storage::disk('public')->delete($image_path);
     }
 
-    /**
-     * @dataProvider profileFormDataProvider
-     */
+    #[DataProvider('profileFormDataProvider')]
     public function test_プロフィール編集時のバリデーション(array $form, array $expected): void
     {
         $user = User::find(1);
