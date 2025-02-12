@@ -23,12 +23,26 @@ commands:
     steps:
       - checkout
 
+      # - run:
+      #     name: "Prepare Environment"
+      #     command: |
+      #       sudo apt update && sudo apt install -y default-mysql-client zlib1g-dev libpng-dev libjpeg-dev
+      #       sudo docker-php-ext-configure gd --with-jpeg
+      #       sudo docker-php-ext-install pdo_mysql gd
+
       - run:
-          name: "Prepare Environment"
+          name: "Update apt"
+          command: sudo apt update
+
+      - run:
+          name: "Install php-gd"
           command: |
-            sudo apt update && sudo apt install -y default-mysql-client zlib1g-dev libpng-dev libjpeg-dev
-            sudo docker-php-ext-configure gd --with-jpeg
-            sudo docker-php-ext-install pdo_mysql gd
+            sudo apt install -y zlib1g-dev libpng-dev
+            sudo docker-php-ext-install gd
+
+      - run:
+          name: "Install php-mysql"
+          command: sudo docker-php-ext-install pdo_mysql
 
       - run:
           name: "composer install"
