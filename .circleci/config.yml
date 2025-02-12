@@ -36,7 +36,7 @@ commands:
 
       - run:
           name: "Install lib"
-          command: sudo apt install -y zlib1g-dev libpng-dev
+          command: sudo apt install -y zlib1g-dev libpng-dev libfreetype6-dev
 
       - run:
           name: "Install php-gd"
