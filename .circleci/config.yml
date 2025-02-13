@@ -1,0 +1,73 @@
+version: 2.1
+
+executors:
+  base:
+    docker:
+      - image: cimg/php:8.3.7-node
+        environment:
+          APP_ENV: testing
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_DATABASE: laravel_db
+          DB_USERNAME: 'root'
+          DB_PASSWORD: ''
+      - image: cimg/mysql:8.0.33
+        environment:
+          MYSQL_DATABASE: laravel_db
+          MYSQL_ROOT_HOST: '%'
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+          TZ: Asia/Tokyo
+
+commands:
+  run_test:
+    steps:
+      - checkout
+
+      - run:
+          name: "Update apt"
+          command: sudo apt update
+
+      - run:
+          name: "Install lib"
+          command: sudo apt install -y zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev
+
+      - run:
+          name: "Install php-pdo-mysql"
+          command: sudo -E docker-php-ext-install pdo_mysql
+
+      - run:
+          name: "Install php-gd"
+          command: sudo -E docker-php-ext-configure gd --with-freetype --with-jpeg && sudo -E docker-php-ext-install gd
+
+      - run:
+          name: "composer install"
+          command: composer install
+
+      - run:
+          name: "yarn install"
+          command: yarn install
+
+      - run:
+          name: "yarn build"
+          command: yarn run build
+
+      - run:
+          name: "Generate App key"
+          command: php artisan key:generate --env=testing
+
+      - run:
+          name: "run phpunit"
+          command: vendor/bin/phpunit
+
+jobs:
+  run_test:
+    executor: base
+    steps:
+      - checkout
+      - run_test
+
+workflows:
+  push-branch-workflow:
+    jobs:
+      - run_test:
+          name: "run_test"
