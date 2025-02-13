@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Category_item;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SellTest extends TestCase
 {
@@ -116,9 +117,7 @@ class SellTest extends TestCase
         Storage::disk('public')->delete($image_path);
     }
 
-    /**
-     * @dataProvider sellFormDataProvider
-     */
+    #[DataProvider('sellFormDataProvider')]
     public function test_出品時のバリデーション(array $form, array $expected): void
     {
         $user = User::find(1);

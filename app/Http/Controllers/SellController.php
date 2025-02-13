@@ -44,26 +44,28 @@ class SellController extends Controller
         try {
             DB::beginTransaction();
 
-            $stripe = new StripeClient(config('stripe.stripe_secret'));
+            if (config('app.env') !== 'testing') {
+                $stripe = new StripeClient(config('stripe.stripe_secret'));
 
-            // Stripe顧客情報の作成処理
-            if ($user->stripe_customer_id === null) {
-                $customer = $stripe->customers->create([
-                    'name' => $user->name,
-                    'email' => $user->email,
-                ]);
+                // Stripe顧客情報の作成処理
+                if ($user->stripe_customer_id === null) {
+                    $customer = $stripe->customers->create([
+                        'name' => $user->name,
+                        'email' => $user->email,
+                    ]);
 
-                $user->update([
-                    'stripe_customer_id' => $customer->id,
+                    $user->update([
+                        'stripe_customer_id' => $customer->id,
+                    ]);
+                }
+
+                // Stripeの商品＆価格情報の作成処理
+                $price = $stripe->prices->create([
+                    'currency' => 'jpy',
+                    'unit_amount' => $request->price,
+                    'product_data' => ['name' => $request->name],
                 ]);
             }
-
-            // Stripeの商品＆価格情報の作成処理
-            $price = $stripe->prices->create([
-                'currency' => 'jpy',
-                'unit_amount' => $request->price,
-                'product_data' => ['name' => $request->name],
-            ]);
 
             // 画像の保存
             $image = $request->file('image');
@@ -80,7 +82,7 @@ class SellController extends Controller
                 'image_url' => $image_path,
                 'condition_id' => $request->condition_id,
                 'user_id' => $user->id,
-                'stripe_price_id' => $price->id,
+                'stripe_price_id' => $price->id ?? 'dummy_price_id',
             ]);
 
             // カテゴリー登録処理

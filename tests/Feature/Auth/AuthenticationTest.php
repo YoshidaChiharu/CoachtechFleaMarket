@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AuthenticationTest extends TestCase
 {
@@ -51,9 +52,7 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect(route('verification.notice', absolute: false));
     }
 
-    /**
-     * @dataProvider loginFormDataProvider
-     */
+    #[DataProvider('loginFormDataProvider')]
     public function test_入力エラーによるログイン失敗(string|null $email, string|null $password, array $expected): void
     {
         $response = $this->post('/login', [
