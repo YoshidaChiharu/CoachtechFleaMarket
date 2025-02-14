@@ -69,12 +69,15 @@ commands:
 
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:GXzzguqYsesZNp7GJoMvvipAoKxsv/LzJ+w5qpU4y8s"
+            - "SHA256:RYMAvyNVFfKR587CPJCcWOrXdurmk04JE5bsRknNUmE"
+
+      - run:
+          name: "connect ec2"
+          command: ssh ec2-user@ec2-57-180-170-88.ap-northeast-1.compute.amazonaws.com
 
       - run:
           name: "git pull"
-          command: |
-            ssh $USER_NAME@$HOST_NAME "cd /var/www/CoachtechFleaMarket/ && git pull"
+          command: cd /var/www/CoachtechFleaMarket/ && git pull
 
       - run:
           name: "npm build"
