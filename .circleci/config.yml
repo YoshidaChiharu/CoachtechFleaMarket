@@ -69,7 +69,7 @@ commands:
 
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:/omqmesnh3JBCJhlzq/8/H+TK1nGMlhNVIOh0rq9d+o"
+            - "SHA256:GXzzguqYsesZNp7GJoMvvipAoKxsv/LzJ+w5qpU4y8s"
 
       - run:
           name: "git pull"
