@@ -65,8 +65,6 @@ commands:
 
   deploy:
     steps:
-      - checkout
-
       - add_ssh_keys:
           fingerprints:
             - "SHA256:RYMAvyNVFfKR587CPJCcWOrXdurmk04JE5bsRknNUmE"
@@ -85,7 +83,6 @@ jobs:
   deploy:
     executor: base
     steps:
-      - checkout
       - deploy
 
 workflows:
