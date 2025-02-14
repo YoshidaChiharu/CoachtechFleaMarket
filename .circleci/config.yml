@@ -72,16 +72,8 @@ commands:
             - "SHA256:RYMAvyNVFfKR587CPJCcWOrXdurmk04JE5bsRknNUmE"
 
       - run:
-          name: "connect ec2"
-          command: ssh -v ec2-user@ec2-57-180-170-88.ap-northeast-1.compute.amazonaws.com
-
-      - run:
-          name: "git pull"
-          command: cd /var/www/CoachtechFleaMarket/ && git pull
-
-      - run:
-          name: "npm build"
-          command: npm run build
+          name: "git pull & npm run build"
+          command: ssh -v $USER_NAME@$HOST_NAME "cd /var/www/CoachtechFleaMarket/ && git pull && npm run build"
 
 jobs:
   run_test:
