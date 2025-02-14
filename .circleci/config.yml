@@ -19,8 +19,8 @@ executors:
           TZ: Asia/Tokyo
 
   base:
-    docker:
-      - image: cimg/base:2025.02
+    machine:
+      image: ubuntu-2404:2024.11.1
 
 commands:
   run_test:
@@ -73,7 +73,7 @@ commands:
 
       - run:
           name: "connect ec2"
-          command: ssh ec2-user@ec2-57-180-170-88.ap-northeast-1.compute.amazonaws.com
+          command: ssh -v ec2-user@ec2-57-180-170-88.ap-northeast-1.compute.amazonaws.com
 
       - run:
           name: "git pull"
