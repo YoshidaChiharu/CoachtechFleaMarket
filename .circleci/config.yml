@@ -1,7 +1,7 @@
 version: 2.1
 
 executors:
-  base:
+  php:
     docker:
       - image: cimg/php:8.3.7-node
         environment:
@@ -17,6 +17,10 @@ executors:
           MYSQL_ROOT_HOST: '%'
           MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
           TZ: Asia/Tokyo
+
+  base:
+    machine:
+      image: cimg/base:2025.02
 
 commands:
   run_test:
@@ -59,15 +63,41 @@ commands:
           name: "run phpunit"
           command: vendor/bin/phpunit
 
+  deploy:
+    steps:
+      - checkout
+
+      - add_ssh_keys:
+
+      - run:
+        name: "git pull"
+        command: ssh ${USER_NAME}@${HOST_NAME} 'cd /var/www/CoachtechFleaMarket/ && git pull'
+
+      - run:
+        name: "npm build"
+        command: npm run build
+
 jobs:
   run_test:
-    executor: base
+    executor: php
     steps:
       - checkout
       - run_test
+
+  deploy:
+    executor: base
+    steps:
+      - checkout
+      - deploy
 
 workflows:
   push-branch-workflow:
     jobs:
       - run_test:
-          name: "run_test"
+        name: "run_test"
+
+      - deploy:
+        name: "deploy"
+        filters:
+          branches:
+            only: main
