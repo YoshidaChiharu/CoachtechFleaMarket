@@ -68,14 +68,16 @@ commands:
       - checkout
 
       - add_ssh_keys:
+          fingerprints:
+            - "SHA256:/omqmesnh3JBCJhlzq/8/H+TK1nGMlhNVIOh0rq9d+o"
 
       - run:
-        name: "git pull"
-        command: ssh ${USER_NAME}@${HOST_NAME} 'cd /var/www/CoachtechFleaMarket/ && git pull'
+          name: "git pull"
+          command: ssh ${USER_NAME}@${HOST_NAME} 'cd /var/www/CoachtechFleaMarket/ && git pull'
 
       - run:
-        name: "npm build"
-        command: npm run build
+          name: "npm build"
+          command: npm run build
 
 jobs:
   run_test:
@@ -94,10 +96,10 @@ workflows:
   push-branch-workflow:
     jobs:
       - run_test:
-        name: "run_test"
+          name: "run_test"
 
       - deploy:
-        name: "deploy"
-        filters:
-          branches:
-            only: main
+          name: "deploy"
+          filters:
+            branches:
+              only: main
