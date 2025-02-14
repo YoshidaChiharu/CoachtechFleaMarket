@@ -19,8 +19,8 @@ executors:
           TZ: Asia/Tokyo
 
   base:
-    machine:
-      image: cimg/base:2025.02
+    docker:
+      - image: cimg/base:2025.02
 
 commands:
   run_test:
