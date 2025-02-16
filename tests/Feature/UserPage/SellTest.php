@@ -247,17 +247,17 @@ class SellTest extends TestCase
                 ],
                 'expected' => ['price' => '300円以上の価格を設定してください'],
             ],
-            '販売価格に10,000,000円以上を入力' => [
+            '販売価格に300,000円以上を入力' => [
                 'form' => [
                     'name' => 'テスト商品',
                     'brand' => 'テストブランド',
-                    'price' => 10000000,
+                    'price' => 300001,
                     'description' => 'テスト商品説明文',
                     'image' => UploadedFile::fake()->image('test.png'),
                     'condition_id' => 1,
                     'categories' => [1, 2, 3],
                 ],
-                'expected' => ['price' => '9999999円以下の価格を設定してください'],
+                'expected' => ['price' => '300000円以下の価格を設定してください'],
             ],
             '画像に画像ファイル以外を指定' => [
                 'form' => [
