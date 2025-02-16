@@ -34,7 +34,6 @@ class PaymentIntentController extends Controller
                 $ship_postcode = $user->profile->postcode;
                 $ship_address = $user->profile->address;
                 if (!$ship_postcode || !$ship_address) {
-                    Log::info('住所なしエラー');
                     return response()->json([
                         'status' => 'error',
                         'message' => '配送先が正しく登録されていません'
@@ -91,7 +90,7 @@ class PaymentIntentController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'エラーが発生しました'
-            ], 500);
+            ], 400);
         }
     }
 }
