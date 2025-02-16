@@ -75,6 +75,10 @@ class TopPageTest extends TestCase
     public function test_マイリストに表示されるのはお気に入り登録商品のみ(): void
     {
         $user = User::find(1);
+        Like::create([
+            'user_id' => $user->id,
+            'item_id' => Item::where('user_id', '!=', $user->id)->inRandomOrder()->first()->id,
+        ]);
 
         $response = $this->actingAs($user)->get(route('top.mylist'));
 
@@ -92,6 +96,16 @@ class TopPageTest extends TestCase
     public function test_マイリストには自身の出品商品を除外して表示される(): void
     {
         $user = User::find(1);
+        Like::insert([
+            [
+                'user_id' => $user->id,
+                'item_id' => Item::where('user_id', '!=', $user->id)->inRandomOrder()->first()->id,
+            ],
+            [
+                'user_id' => $user->id,
+                'item_id' => Item::where('user_id', $user->id)->inRandomOrder()->first()->id,
+            ]
+        ]);
         $count = $user->likeItems->where('user_id', '!=', $user->id)->count();
 
         $response = $this->actingAs($user)->get(route('top.mylist'));

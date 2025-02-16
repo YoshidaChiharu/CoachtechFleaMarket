@@ -54,7 +54,7 @@ class AdminCommentTest extends TestCase
     public function test_商品名でのコメント検索(): void
     {
         $user = User::where('role_id', 1)->first();
-        $test_param = 'ダミー商品_' . rand(1, 5);
+        $test_param = 'ダミー商品_' . rand(1, 4);
         $search_param = [
             'itemName' => $test_param,
         ];
