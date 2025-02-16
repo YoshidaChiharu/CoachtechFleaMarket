@@ -59,10 +59,10 @@ class ProfileTest extends TestCase
 
         $response->assertRedirect(route('mypage'));
         $image_path = $user->profile->image_path;
-        Storage::disk('s3')->assertExists($image_path);
+        Storage::disk('public')->assertExists($image_path);
 
         // アップロードしたテスト用画像ファイルの削除
-        Storage::disk('s3')->delete($image_path);
+        Storage::disk('public')->delete($image_path);
     }
 
     #[DataProvider('profileFormDataProvider')]
