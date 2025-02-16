@@ -51,7 +51,6 @@ class SellTest extends TestCase
         $response = $this->actingAs($user)->post(route('sell'), $form);
 
         $item = Item::latest('id')->first();
-        $image_path = str_replace("/storage/img", "img", $item->image_url);
         $response->assertRedirect(route('item.detail', $item->id));
         $this->assertDatabaseHas(Item::class, [
             'name' => 'テスト商品',
@@ -62,7 +61,7 @@ class SellTest extends TestCase
         ]);
 
         // アップロードしたテスト用画像ファイルの削除
-        Storage::disk('public')->delete($image_path);
+        Storage::disk('public')->delete($item->image_path);
     }
 
     public function test_出品処理_商品画像ファイルの存在確認(): void
@@ -84,11 +83,10 @@ class SellTest extends TestCase
         $response = $this->actingAs($user)->post(route('sell'), $form);
 
         $item = Item::latest('id')->first();
-        $image_path = str_replace("/storage/img", "img", $item->image_url);
-        Storage::disk('public')->assertExists($image_path);
+        Storage::disk('public')->assertExists($item->image_path);
 
         // アップロードしたテスト用画像ファイルの削除
-        Storage::disk('public')->delete($image_path);
+        Storage::disk('public')->delete($item->image_path);
     }
 
     public function test_出品処理_カテゴリーの登録確認(): void
@@ -110,11 +108,10 @@ class SellTest extends TestCase
         $response = $this->actingAs($user)->post(route('sell'), $form);
 
         $item = Item::latest('id')->first();
-        $image_path = str_replace("/storage/img", "img", $item->image_url);
         $this->assertSame($categories->count(), $item->categories->count());
 
         // アップロードしたテスト用画像ファイルの削除
-        Storage::disk('public')->delete($image_path);
+        Storage::disk('public')->delete($item->image_path);
     }
 
     #[DataProvider('sellFormDataProvider')]

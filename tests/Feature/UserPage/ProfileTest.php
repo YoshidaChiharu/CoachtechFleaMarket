@@ -58,7 +58,7 @@ class ProfileTest extends TestCase
         $response = $this->actingAs($user)->post(route('mypage.profile'), $form);
 
         $response->assertRedirect(route('mypage'));
-        $image_path = str_replace("/storage/img", "img", $user->profile->image_url);
+        $image_path = $user->profile->image_path;
         Storage::disk('public')->assertExists($image_path);
 
         // アップロードしたテスト用画像ファイルの削除

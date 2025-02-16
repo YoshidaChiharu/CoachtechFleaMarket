@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $id
  * @property int $user_id
  * @property string $image_url
+ * @property string $image_path
  * @property string|null $postcode
  * @property string|null $address
  * @property string|null $building
@@ -46,6 +47,26 @@ class Profile extends Model
      * @var list<string>
      */
     protected $guarded = ['id'];
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサ・ミューテタ
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * image_path 取得
+     * image_url のパス部分のみを抽出
+     *
+     * @param [type] $value
+     * @return string
+     */
+    public function getImagePathAttribute($value) : string
+    {
+        if (config('app.env') !== 'production') { $except = 'http://localhost/storage'; }
+        if (config('app.env') === 'production') { $except = 'https://coachtechfleamarket-bucket-20250215.s3.ap-northeast-1.amazonaws.com'; }
+        return str_replace($except, "", $this->image_url);
+    }
 
     /*
     |--------------------------------------------------------------------------

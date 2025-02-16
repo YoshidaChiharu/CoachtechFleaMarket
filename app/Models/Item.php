@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $price
  * @property string $description
  * @property string $image_url
+ * @property string $image_path
  * @property int $condition_id
  * @property int $user_id
  * @property string $stripe_price_id
@@ -81,6 +82,26 @@ class Item extends Model
      * @var list<string>
      */
     protected $guarded = ['id'];
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサ・ミューテタ
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * image_path 取得
+     * image_url のパス部分のみを抽出
+     *
+     * @param [type] $value
+     * @return string
+     */
+    public function getImagePathAttribute($value) : string
+    {
+        if (config('app.env') !== 'production') { $except = 'http://localhost/storage'; }
+        if (config('app.env') === 'production') { $except = 'https://coachtechfleamarket-bucket-20250215.s3.ap-northeast-1.amazonaws.com'; }
+        return str_replace($except, "", $this->image_url);
+    }
 
     /*
     |--------------------------------------------------------------------------

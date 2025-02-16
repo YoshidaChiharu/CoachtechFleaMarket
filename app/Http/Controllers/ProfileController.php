@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -53,8 +54,10 @@ class ProfileController extends Controller
             if ($request->image) {
                 $image = $request->file('image');
                 $file_name = $image->getClientOriginalName();
-                $image_path = $image->storeAs('img', $file_name, 'public');
-                $param['image_url'] = str_replace("img", "/storage/img", $image_path);
+                if (config('app.env') !== 'production') { $disk = 'public'; }
+                if (config('app.env') === 'production') { $disk = 's3'; }
+                $image_path = Storage::disk($disk)->putFileAs('user_images', $image, $file_name);
+                $param['image_url'] = Storage::disk($disk)->url($image_path);
             }
 
             $profile = $request->user()->profile;

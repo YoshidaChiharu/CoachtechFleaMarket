@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -70,8 +71,10 @@ class SellController extends Controller
             // 画像の保存
             $image = $request->file('image');
             $file_name = $image->getClientOriginalName();
-            $image_path = $image->storeAs('img', $file_name, 'public');
-            $image_path = str_replace("img", "/storage/img", $image_path);
+            if (config('app.env') !== 'production') { $disk = 'public'; }
+            if (config('app.env') === 'production') { $disk = 's3'; }
+            $image_path = Storage::disk($disk)->putFileAs('item_images', $image, $file_name);
+            $image_url = Storage::disk($disk)->url($image_path);
 
             // 商品登録処理
             $item = Item::create([
@@ -79,7 +82,7 @@ class SellController extends Controller
                 'brand' => $request->brand,
                 'price' => $request->price,
                 'description' => $request->description,
-                'image_url' => $image_path,
+                'image_url' => $image_url,
                 'condition_id' => $request->condition_id,
                 'user_id' => $user->id,
                 'stripe_price_id' => $price->id ?? 'dummy_price_id',
