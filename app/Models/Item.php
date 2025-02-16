@@ -98,7 +98,9 @@ class Item extends Model
      */
     public function getImagePathAttribute($value) : string
     {
-        return str_replace("https://coachtechfleamarket-bucket-20250215.s3.ap-northeast-1.amazonaws.com", "", $this->image_url);
+        if (config('app.env') !== 'production') { $except = 'http://localhost/storage'; }
+        if (config('app.env') === 'production') { $except = 'https://coachtechfleamarket-bucket-20250215.s3.ap-northeast-1.amazonaws.com'; }
+        return str_replace($except, "", $this->image_url);
     }
 
     /*

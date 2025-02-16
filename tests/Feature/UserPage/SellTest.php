@@ -61,7 +61,7 @@ class SellTest extends TestCase
         ]);
 
         // アップロードしたテスト用画像ファイルの削除
-        Storage::disk('s3')->delete($item->image_path);
+        Storage::disk('public')->delete($item->image_path);
     }
 
     public function test_出品処理_商品画像ファイルの存在確認(): void
@@ -83,10 +83,10 @@ class SellTest extends TestCase
         $response = $this->actingAs($user)->post(route('sell'), $form);
 
         $item = Item::latest('id')->first();
-        Storage::disk('s3')->assertExists($item->image_path);
+        Storage::disk('public')->assertExists($item->image_path);
 
         // アップロードしたテスト用画像ファイルの削除
-        Storage::disk('s3')->delete($item->image_path);
+        Storage::disk('public')->delete($item->image_path);
     }
 
     public function test_出品処理_カテゴリーの登録確認(): void
@@ -111,7 +111,7 @@ class SellTest extends TestCase
         $this->assertSame($categories->count(), $item->categories->count());
 
         // アップロードしたテスト用画像ファイルの削除
-        Storage::disk('s3')->delete($item->image_path);
+        Storage::disk('public')->delete($item->image_path);
     }
 
     #[DataProvider('sellFormDataProvider')]
