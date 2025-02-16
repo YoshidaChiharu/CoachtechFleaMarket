@@ -36,7 +36,7 @@ class SoldItemController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'エラーが発生しました'
-            ], 500);
+            ], 400);
         }
     }
 
@@ -91,7 +91,7 @@ class SoldItemController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'エラーが発生しました'
-            ], 500);
+            ], 400);
         }
     }
 
@@ -113,7 +113,7 @@ class SoldItemController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'エラーが発生しました'
-            ], 500);
+            ], 400);
         }
     }
 }
