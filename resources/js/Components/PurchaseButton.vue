@@ -51,6 +51,7 @@ async function showForm() {
         })
         .catch(function (error) {
             router.reload();
+            console.log(error);
             showError(error.response.data.message)
         })
 }
