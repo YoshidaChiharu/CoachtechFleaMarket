@@ -64,9 +64,12 @@
 | PHP                   | 8.3.7      |
 | NGINX                 | 1.26.0     |
 | MySQL                 | 8.0.37     |
-| inertia.js            | 1.0.0      |
+| inertia.js            | 1.3.2      |
 | Vue.js                | 3.5.13     |
 | tailwindCSS           | 3.4.16     |
+| Laravel Breeze        | 2.2.6      |
+| Laravel Vite          | 3.4.16     |
+| PHP Unit              | 11.5.0     |
 
 ## テーブル設計
 
