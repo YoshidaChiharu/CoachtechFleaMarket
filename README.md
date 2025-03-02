@@ -92,64 +92,60 @@ cd docker-template-LEMP-Breeze
 ```
 mkdir src
 ```
-3. **srcディレクトリのパーミッションを変更**
-```
-sudo chmod 777 src
-```
-4. **ディレクトリを移動し、本プロジェクトのリモートリポジトリをクローンする**
+3. **ディレクトリを移動し、本プロジェクトのリモートリポジトリをクローンする**
 ```
 cd src
 ```
 ```
 git clone git@github.com:YoshidaChiharu/CoachtechFleaMarket.git
 ```
-5. **ディレクトリを移動し、Dockerコンテナを作成**
+4. **ディレクトリを移動し、Dockerコンテナを作成**
 ```
 cd ..
 ```
 ```
 docker-compose up -d --build
 ```
-6. **`composer install` コマンドでパッケージをインストール**
+5. **`composer install` コマンドでパッケージをインストール**
 ```
 docker-compose exec php-fpm bash
 ```
 ```
 composer install
 ```
-7. **`npm install` コマンドでパッケージをインストール**
+6. **`npm install` コマンドでパッケージをインストール**
 ```
 npm install
 ```
-8. **Vue.jsのビルド**
+7. **Vue.jsのビルド**
 ```
 npm run build
 ```
-9. **.envファイルを作成**
+8. **.envファイルを作成**
 ```
 cp .env.local .env
 ```
-10. **アプリケーションキーを生成**
+9. **アプリケーションキーを生成**
 ```
 php artisan key:generate
 ```
-11. **シンボリックリンクの作成**
+10. **シンボリックリンクの作成**
 ```
 php artisan storage:link
 ```
-12. **テーブル作成**
+11. **テーブル作成**
 ```
 php artisan migrate
 ```
-13. **ダミーデータ作成**
+12. **ダミーデータ作成**
 ```
 php artisan db:seed
 ```
-14. **パーミッションを変更**
+13. **パーミッションを変更**
 ```
 chmod -R 777 *
 ```
-15. **Dockerコンテナを再起動**
+14. **Dockerコンテナを再起動**
 ```
 exit
 ```

@@ -62,7 +62,12 @@ function submit() {
                         <!-- <InputError class="mt-2" :message="form.errors.comment" /> -->
                         <TextAreaInput v-model="form.comment" required />
                         <InputError class="mb-2" :message="form.errors.comment" />
-                        <PrimaryButton>コメントを送信する</PrimaryButton>
+                        <PrimaryButton
+                            :class="{ 'opacity-25': form.processing }"
+                            :disabled="form.processing"
+                        >
+                            コメントを送信する
+                        </PrimaryButton>
                     </form>
                 </div>
             </div>
