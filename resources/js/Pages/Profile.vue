@@ -65,7 +65,12 @@ function submit() {
                 <InputError class="mt-2" :message="form.errors.building" />
             </div>
             <div class="pt-16">
-                <PrimaryButton>更新する</PrimaryButton><br>
+                <PrimaryButton
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    更新する
+                </PrimaryButton><br>
             </div>
         </form>
     </div>
