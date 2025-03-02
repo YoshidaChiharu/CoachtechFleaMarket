@@ -94,7 +94,12 @@ function imageReset() {
                 <InputError class="mt-2" :message="form.errors.price" />
             </div>
             <div class="pt-16">
-                <PrimaryButton>出品する</PrimaryButton><br>
+                <PrimaryButton
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    出品する
+                </PrimaryButton><br>
             </div>
         </form>
     </div>

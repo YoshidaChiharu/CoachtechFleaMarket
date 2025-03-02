@@ -53,7 +53,12 @@ function submit() {
                 </div>
             </div>
             <div class="pt-8">
-                <PrimaryButton>送信する</PrimaryButton><br>
+                <PrimaryButton
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    送信する
+                </PrimaryButton><br>
             </div>
         </form>
 
