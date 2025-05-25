@@ -69,7 +69,7 @@ class PurchaseController extends Controller
             $stripe = new StripeClient(config('stripe.stripe_secret'));
 
             // sold_itemレコードが意図したものか念のため確認
-            if ($sold_item->user_id !== $request->user()->id || $sold_item->item_id !== $request->item_id) {
+            if ($sold_item->user_id !== $request->user()->id || $sold_item->item_id != $request->item_id) {
                 return to_route('top');
             }
 
